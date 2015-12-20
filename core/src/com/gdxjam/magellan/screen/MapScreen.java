@@ -78,7 +78,7 @@ public class MapScreen  implements Screen, InputProcessor {
         batch.begin();
 
         for(Sector sector : universe.sectors){
-            if(!sector.discovered) continue;
+            //if(!sector.discovered) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector)
@@ -97,7 +97,7 @@ public class MapScreen  implements Screen, InputProcessor {
             }
         }
         for(Sector sector : universe.sectors){
-            if(!sector.discovered) continue;
+            //if(!sector.discovered) continue;
             dot.setColor(Color.CYAN);
             dot.setSize(10,10);
             dot.setPosition(sector.position.x - 5, sector.position.y - 5);
@@ -183,6 +183,7 @@ public class MapScreen  implements Screen, InputProcessor {
             Sector sector = universe.getSectorsInCircle(touchCircle).get(0);
             if(universe.playerShip.sector.connectedSectors.contains(sector, true)){
                 universe.playerShip.moveTo(sector);
+                universe.tick();
             }
         }
         return false;

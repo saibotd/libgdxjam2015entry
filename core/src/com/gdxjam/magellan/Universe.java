@@ -49,9 +49,9 @@ public class Universe {
     }
 
     public void tick() {
-        for(Sector sector : sectors){
-            for(GameObj gameObj : sector.gameObjs){
-                gameObj.tick();
+        for(int i = 0; i < sectors.size; i++){
+            for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
+                sectors.get(i).gameObjs.get(j).tick();
             }
         }
     }
@@ -63,6 +63,10 @@ public class Universe {
         if(addSector(newSector)) {
             if (Math.random() < .1) {
                 new Planet(newSector);
+            } else if(Math.random() < .2){
+                new AiShipFighter(newSector);
+            } else if(Math.random() < .1){
+                new AiShipSettler(newSector);
             }
         }
     }
