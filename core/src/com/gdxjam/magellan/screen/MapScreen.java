@@ -1,14 +1,15 @@
 package com.gdxjam.magellan.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gdxjam.magellan.*;
 
 /**
@@ -18,6 +19,7 @@ public class MapScreen extends BaseScreen {
     private final Sprite pixel;
     private final Sprite dot;
     private final Sprite circle;
+    private final FitViewport mapViewport;
     private float zoom = 1;
     private float panX;
     private float panY;
@@ -25,40 +27,35 @@ public class MapScreen extends BaseScreen {
     private Circle touchCircle = new Circle(0,0,30);
     private Universe universe;
     private Vector2 tmp1;
+    public OrthographicCamera camera;
+    public SpriteBatch mapBatch;
 
     public MapScreen(MagellanGame game){
         super(game);
         universe = game.universe;
+        mapBatch = new SpriteBatch();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         circle = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-    }
-
-    public void show(){
-        super.show();
+        camera = new OrthographicCamera();
+        mapViewport = new FitViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
-    }
-
-    public void update() {
-        if(universe.updated) {
-            universe.updated = false;
-        }
+        mapViewport.apply();
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(delta);
+
+        camera.update();
+        mapBatch.setProjectionMatrix(camera.combined);
 
         camera.zoom = zoom;
         camera.position.x += panX;
         camera.position.y += panY;
-        camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
-
-        batch.begin();
+        mapBatch.begin();
 
         for(Sector sector : universe.sectors){
             //if(!sector.discovered) continue;
@@ -72,11 +69,11 @@ public class MapScreen extends BaseScreen {
                 pixel.setOrigin(0,.5f);
                 pixel.setPosition(_sector.position.x-.5f, _sector.position.y-.5f);
                 pixel.setRotation(tmp1.angle());
-                pixel.draw(batch);
+                pixel.draw(mapBatch);
                 dot.setColor(Color.CYAN);
                 dot.setSize(10,10);
                 dot.setPosition(_sector.position.x - 5, _sector.position.y - 5);
-                dot.draw(batch);
+                dot.draw(mapBatch);
             }
         }
         for(Sector sector : universe.sectors){
@@ -84,7 +81,7 @@ public class MapScreen extends BaseScreen {
             dot.setColor(Color.CYAN);
             dot.setSize(10,10);
             dot.setPosition(sector.position.x - 5, sector.position.y - 5);
-            dot.draw(batch);
+            dot.draw(mapBatch);
             for(GameObj gameObj:sector.gameObjs){
                 Sprite sprite = dot;
                 if(gameObj instanceof PlayerShip)
@@ -92,29 +89,18 @@ public class MapScreen extends BaseScreen {
                 sprite.setColor(gameObj.colorOnMap);
                 sprite.setSize(gameObj.sizeOnMap,gameObj.sizeOnMap);
                 sprite.setPosition(sector.position.x - gameObj.sizeOnMap/2, sector.position.y - gameObj.sizeOnMap/2);
-                sprite.draw(batch);
+                sprite.draw(mapBatch);
             }
         }
-        batch.end();
+        mapBatch.end();
 
-        update();
-    }
-
-    public void pause() {
-
-    }
-
-    public void resume() {
-
+        stage.draw();
     }
 
     @Override
-    public void hide() {
-
-    }
-
-    public void dispose() {
-        batch.dispose();
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        mapViewport.update(width, height);
     }
 
     public boolean keyDown(int keyCode) {
@@ -154,10 +140,6 @@ public class MapScreen extends BaseScreen {
         return false;
     }
 
-    public boolean keyTyped(char c) {
-        return false;
-    }
-
     public boolean touchDown(int x, int y, int pointer, int button) {
         camera.unproject(touch.set(x, y, zoom));
         touchCircle.setPosition(touch.x, touch.y);
@@ -182,11 +164,7 @@ public class MapScreen extends BaseScreen {
         panY += touchCircle.y - touch.y;
         touchCircle.x = touch.x;
         touchCircle.y = touch.y;
-        return false;
-    }
-
-    public boolean mouseMoved(int x, int y) {
-        return false;
+        return true;
     }
 
     public boolean scrolled(int i) {

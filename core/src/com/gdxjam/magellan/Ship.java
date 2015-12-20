@@ -16,7 +16,12 @@ public class Ship extends MovingGameObj implements IDrawable, IDestroyable, IArm
     }
 
     @Override
-    public void render(SpriteBatch batch, int delta) {
+    public void prepareRendering() {
+
+    }
+
+    @Override
+    public void render(SpriteBatch batch, float delta) {
 
     }
 
