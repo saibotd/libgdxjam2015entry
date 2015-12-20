@@ -45,8 +45,8 @@ public class MapScreen  implements Screen, InputProcessor {
         batch = new SpriteBatch();
         Pixmap.setFilter(Pixmap.Filter.BiLinear);
         viewport = new FitViewport(1280, 720, camera);
-        camera.position.x = universe.size/2 - camera.viewportWidth/2;
-        camera.position.y = universe.size/2 - camera.viewportHeight/2;
+        camera.position.x = universe.playerShip.sector.position.x - camera.viewportWidth/2;
+        camera.position.y = universe.playerShip.sector.position.y - camera.viewportHeight/2;
         viewport.apply();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
@@ -78,17 +78,26 @@ public class MapScreen  implements Screen, InputProcessor {
         batch.begin();
 
         for(Sector sector : universe.sectors){
+            if(!sector.discovered) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
-                pixel.setColor(Color.CYAN);
+                if(sector == universe.playerShip.sector)
+                    pixel.setColor(Color.WHITE);
+                else
+                    pixel.setColor(Color.CYAN);
                 pixel.setSize(tmp1.len(), 1);
                 pixel.setOrigin(0,.5f);
                 pixel.setPosition(_sector.position.x-.5f, _sector.position.y-.5f);
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(batch);
+                dot.setColor(Color.CYAN);
+                dot.setSize(10,10);
+                dot.setPosition(_sector.position.x - 5, _sector.position.y - 5);
+                dot.draw(batch);
             }
         }
         for(Sector sector : universe.sectors){
+            if(!sector.discovered) continue;
             dot.setColor(Color.CYAN);
             dot.setSize(10,10);
             dot.setPosition(sector.position.x - 5, sector.position.y - 5);
@@ -170,7 +179,12 @@ public class MapScreen  implements Screen, InputProcessor {
     public boolean touchDown(int x, int y, int pointer, int button) {
         camera.unproject(touch.set(x, y, zoom));
         touchCircle.setPosition(touch.x, touch.y);
-        Gdx.app.log("TOUCH", touchCircle.toString() + "  " + universe.getSectorsInCircle(touchCircle).toString());
+        if(universe.getSectorsInCircle(touchCircle).size > 0){
+            Sector sector = universe.getSectorsInCircle(touchCircle).get(0);
+            if(universe.playerShip.sector.connectedSectors.contains(sector, true)){
+                universe.playerShip.moveTo(sector);
+            }
+        }
         return false;
     }
 

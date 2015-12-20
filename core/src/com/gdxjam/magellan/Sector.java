@@ -10,6 +10,7 @@ public class Sector {
     public Circle circleConnect;
     public Circle circleAlone;
     public Array<GameObj> gameObjs = new Array();
+    public boolean discovered = false;
     public Sector(int x, int y){
         position = new Vector2(x,y);
         circleConnect = new Circle(position, 256);

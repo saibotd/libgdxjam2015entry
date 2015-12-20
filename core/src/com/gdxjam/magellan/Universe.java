@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class Universe {
+    public final PlayerShip playerShip;
     public Array<Sector> sectors;
     public int size = 8192;
     public boolean updated = false;
@@ -14,6 +15,7 @@ public class Universe {
             addRandomSector();
         }
         connectSectors();
+        playerShip = new PlayerShip(sectors.random());
     }
 
     public boolean addSector(Sector sector) {
