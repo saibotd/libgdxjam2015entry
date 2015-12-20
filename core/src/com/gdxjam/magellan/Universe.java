@@ -15,7 +15,23 @@ public class Universe {
             addRandomSector();
         }
         connectSectors();
-        playerShip = new PlayerShip(sectors.random());
+        Sector bottomLeft = sectors.random();
+        Sector topRight = sectors.random();
+        for(Sector sector : sectors){
+            if(sector.position.x < bottomLeft.position.x && sector.position.y < bottomLeft.position.y){
+                bottomLeft = sector;
+            }
+            if(sector.position.x > topRight.position.x && sector.position.y > topRight.position.y){
+                topRight = sector;
+            }
+        }
+        playerShip = new PlayerShip(bottomLeft);
+        for(int i = 0; i < 100; i++){
+            new AiShipFighter(topRight);
+        }
+        for(int i = 0; i < 20; i++){
+            new AiShipSettler(topRight);
+        }
     }
 
     public boolean addSector(Sector sector) {
@@ -63,10 +79,6 @@ public class Universe {
         if(addSector(newSector)) {
             if (Math.random() < .1) {
                 new Planet(newSector);
-            } else if(Math.random() < .2){
-                new AiShipFighter(newSector);
-            } else if(Math.random() < .1){
-                new AiShipSettler(newSector);
             }
         }
     }

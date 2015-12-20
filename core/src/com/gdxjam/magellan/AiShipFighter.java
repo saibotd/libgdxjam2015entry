@@ -40,7 +40,7 @@ public class AiShipFighter extends AiShip {
                 if(Math.random() < .5) super.tick();
                 break;
             case HOSTILE:
-                target.receiveDamage(attack);
+                shootAt(target);
                 break;
             case FLEEING:
                 super.tick();

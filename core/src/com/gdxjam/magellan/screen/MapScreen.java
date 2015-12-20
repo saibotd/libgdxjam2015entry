@@ -2,59 +2,42 @@ package com.gdxjam.magellan.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.environment.SpotLight;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.MagellanGame;
-import com.gdxjam.magellan.Sector;
-import com.gdxjam.magellan.Universe;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.gdxjam.magellan.*;
 
 /**
  * Created by lolcorner on 19.12.2015.
  */
-public class MapScreen  implements Screen, InputProcessor {
-    private final MagellanGame game;
-    private final FitViewport viewport;
+public class MapScreen extends BaseScreen {
     private final Sprite pixel;
     private final Sprite dot;
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
+    private final Sprite circle;
     private float zoom = 1;
     private float panX;
     private float panY;
-    private Array<Array<Texture>> mapTextures = new Array();
-    private int pmSize = 1024;
     private Vector3 touch = new Vector3();
     private Circle touchCircle = new Circle(0,0,30);
     private Universe universe;
     private Vector2 tmp1;
 
-    public MapScreen(MagellanGame magellanGame){
-        game = magellanGame;
+    public MapScreen(MagellanGame game){
+        super(game);
         universe = game.universe;
-        camera = new OrthographicCamera();
-        batch = new SpriteBatch();
-        Pixmap.setFilter(Pixmap.Filter.BiLinear);
-        viewport = new FitViewport(1280, 720, camera);
-        camera.position.x = universe.playerShip.sector.position.x - camera.viewportWidth/2;
-        camera.position.y = universe.playerShip.sector.position.y - camera.viewportHeight/2;
-        viewport.apply();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
+        circle = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(this);
+    public void show(){
+        super.show();
+        camera.position.x = universe.playerShip.sector.position.x;
+        camera.position.y = universe.playerShip.sector.position.y;
     }
 
     public void update() {
@@ -81,7 +64,7 @@ public class MapScreen  implements Screen, InputProcessor {
             //if(!sector.discovered) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
-                if(sector == universe.playerShip.sector)
+                if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector)
                     pixel.setColor(Color.WHITE);
                 else
                     pixel.setColor(Color.CYAN);
@@ -103,19 +86,18 @@ public class MapScreen  implements Screen, InputProcessor {
             dot.setPosition(sector.position.x - 5, sector.position.y - 5);
             dot.draw(batch);
             for(GameObj gameObj:sector.gameObjs){
-                dot.setColor(gameObj.colorOnMap);
-                dot.setSize(gameObj.sizeOnMap,gameObj.sizeOnMap);
-                dot.setPosition(sector.position.x - gameObj.sizeOnMap/2, sector.position.y - gameObj.sizeOnMap/2);
-                dot.draw(batch);
+                Sprite sprite = dot;
+                if(gameObj instanceof PlayerShip)
+                    sprite = circle;
+                sprite.setColor(gameObj.colorOnMap);
+                sprite.setSize(gameObj.sizeOnMap,gameObj.sizeOnMap);
+                sprite.setPosition(sector.position.x - gameObj.sizeOnMap/2, sector.position.y - gameObj.sizeOnMap/2);
+                sprite.draw(batch);
             }
         }
         batch.end();
 
         update();
-    }
-
-    public void resize(int w, int h) {
-        viewport.update(w,h);
     }
 
     public void pause() {

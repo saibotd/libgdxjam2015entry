@@ -11,7 +11,7 @@ public class PlayerShip extends Ship {
         super(sector);
         sector.discovered = true;
         colorOnMap = Color.YELLOW;
-        sizeOnMap = 15;
+        sizeOnMap = 20;
     }
 
     public void moveTo(Sector sector) {
