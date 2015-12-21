@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
 
 /**
@@ -19,7 +21,7 @@ public class MapScreen extends BaseScreen {
     private final Sprite pixel;
     private final Sprite dot;
     private final Sprite circle;
-    private final FitViewport mapViewport;
+    private final Viewport mapViewport;
     private float zoom = 1;
     private float panX;
     private float panY;
@@ -38,15 +40,16 @@ public class MapScreen extends BaseScreen {
         circle = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
         camera = new OrthographicCamera();
-        mapViewport = new FitViewport(1280, 720, camera);
+        mapViewport = new FillViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
-        mapViewport.apply();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        mapViewport.apply();
 
         camera.update();
         mapBatch.setProjectionMatrix(camera.combined);
@@ -94,13 +97,15 @@ public class MapScreen extends BaseScreen {
         }
         mapBatch.end();
 
+        viewport.apply();
+
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        mapViewport.update(width, height);
+        mapViewport.update(width, height, true);
     }
 
     public boolean keyDown(int keyCode) {

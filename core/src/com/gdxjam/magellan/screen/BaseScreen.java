@@ -42,7 +42,7 @@ public class BaseScreen implements Screen, InputProcessor {
         stage.addActor(menu);
 
         btnWindow.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 game.showWindowScreen();
             }
         });
@@ -52,6 +52,7 @@ public class BaseScreen implements Screen, InputProcessor {
                 game.showMapScreen();
             }
         });
+        viewport.apply();
     }
 
     @Override
@@ -113,7 +114,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
