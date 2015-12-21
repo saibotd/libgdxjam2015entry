@@ -1,7 +1,7 @@
 package com.gdxjam.magellan.screen;
 
 import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.IDrawable;
+import com.gdxjam.magellan.IDrawableWindow;
 import com.gdxjam.magellan.MagellanGame;
 
 /**
@@ -14,8 +14,8 @@ public class WindowScreen extends BaseScreen {
 
     public void show(){
         for(GameObj gameObj : game.universe.playerShip.sector.gameObjs){
-            if(gameObj instanceof IDrawable){
-                ((IDrawable) gameObj).prepareRendering();
+            if(gameObj instanceof IDrawableWindow){
+                ((IDrawableWindow) gameObj).prepareRendering();
             }
         }
     }
@@ -25,8 +25,8 @@ public class WindowScreen extends BaseScreen {
 
         batch.begin();
         for(GameObj gameObj : game.universe.playerShip.sector.gameObjs){
-            if(gameObj instanceof IDrawable){
-                ((IDrawable) gameObj).render(batch, delta);
+            if(gameObj instanceof IDrawableWindow){
+                ((IDrawableWindow) gameObj).render(batch, delta);
             }
         }
         batch.end();

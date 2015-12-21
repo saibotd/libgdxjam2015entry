@@ -13,7 +13,7 @@ public class Sector {
     public boolean discovered = false;
     public Sector(int x, int y){
         position = new Vector2(x,y);
-        circleConnect = new Circle(position, 256);
+        circleConnect = new Circle(position, 200);
         circleAlone = new Circle(position, 64);
         connectedSectors = new Array();
     }

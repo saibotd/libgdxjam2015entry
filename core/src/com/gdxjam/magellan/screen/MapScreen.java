@@ -20,7 +20,6 @@ import com.gdxjam.magellan.*;
 public class MapScreen extends BaseScreen {
     private final Sprite pixel;
     private final Sprite dot;
-    private final Sprite circle;
     private final Viewport mapViewport;
     private float zoom = 1;
     private float panX;
@@ -37,12 +36,18 @@ public class MapScreen extends BaseScreen {
         universe = game.universe;
         mapBatch = new SpriteBatch();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
-        circle = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
         camera = new OrthographicCamera();
         mapViewport = new FillViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
+        for(Sector sector : universe.sectors){
+            for(GameObj gameObj:sector.gameObjs){
+                if(gameObj instanceof IDrawableMap) {
+                    ((IDrawableMap) gameObj).prepareRenderingOnMap();
+                }
+            }
+        }
     }
 
     @Override
@@ -65,34 +70,30 @@ public class MapScreen extends BaseScreen {
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector)
-                    pixel.setColor(Color.WHITE);
+                    pixel.setColor(Color.YELLOW);
                 else
                     pixel.setColor(Color.CYAN);
-                pixel.setSize(tmp1.len(), 1);
-                pixel.setOrigin(0,.5f);
-                pixel.setPosition(_sector.position.x-.5f, _sector.position.y-.5f);
+                pixel.setSize(tmp1.len()+1f, 2);
+                pixel.setOrigin(0,1f);
+                pixel.setPosition(_sector.position.x-1f, _sector.position.y-1f);
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(mapBatch);
                 dot.setColor(Color.CYAN);
-                dot.setSize(10,10);
-                dot.setPosition(_sector.position.x - 5, _sector.position.y - 5);
+                dot.setSize(20,20);
+                dot.setPosition(_sector.position.x - 10, _sector.position.y - 10);
                 dot.draw(mapBatch);
             }
         }
         for(Sector sector : universe.sectors){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
             dot.setColor(Color.CYAN);
-            dot.setSize(10,10);
-            dot.setPosition(sector.position.x - 5, sector.position.y - 5);
+            dot.setSize(20,20);
+            dot.setPosition(sector.position.x - 10, sector.position.y - 10);
             dot.draw(mapBatch);
             for(GameObj gameObj:sector.gameObjs){
-                Sprite sprite = dot;
-                if(gameObj instanceof PlayerShip)
-                    sprite = circle;
-                sprite.setColor(gameObj.colorOnMap);
-                sprite.setSize(gameObj.sizeOnMap,gameObj.sizeOnMap);
-                sprite.setPosition(sector.position.x - gameObj.sizeOnMap/2, sector.position.y - gameObj.sizeOnMap/2);
-                sprite.draw(mapBatch);
+                if(gameObj instanceof IDrawableMap) {
+                    ((IDrawableMap) gameObj).renderOnMap(mapBatch, delta);
+                }
             }
         }
         mapBatch.end();
@@ -105,7 +106,7 @@ public class MapScreen extends BaseScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        mapViewport.update(width, height, true);
+        mapViewport.update(width, height);
     }
 
     public boolean keyDown(int keyCode) {

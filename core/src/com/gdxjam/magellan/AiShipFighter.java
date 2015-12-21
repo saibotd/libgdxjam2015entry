@@ -10,8 +10,6 @@ public class AiShipFighter extends AiShip {
     public AiShipFighter(Sector sector) {
         super(sector);
         faction = Factions.ENEMY;
-        colorOnMap = Color.RED;
-        sizeOnMap = 15;
     }
 
     private void decideState(){

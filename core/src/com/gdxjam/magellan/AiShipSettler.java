@@ -10,8 +10,6 @@ public class AiShipSettler extends AiShip {
     public AiShipSettler(Sector sector) {
         super(sector);
         faction = Factions.ENEMY;
-        colorOnMap = Color.ORANGE;
-        sizeOnMap = 15;
     }
 
     private void decideState(){
@@ -47,4 +45,11 @@ public class AiShipSettler extends AiShip {
                 break;
         }
     }
+
+    @Override
+    public void prepareRenderingOnMap() {
+        super.prepareRenderingOnMap();
+        sprite.setColor(Color.ORANGE);
+    }
+
 }
