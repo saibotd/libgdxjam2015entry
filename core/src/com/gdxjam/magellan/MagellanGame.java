@@ -13,6 +13,7 @@ public class MagellanGame extends Game{
     public Universe universe;
     private Screen mapScreen;
     private Screen windowScreen;
+    public static boolean DEBUG = false;
 
     public MagellanGame(){
 		universe = new Universe();

@@ -58,7 +58,7 @@ public class MapScreen extends BaseScreen {
         mapBatch.begin();
 
         for(Sector sector : universe.sectors){
-            //if(!sector.discovered) continue;
+            if(!sector.discovered && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector)
@@ -77,7 +77,7 @@ public class MapScreen extends BaseScreen {
             }
         }
         for(Sector sector : universe.sectors){
-            //if(!sector.discovered) continue;
+            if(!sector.discovered && !MagellanGame.DEBUG) continue;
             dot.setColor(Color.CYAN);
             dot.setSize(10,10);
             dot.setPosition(sector.position.x - 5, sector.position.y - 5);
@@ -116,6 +116,9 @@ public class MapScreen extends BaseScreen {
                 break;
             case Input.Keys.D:
                 panX = 10*camera.zoom;
+                break;
+            case Input.Keys.Z:
+                MagellanGame.DEBUG = !MagellanGame.DEBUG;
                 break;
         }
         return false;

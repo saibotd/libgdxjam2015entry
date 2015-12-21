@@ -5,10 +5,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class Universe {
-    public final PlayerShip playerShip;
+    public PlayerShip playerShip;
     public Array<Sector> sectors;
     public int size = 8192;
-    public boolean updated = false;
     public Universe(){
         sectors = new Array();
         for(int i = 0; i < size/2; i++){
