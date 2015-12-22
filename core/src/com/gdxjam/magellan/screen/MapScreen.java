@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,6 +33,8 @@ public class MapScreen extends BaseScreen {
     private Vector2 tmp1;
     public OrthographicCamera camera;
     public SpriteBatch mapBatch;
+    private Rectangle cameraFrame = new Rectangle();
+    private float cameraFramePadding = 200;
 
     public MapScreen(MagellanGame game){
         super(game);
@@ -77,7 +76,13 @@ public class MapScreen extends BaseScreen {
 
         mapBatch.begin();
 
-        for(Sector sector : universe.sectors){
+        cameraFrame.set(
+                camera.position.x - camera.viewportWidth * zoom / 2 - cameraFramePadding,
+                camera.position.y - camera.viewportHeight * zoom / 2 - cameraFramePadding,
+                camera.viewportWidth * zoom + (cameraFramePadding*2),
+                camera.viewportHeight * zoom + (cameraFramePadding*2)
+        );
+        for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
@@ -96,7 +101,7 @@ public class MapScreen extends BaseScreen {
                 dot.draw(mapBatch);
             }
         }
-        for(Sector sector : universe.sectors){
+        for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
             dot.setColor(Color.CYAN);
             dot.setSize(20,20);
