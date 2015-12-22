@@ -16,6 +16,7 @@ public class PlayerShip extends Ship {
         super(sector);
         stats.put("coins", 0);
         stats.put("humansOnBoard", 0);
+        stats.put("drones", 0);
         stats.put("population", 10000);
         stats.put("ressource1", 0);
         stats.put("ressource2", 0);

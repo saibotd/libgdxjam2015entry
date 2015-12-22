@@ -12,7 +12,8 @@ public class DesktopLauncher {
         config.backgroundFPS = 60;
         config.foregroundFPS = 60;
         config.samples = 8;
-        config.resizable = true;
+		config.vSyncEnabled = true;
+        config.resizable = false;
 		new LwjglApplication(new MagellanGame(), config);
 	}
 }
