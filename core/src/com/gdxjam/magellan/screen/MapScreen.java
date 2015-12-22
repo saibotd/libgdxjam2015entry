@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -158,6 +159,8 @@ public class MapScreen extends BaseScreen {
             case Input.Keys.D:
                 keyboardPanX = 0;
                 break;
+            case Input.Keys.F:
+                Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
         }
         return false;
     }
@@ -191,9 +194,7 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean scrolled(int i) {
-        zoom += i*.3;
-        if(zoom < 1) zoom = 1;
-        if(zoom > 3) zoom = 3;
+        zoom = MathUtils.clamp(zoom + i*.3f, .5f, 2f);
         return false;
     }
 
