@@ -70,18 +70,19 @@ public class MapScreen extends BaseScreen {
         camera.position.x += keyboardPanX;
         camera.position.y += keyboardPanY;
 
-        if (doMousePan) {
-            camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom, dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom, 1);
-        }
-
-        mapBatch.begin();
-
         cameraFrame.set(
                 camera.position.x - camera.viewportWidth * zoom / 2 - cameraFramePadding,
                 camera.position.y - camera.viewportHeight * zoom / 2 - cameraFramePadding,
                 camera.viewportWidth * zoom + (cameraFramePadding*2),
                 camera.viewportHeight * zoom + (cameraFramePadding*2)
         );
+
+        if (doMousePan) {
+            camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom, dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom, 1);
+        }
+
+        mapBatch.begin();
+
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
@@ -165,7 +166,11 @@ public class MapScreen extends BaseScreen {
                 keyboardPanX = 0;
                 break;
             case Input.Keys.F:
-                Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+                if(Gdx.graphics.isFullscreen())
+                    Gdx.graphics.setDisplayMode(1280, 720, false);
+                else
+                    Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+                break;
         }
         return false;
     }
