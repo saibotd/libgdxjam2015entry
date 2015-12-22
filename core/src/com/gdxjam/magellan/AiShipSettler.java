@@ -49,7 +49,7 @@ public class AiShipSettler extends AiShip {
     @Override
     public void prepareRenderingOnMap() {
         super.prepareRenderingOnMap();
-        sprite.setColor(Color.ORANGE);
+        mapSprite.setColor(Color.ORANGE);
     }
 
 }

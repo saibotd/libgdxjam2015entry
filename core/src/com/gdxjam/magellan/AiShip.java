@@ -1,9 +1,6 @@
 package com.gdxjam.magellan;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -27,6 +24,6 @@ public class AiShip extends Ship {
     @Override
     public void prepareRenderingOnMap() {
         super.prepareRenderingOnMap();
-        sprite.setColor(Color.RED);
+        mapSprite.setColor(Color.RED);
     }
 }
