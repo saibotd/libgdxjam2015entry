@@ -11,6 +11,7 @@ import com.gdxjam.magellan.screen.WindowScreen;
 public class MagellanGame extends Game{
     public static AssetManager assets;
     public Universe universe;
+    public GlobalUi ui;
     private Screen mapScreen;
     private Screen windowScreen;
     public static boolean DEBUG = false;
@@ -24,11 +25,14 @@ public class MagellanGame extends Game{
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);
         assets.load("circle.png", Texture.class);
+        assets.load("bg.png", Texture.class);
         assets.load("skin/uiskin.json", Skin.class);
         assets.finishLoading();
+        ui = new GlobalUi(this);
         mapScreen = new MapScreen(this);
         windowScreen = new WindowScreen(this);
         setScreen(mapScreen);
+
 	}
 
     public void showWindowScreen() {

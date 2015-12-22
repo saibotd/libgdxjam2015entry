@@ -52,7 +52,7 @@ public class BaseScreen implements Screen, InputProcessor {
                 game.showMapScreen();
             }
         });
-        viewport.apply();
+
     }
 
     @Override
@@ -105,6 +105,8 @@ public class BaseScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.ui.renderBG(delta);
+
         update(delta);
     }
 
@@ -115,6 +117,8 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+
+        game.ui.viewport.update(width, height, true);
     }
 
     @Override

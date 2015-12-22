@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
 
@@ -42,7 +43,7 @@ public class MapScreen extends BaseScreen {
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
         camera = new OrthographicCamera();
-        mapViewport = new FillViewport(1280, 720, camera);
+        mapViewport = new FitViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
         for(Sector sector : universe.sectors){
@@ -57,6 +58,8 @@ public class MapScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+
 
         mapViewport.apply();
 
@@ -109,6 +112,8 @@ public class MapScreen extends BaseScreen {
         viewport.apply();
 
         stage.draw();
+
+        game.ui.renderOverlays(delta);
     }
 
     @Override
