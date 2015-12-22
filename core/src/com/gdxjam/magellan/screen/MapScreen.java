@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
 
@@ -22,10 +22,14 @@ public class MapScreen extends BaseScreen {
     private final Sprite dot;
     private final Viewport mapViewport;
     private float zoom = 1;
-    private float panX;
-    private float panY;
     private Vector3 touch = new Vector3();
     private Circle touchCircle = new Circle(0,0,30);
+    private boolean doMousePan = false;
+    private Vector2 dragStartMousePos = new Vector2();
+    private Vector2 dragStartCameraPos = new Vector2();
+    private Vector2 mousePos = new Vector2();
+    private float keyboardPanX;
+    private float keyboardPanY;
     private Universe universe;
     private Vector2 tmp1;
     public OrthographicCamera camera;
@@ -60,8 +64,12 @@ public class MapScreen extends BaseScreen {
         mapBatch.setProjectionMatrix(camera.combined);
 
         camera.zoom = zoom;
-        camera.position.x += panX;
-        camera.position.y += panY;
+        camera.position.x += keyboardPanX;
+        camera.position.y += keyboardPanY;
+
+        if (doMousePan) {
+            camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom, dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom, 1);
+        }
 
         mapBatch.begin();
 
@@ -112,16 +120,16 @@ public class MapScreen extends BaseScreen {
     public boolean keyDown(int keyCode) {
         switch (keyCode){
             case Input.Keys.W:
-                panY = 10*camera.zoom;
+                keyboardPanY = 10*camera.zoom;
                 break;
             case Input.Keys.A:
-                panX = -10*camera.zoom;
+                keyboardPanX = -10*camera.zoom;
                 break;
             case Input.Keys.S:
-                panY = -10*camera.zoom;
+                keyboardPanY = -10*camera.zoom;
                 break;
             case Input.Keys.D:
-                panX = 10*camera.zoom;
+                keyboardPanX = 10*camera.zoom;
                 break;
             case Input.Keys.Z:
                 MagellanGame.DEBUG = !MagellanGame.DEBUG;
@@ -134,16 +142,16 @@ public class MapScreen extends BaseScreen {
 
         switch (keyCode){
             case Input.Keys.W:
-                panY = 0;
+                keyboardPanY = 0;
                 break;
             case Input.Keys.A:
-                panX = 0;
+                keyboardPanX = 0;
                 break;
             case Input.Keys.S:
-                panY = 0;
+                keyboardPanY = 0;
                 break;
             case Input.Keys.D:
-                panX = 0;
+                keyboardPanX = 0;
                 break;
         }
         return false;
@@ -152,6 +160,10 @@ public class MapScreen extends BaseScreen {
     public boolean touchDown(int x, int y, int pointer, int button) {
         camera.unproject(touch.set(x, y, zoom));
         touchCircle.setPosition(touch.x, touch.y);
+        doMousePan = true;
+        dragStartMousePos.set((float)x, (float)y);
+        dragStartCameraPos.set(camera.position.x, camera.position.y);
+        mousePos.set((float)x, (float)y);
         if(universe.getSectorsInCircle(touchCircle).size > 0){
             Sector sector = universe.getSectorsInCircle(touchCircle).get(0);
             if(universe.playerShip.sector.connectedSectors.contains(sector, true)){
@@ -163,22 +175,20 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean touchUp(int x, int y, int pointer, int button) {
-        panX = panY = 0;
+        doMousePan = false;
+        dragStartMousePos.set(mousePos);
         return false;
     }
 
     public boolean touchDragged(int x, int y, int i) {
-        camera.unproject(touch.set(x, y, zoom));
-        panX += touchCircle.x - touch.x;
-        panY += touchCircle.y - touch.y;
-        touchCircle.x = touch.x;
-        touchCircle.y = touch.y;
+        mousePos.set((float)x, (float)y);
         return true;
     }
 
     public boolean scrolled(int i) {
-        zoom += i*.5;
+        zoom += i*.3;
         if(zoom < 1) zoom = 1;
+        if(zoom > 3) zoom = 3;
         return false;
     }
 
