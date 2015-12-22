@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Planet extends GameObj implements IDrawableMap, IDrawableWindow {
     private Sprite sprite;
+    private Sprite mapSprite;
 
     public Planet(Sector sector) {
         super(sector);
@@ -29,14 +30,14 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow {
 
     @Override
     public void prepareRenderingOnMap() {
-        sprite = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        sprite.setSize(24,24);
-        sprite.setColor(Color.MAGENTA);
+        mapSprite = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        mapSprite.setSize(24,24);
+        mapSprite.setColor(Color.MAGENTA);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
-        sprite.setPosition(sector.position.x - sprite.getWidth()/2, sector.position.y - sprite.getHeight()/2);
-        sprite.draw(batch);
+        mapSprite.setPosition(sector.position.x - mapSprite.getWidth()/2, sector.position.y - mapSprite.getHeight()/2);
+        mapSprite.draw(batch);
     }
 }
