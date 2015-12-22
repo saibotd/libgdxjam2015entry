@@ -10,17 +10,15 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class PlayerShip extends Ship {
 
-    public ObjectMap<String, Integer> stats = new ObjectMap();
+    public int COINS = 0;
+    public int HUMANS = 10000;
+    public int DRONES = 0;
+    public int RESSOURCE1 = 0;
+    public int RESSOURCE2 = 0;
+    public int RESSOURCE3 = 0;
 
     public PlayerShip(Sector sector) {
         super(sector);
-        stats.put("coins", 0);
-        stats.put("humansOnBoard", 0);
-        stats.put("drones", 0);
-        stats.put("population", 10000);
-        stats.put("ressource1", 0);
-        stats.put("ressource2", 0);
-        stats.put("ressource3", 0);
         sector.discovered = true;
     }
 

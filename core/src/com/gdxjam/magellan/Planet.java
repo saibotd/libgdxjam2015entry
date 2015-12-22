@@ -5,17 +5,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+
+
 
 /**
  * Created by lolcorner on 19.12.2015.
  */
-public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, IDestroyable {
+public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, IDestroyable, IInteractable {
     private Sprite sprite;
     private Sprite mapSprite;
+    private ObjectMap<String, Interaction> interactions;
     public int population = 0;
 
     public Planet(Sector sector) {
         super(sector);
+        interactions = new ObjectMap();
     }
 
     @Override
@@ -65,5 +71,36 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
     @Override
     public void dispose() {
 
+    }
+
+    public void populate(Ship ship, int humans){
+        if(ship instanceof PlayerShip){
+            faction = ship.faction;
+            humans = MathUtils.clamp(humans, 0, ((PlayerShip) ship).HUMANS);
+            population += humans;
+            ((PlayerShip) ship).HUMANS -= humans;
+        }
+        if(ship instanceof AiShipSettler){
+            faction = ship.faction;
+            population += 500;
+        }
+    }
+
+    @Override
+    public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
+        if(faction == Factions.NEUTRAL || faction == with.faction) {
+            interactions.put("populate", new Interaction() {
+                @Override
+                public void interact(double arg1) {
+                    populate((Ship) with, (int) arg1);
+                }
+                @Override
+                public void interact(String arg1) {}
+            });
+        }
+        if(faction == with.faction && population > 0){
+
+        }
+        return interactions;
     }
 }
