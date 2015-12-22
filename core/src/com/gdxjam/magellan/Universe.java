@@ -76,7 +76,9 @@ public class Universe {
         int y = (int) Math.round(Math.random() * size);
         Sector newSector = new Sector(x,y);
         if(addSector(newSector)) {
-            if (Math.random() < .1) {
+            if (Math.random() < .2) {
+                new MetroidField(newSector);
+            } else if(Math.random() < .2){
                 new Planet(newSector);
             }
         }

@@ -4,13 +4,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Created by lolcorner on 19.12.2015.
  */
-public class Planet extends GameObj implements IDrawableMap, IDrawableWindow {
+public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, IDestroyable {
     private Sprite sprite;
     private Sprite mapSprite;
+    public int population = 0;
 
     public Planet(Sector sector) {
         super(sector);
@@ -39,5 +41,29 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow {
     public void renderOnMap(SpriteBatch batch, float delta) {
         mapSprite.setPosition(sector.position.x - mapSprite.getWidth()/2, sector.position.y - mapSprite.getHeight()/2);
         mapSprite.draw(batch);
+    }
+
+    @Override
+    public void receiveDamage(int damage) {
+        population -= damage;
+        if(population <= 0){
+            population = 0;
+            faction = Factions.NEUTRAL;
+        }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return true;
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
