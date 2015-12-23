@@ -1,12 +1,10 @@
 package com.gdxjam.magellan;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 
@@ -19,8 +17,8 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
     private Sprite mapSprite;
     public int population = 0;
 
-    public Planet(Sector sector) {
-        super(sector);
+    public Planet(Sector sector, MagellanGame game) {
+        super(sector, game);
     }
 
     @Override

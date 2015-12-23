@@ -16,8 +16,8 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
     private Sprite mapSprite;
     private Sprite sprite;
 
-    public MetroidField(Sector sector) {
-        super(sector);
+    public MetroidField(Sector sector, MagellanGame game) {
+        super(sector, game);
         ressource = MathUtils.random(1, 3);
         ressourcePerTick = MathUtils.random(10, 100);
     }

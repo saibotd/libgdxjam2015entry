@@ -14,8 +14,8 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     public int attack;
     public Sprite mapSprite;
 
-    public Ship(Sector sector) {
-        super(sector);
+    public Ship(Sector sector, MagellanGame game) {
+        super(sector, game);
     }
 
     @Override

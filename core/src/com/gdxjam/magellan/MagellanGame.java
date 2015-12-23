@@ -18,7 +18,7 @@ public class MagellanGame extends Game{
     public static boolean DEBUG = false;
 
     public MagellanGame(){
-		universe = new Universe();
+		universe = new Universe(this);
 	}
 
 	public void create() {

@@ -8,7 +8,9 @@ public class Universe {
     public PlayerShip playerShip;
     public Array<Sector> sectors;
     public int size = 4000;
-    public Universe(){
+    private MagellanGame game;
+    public Universe(MagellanGame game){
+        this.game = game;
         sectors = new Array();
         for(int i = 0; i < size/2; i++){
             addRandomSector();
@@ -24,12 +26,12 @@ public class Universe {
                 topRight = sector;
             }
         }
-        playerShip = new PlayerShip(bottomLeft);
+        playerShip = new PlayerShip(bottomLeft, game);
         for(int i = 0; i < 100; i++){
-            new AiShipFighter(topRight);
+            new AiShipFighter(topRight, game);
         }
         for(int i = 0; i < 20; i++){
-            new AiShipSettler(topRight);
+            new AiShipSettler(topRight, game);
         }
     }
 
@@ -77,9 +79,9 @@ public class Universe {
         Sector newSector = new Sector(x,y);
         if(addSector(newSector)) {
             if (Math.random() < .3)
-                new MetroidField(newSector);
+                new MetroidField(newSector, game);
             if(Math.random() < .2)
-                new Planet(newSector);
+                new Planet(newSector, game);
         }
     }
 

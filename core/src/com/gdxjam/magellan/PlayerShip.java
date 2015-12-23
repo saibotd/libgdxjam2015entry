@@ -12,8 +12,8 @@ public class PlayerShip extends Ship {
 
     public int HUMANS = 10000;
 
-    public PlayerShip(Sector sector) {
-        super(sector);
+    public PlayerShip(Sector sector, MagellanGame game) {
+        super(sector, game);
         faction = Factions.PLAYER;
         sector.discovered = true;
     }
@@ -21,6 +21,7 @@ public class PlayerShip extends Ship {
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         sector.discovered = true;
+        
     }
 
     @Override

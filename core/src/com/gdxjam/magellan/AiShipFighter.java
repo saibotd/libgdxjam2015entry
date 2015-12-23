@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class AiShipFighter extends AiShip {
 
-    public AiShipFighter(Sector sector) {
-        super(sector);
+    public AiShipFighter(Sector sector, MagellanGame game) {
+        super(sector, game);
         faction = Factions.ENEMY;
     }
 

@@ -4,8 +4,8 @@ package com.gdxjam.magellan;
  * Created by lolcorner on 19.12.2015.
  */
 public class MovingGameObj extends GameObj {
-    public MovingGameObj(Sector sector) {
-        super(sector);
+    public MovingGameObj(Sector sector, MagellanGame game) {
+        super(sector, game);
     }
 
     public void moveTo(Sector sector) {

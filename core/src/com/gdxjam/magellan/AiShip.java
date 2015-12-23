@@ -12,8 +12,8 @@ public class AiShip extends Ship {
     enum States{IDLE, HOSTILE, FLEEING};
     public States state = States.IDLE;
 
-    public AiShip(Sector sector) {
-        super(sector);
+    public AiShip(Sector sector, MagellanGame game) {
+        super(sector, game);
         faction = Factions.ENEMY;
     }
 
