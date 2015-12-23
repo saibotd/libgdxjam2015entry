@@ -66,5 +66,7 @@ public class WindowScreen extends BaseScreen {
         batch.end();
 
         stage.draw();
+
+        game.ui.renderOverlays(delta);
     }
 }
