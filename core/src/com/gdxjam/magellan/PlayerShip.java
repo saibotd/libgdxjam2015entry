@@ -21,7 +21,7 @@ public class PlayerShip extends Ship {
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         sector.discovered = true;
-        
+        game.gameState.YEAR++;
     }
 
     @Override
