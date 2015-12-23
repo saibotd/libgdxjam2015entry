@@ -22,7 +22,7 @@ public class MagellanGame extends Game{
 	}
 
 	public void create() {
-        gameState = new GameState();
+        gameState = new GameState(this);
         assets = new AssetManager();
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);

@@ -92,6 +92,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
             faction = ship.faction;
             population += 500;
         }
+        game.gameState.updatePopulationCount();
     }
 
     public void boardHumans(Ship ship, int humans){
@@ -101,6 +102,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
             population -= humans;
             ((PlayerShip) ship).HUMANS += humans;
         }
+        game.gameState.updatePopulationCount();
     }
 
     public int creditsByTick(){

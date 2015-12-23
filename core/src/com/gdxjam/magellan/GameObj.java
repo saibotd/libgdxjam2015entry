@@ -6,7 +6,7 @@ package com.gdxjam.magellan;
 public class GameObj {
 
     public Sector sector;
-    enum Factions{NEUTRAL, PLAYER, ENEMY, PIRATE};
+    public enum Factions{NEUTRAL, PLAYER, ENEMY, PIRATE};
     public Factions faction = Factions.NEUTRAL;
     public MagellanGame game;
 
