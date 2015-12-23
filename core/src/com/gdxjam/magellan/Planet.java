@@ -1,5 +1,6 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -73,6 +74,14 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
 
     }
 
+    public void tick(){
+        if(population <= 1) population = 0;
+        else{
+            population += MathUtils.clamp(Math.round(population/MathUtils.random(200,500)), 1, population);
+            Gdx.app.log(this.toString(), population +"");
+        }
+    }
+
     public void populate(Ship ship, int humans){
         if(ship instanceof PlayerShip){
             faction = ship.faction;
@@ -86,20 +95,34 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
         }
     }
 
+    public void boardHumans(Ship ship, int humans){
+        if(ship instanceof PlayerShip){
+            faction = ship.faction;
+            humans = MathUtils.clamp(humans, 0, population);
+            population -= humans;
+            ((PlayerShip) ship).HUMANS += humans;
+        }
+    }
+
     @Override
     public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
         if(faction == Factions.NEUTRAL || faction == with.faction) {
             interactions.put("populate", new Interaction() {
                 @Override
-                public void interact(double arg1) {
-                    populate((Ship) with, (int) arg1);
+                public void interact() {
+                    // TODO: Ask for how many
+                    populate((Ship) with, 1000);
                 }
-                @Override
-                public void interact(String arg1) {}
             });
         }
         if(faction == with.faction && population > 0){
-
+            interactions.put("board humans", new Interaction() {
+                @Override
+                public void interact() {
+                    // TODO: Ask for how many
+                    boardHumans((Ship) with, 100);
+                }
+            });
         }
         return interactions;
     }
