@@ -17,12 +17,10 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, IDestroyable, IInteractable {
     private Sprite sprite;
     private Sprite mapSprite;
-    private ObjectMap<String, Interaction> interactions;
     public int population = 0;
 
     public Planet(Sector sector) {
         super(sector);
-        interactions = new ObjectMap();
     }
 
     @Override
@@ -78,8 +76,11 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
         if(population <= 1) population = 0;
         else{
             population += MathUtils.clamp(Math.round(population/MathUtils.random(200,500)), 1, population);
-            Gdx.app.log(this.toString(), population +"");
         }
+    }
+
+    public void claim(Ship ship){
+        this.faction = ship.faction;
     }
 
     public void populate(Ship ship, int humans){
@@ -104,9 +105,22 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
         }
     }
 
+    public int creditsByTick(){
+        return Math.round(population/100);
+    }
+
     @Override
     public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
-        if(faction == Factions.NEUTRAL || faction == with.faction) {
+        ObjectMap<String, Interaction> interactions = new ObjectMap();
+        if (faction == Factions.NEUTRAL) {
+            interactions.put("claim", new Interaction() {
+                @Override
+                public void interact() {
+                    claim((Ship) with);
+                }
+            });
+        }
+        if (faction == with.faction) {
             interactions.put("populate", new Interaction() {
                 @Override
                 public void interact() {
@@ -115,7 +129,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
                 }
             });
         }
-        if(faction == with.faction && population > 0){
+        if (faction == with.faction && population > 0) {
             interactions.put("board humans", new Interaction() {
                 @Override
                 public void interact() {
@@ -125,5 +139,13 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
             });
         }
         return interactions;
+    }
+
+    @Override
+    public String getInfo() {
+        String s = "Faction: " + faction.toString();
+        s += "\nPopulation: " + population;
+        s += "\nCredits production: " + creditsByTick();
+        return s;
     }
 }

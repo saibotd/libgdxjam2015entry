@@ -19,6 +19,7 @@ public class PlayerShip extends Ship {
 
     public PlayerShip(Sector sector) {
         super(sector);
+        faction = Factions.PLAYER;
         sector.discovered = true;
     }
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public interface IInteractable {
     ObjectMap<String, Interaction> getInteractions(final GameObj with);
+    String getInfo();
     interface Interaction {
         void interact();
     }

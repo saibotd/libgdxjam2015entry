@@ -2,9 +2,7 @@ package com.gdxjam.magellan.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdxjam.magellan.GameObj;
 import com.gdxjam.magellan.IDrawableWindow;
@@ -20,12 +18,16 @@ public class WindowScreen extends BaseScreen {
     public WindowScreen(MagellanGame game) {
         super(game);
         interactionsMenu = new HorizontalGroup();
-        interactionsMenu.setPosition(400,40);
+        interactionsMenu.setPosition(400,400);
         stage.addActor(interactionsMenu);
     }
 
     public void show(){
         super.show();
+        setupInterfaceMenus();
+    }
+
+    private void setupInterfaceMenus(){
         interactionsMenu.clear();
         for(GameObj gameObj : game.universe.playerShip.sector.gameObjs){
             if(gameObj instanceof IDrawableWindow){
@@ -39,16 +41,17 @@ public class WindowScreen extends BaseScreen {
                     button.addListener(new ChangeListener() {
                         @Override
                         public void changed(ChangeEvent event, Actor actor) {
-                            Gdx.app.log("fsdfs", "fdsf");
                             interactableGameObj.getInteractions(game.universe.playerShip).get(key).interact();
+                            setupInterfaceMenus();
                         }
                     });
                     menu.addActor(button);
                 }
+                Label info = new Label(interactableGameObj.getInfo(), skin);
+                menu.addActor(info);
                 interactionsMenu.addActor(menu);
             }
         }
-        stage.act();
     }
 
     public void render(float delta){
