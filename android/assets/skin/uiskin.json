@@ -1,5 +1,11 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: morningtype_24.fnt }, headline-font: { file: heavytas_36.fnt}, button-font: { file: heavytas_22.fnt} },
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	default-font: { file: morningtype_24.fnt },
+	headline-font: { file: heavytas_36.fnt},
+	button-font: { file: heavytas_22.fnt},
+	datalabel-font: { file: heavytas_12.fnt},
+	datavalue-font: { file: heavytas_22.fnt}
+},
 com.badlogic.gdx.graphics.Color: {
 	white: { a: 1, r: 1, g: 1, b: 1 },
 	black: { a: 1, r: 0, g: 0, b: 0 },
@@ -38,7 +44,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white }
+	default: { font: datalabel-font, fontColor: white }
+	value: { font: datavalue-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }

@@ -14,6 +14,7 @@ public class MagellanGame extends Game{
     public GlobalUi ui;
     private Screen mapScreen;
     private Screen windowScreen;
+    public GameState gameState;
     public static boolean DEBUG = false;
 
     public MagellanGame(){
@@ -21,11 +22,13 @@ public class MagellanGame extends Game{
 	}
 
 	public void create() {
+        gameState = new GameState();
         assets = new AssetManager();
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);
         assets.load("circle.png", Texture.class);
         assets.load("bg.png", Texture.class);
+        assets.load("topbarBg.png", Texture.class);
         assets.load("skin/uiskin.json", Skin.class);
         assets.finishLoading();
         ui = new GlobalUi(this);

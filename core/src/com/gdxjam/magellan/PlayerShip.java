@@ -10,12 +10,7 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class PlayerShip extends Ship {
 
-    public int COINS = 0;
     public int HUMANS = 10000;
-    public int DRONES = 0;
-    public int RESSOURCE1 = 0;
-    public int RESSOURCE2 = 0;
-    public int RESSOURCE3 = 0;
 
     public PlayerShip(Sector sector) {
         super(sector);
