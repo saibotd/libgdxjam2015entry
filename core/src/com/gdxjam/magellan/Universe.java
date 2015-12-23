@@ -65,6 +65,19 @@ public class Universe {
         return result;
     }
 
+    public Array<GameObj> getGameObjs(Class objType) {
+        Array<GameObj> result = new Array();
+        for(Sector sector : sectors){
+            for (GameObj gameObj: sector.gameObjs) {
+                if (objType.isAssignableFrom(gameObj.getClass())) {
+                    result.add(gameObj);
+                }
+            }
+        }
+        return result;
+    }
+
+
     public void tick() {
         for(int i = 0; i < sectors.size; i++){
             for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
