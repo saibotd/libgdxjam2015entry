@@ -84,7 +84,7 @@ public class MapScreen extends BaseScreen {
         mapBatch.begin();
 
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
-            if(!sector.discovered && !MagellanGame.DEBUG) continue;
+            if(!sector.visited && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector)
@@ -104,13 +104,19 @@ public class MapScreen extends BaseScreen {
         }
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
-            dot.setColor(Color.CYAN);
+            if (sector.visited) {
+                dot.setColor(Color.CYAN);
+            } else {
+                dot.setColor(Color.LIGHT_GRAY);
+            }
             dot.setSize(20,20);
             dot.setPosition(sector.position.x - 10, sector.position.y - 10);
             dot.draw(mapBatch);
-            for(GameObj gameObj:sector.gameObjs){
-                if(gameObj instanceof IDrawableMap) {
-                    ((IDrawableMap) gameObj).renderOnMap(mapBatch, delta);
+            if (sector.visited) {
+                for (GameObj gameObj : sector.gameObjs) {
+                    if (gameObj instanceof IDrawableMap) {
+                        ((IDrawableMap) gameObj).renderOnMap(mapBatch, delta);
+                    }
                 }
             }
         }

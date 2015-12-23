@@ -15,13 +15,21 @@ public class PlayerShip extends Ship {
     public PlayerShip(Sector sector, MagellanGame game) {
         super(sector, game);
         faction = Factions.PLAYER;
-        sector.discovered = true;
+        setSectorsDiscovered();
     }
 
     public void moveTo(Sector sector) {
         super.moveTo(sector);
-        sector.discovered = true;
+        setSectorsDiscovered();
         game.gameState.progressYear();
+    }
+
+    private void setSectorsDiscovered() {
+        sector.visited = true;
+        sector.discovered = true;
+        for(Sector _sector : sector.connectedSectors){
+            _sector.discovered = true;
+        }
     }
 
     @Override
