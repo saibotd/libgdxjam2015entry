@@ -78,7 +78,7 @@ public class MapScreen extends BaseScreen {
         );
 
         if (doMousePan) {
-            camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom, dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom, 1);
+            camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom * viewport.getWorldWidth() / viewport.getScreenWidth(), dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom * viewport.getWorldHeight() / viewport.getScreenHeight(), 1);
         }
 
         mapBatch.begin();
