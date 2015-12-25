@@ -12,7 +12,8 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     public float shield = .1f;
     public int health = 100;
     public int attack;
-    public Sprite mapSprite;
+    public Sprite spriteDot;
+    public Sprite spriteShip;
 
     public Ship(Sector sector, MagellanGame game) {
         super(sector, game);
@@ -25,7 +26,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public void render(SpriteBatch batch, float delta) {
-
+        super.render(delta);
     }
 
     @Override
@@ -57,13 +58,13 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        mapSprite.setSize(10,10);
+        spriteDot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        spriteDot.setSize(10,10);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
-        mapSprite.setPosition(sector.position.x - mapSprite.getWidth()/2, sector.position.y - mapSprite.getHeight()/2);
-        mapSprite.draw(batch);
+        spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
+        spriteDot.draw(batch);
     }
 }

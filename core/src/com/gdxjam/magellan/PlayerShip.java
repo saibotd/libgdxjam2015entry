@@ -1,9 +1,11 @@
 package com.gdxjam.magellan;
 
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -22,6 +24,15 @@ public class PlayerShip extends Ship {
         super.moveTo(sector);
         setSectorsDiscovered();
         game.gameState.progressYear();
+
+
+        Timeline.createSequence()
+                .push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.5f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
+                .push(Tween.to(this.spriteShip, SpriteAccessor.POSITION_XY, 0.7f).target(sector.position.x + 20, sector.position.y - 30))
+                .push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.5f).target(0))
+        .start(tweenManager);
+
+
     }
 
     private void setSectorsDiscovered() {
@@ -34,9 +45,23 @@ public class PlayerShip extends Ship {
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
-        mapSprite.setSize(24,24);
-        mapSprite.setColor(Color.YELLOW);
+        spriteDot = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
+        spriteDot.setSize(24,24);
+        spriteDot.setColor(Color.YELLOW);
+
+        spriteShip = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
+        spriteShip.setSize(20, 40);
+        spriteShip.setOriginCenter();
+        spriteShip.setPosition(sector.position.x + 20, sector.position.y - 30);
+    }
+
+    @Override
+    public void renderOnMap(SpriteBatch batch, float delta) {
+        super.render(delta);
+        spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
+        spriteDot.draw(batch);
+
+        spriteShip.draw(batch);
     }
 
 }

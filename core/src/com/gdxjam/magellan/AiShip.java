@@ -24,6 +24,6 @@ public class AiShip extends Ship {
     @Override
     public void prepareRenderingOnMap() {
         super.prepareRenderingOnMap();
-        mapSprite.setColor(Color.RED);
+        spriteDot.setColor(Color.RED);
     }
 }
