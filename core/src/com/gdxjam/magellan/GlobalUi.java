@@ -34,6 +34,7 @@ public class GlobalUi {
     private Label valueCredits;
     private Label valuePopulation;
     private Label valueDrones;
+    private Label valueHealth;
 
     private Sprite topBarBg;
 
@@ -145,6 +146,15 @@ public class GlobalUi {
         groupDrones.addActor(labelDrones);
         groupDrones.addActor(valueDrones);
 
+        HorizontalGroup groupHealth = new HorizontalGroup();
+        groupHealth.bottom();
+        groupHealth.space(5);
+        groupStats.addActor(groupHealth);
+        Label labelHealth = new Label("Health:", skin);
+        valueHealth = new Label("0", skin, "value");
+        groupDrones.addActor(labelHealth);
+        groupDrones.addActor(valueHealth);
+
     }
 
     public void updateStats() {
@@ -155,6 +165,7 @@ public class GlobalUi {
         valueCredits.setText(game.gameState.CREDITS + "");
         valuePopulation.setText(game.gameState.POPULATION + "");
         valueDrones.setText(game.gameState.DRONES + "");
+        valueHealth.setText(game.universe.playerShip.health + "");
     }
 
 
