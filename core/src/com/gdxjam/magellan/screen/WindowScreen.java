@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.IDrawableWindow;
-import com.gdxjam.magellan.IInteractable;
-import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.*;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -33,9 +30,11 @@ public class WindowScreen extends BaseScreen {
             if(gameObj instanceof IDrawableWindow){
                 ((IDrawableWindow) gameObj).prepareRendering();
             }
+            VerticalGroup menu = new VerticalGroup();
             if(gameObj instanceof IInteractable){
                 final IInteractable interactableGameObj = (IInteractable) gameObj;
-                VerticalGroup menu = new VerticalGroup();
+                Label info = new Label(interactableGameObj.getInfo(), skin);
+                menu.addActor(info);
                 for(final String key : interactableGameObj.getInteractions(game.universe.playerShip).keys()){
                     TextButton button = new TextButton(key, skin);
                     button.addListener(new ChangeListener() {
@@ -47,10 +46,20 @@ public class WindowScreen extends BaseScreen {
                     });
                     menu.addActor(button);
                 }
-                Label info = new Label(interactableGameObj.getInfo(), skin);
-                menu.addActor(info);
-                interactionsMenu.addActor(menu);
             }
+            if(gameObj instanceof IDestroyable && gameObj != game.universe.playerShip){
+                final IDestroyable destroyableGameObj = (IDestroyable) gameObj;
+                TextButton button = new TextButton("attack", skin);
+                button.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        ((IArmed) game.universe.playerShip).shootAt(destroyableGameObj);
+                        setupInterfaceMenus();
+                    }
+                });
+                menu.addActor(button);
+            }
+            interactionsMenu.addActor(menu);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.gdxjam.magellan;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Plane;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -13,11 +14,17 @@ public class AiShipSettler extends AiShip {
     }
 
     private void decideState(){
-        for (GameObj gameObj : sector.gameObjs){
+        for (int i = 0; i < sector.gameObjs.size; i++){
+            GameObj gameObj = sector.gameObjs.get(i);
             if(gameObj instanceof IDestroyable && gameObj.faction != faction){
                 if(Math.random() < .5){
                     target = (IDestroyable) gameObj;
                 }
+            }
+            if(gameObj instanceof Planet && gameObj.faction == Factions.NEUTRAL){
+                Planet planet = (Planet) gameObj;
+                planet.claim(this);
+                planet.populate(this, 500);
             }
         }
         if(target != null && target.isAlive()){
