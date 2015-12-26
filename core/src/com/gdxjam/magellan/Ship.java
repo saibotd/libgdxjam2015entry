@@ -43,7 +43,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public boolean isAlive() {
-        return false;
+        return health <= 0;
     }
 
     @Override
