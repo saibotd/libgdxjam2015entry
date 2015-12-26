@@ -25,7 +25,6 @@ public class PlayerShip extends Ship {
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         setSectorsDiscovered();
-        game.gameState.progressYear();
 
 
         Timeline.createSequence()

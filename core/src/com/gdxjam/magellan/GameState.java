@@ -23,9 +23,6 @@ public class GameState {
     public void progressYear() {
         YEAR++;
 
-        getPlanetIncome();
-        updatePopulationCount();
-
     }
 
     public void getPlanetIncome() {

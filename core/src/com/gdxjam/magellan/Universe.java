@@ -79,11 +79,18 @@ public class Universe {
 
 
     public void tick() {
+
+        game.gameState.progressYear();
+
         for(int i = 0; i < sectors.size; i++){
             for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
                 sectors.get(i).gameObjs.get(j).tick();
             }
         }
+
+        game.gameState.updatePopulationCount();
+        game.gameState.getPlanetIncome();
+
     }
 
     public void addRandomSector(){
