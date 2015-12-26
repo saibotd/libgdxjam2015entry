@@ -54,6 +54,7 @@ public class PlayerShip extends Ship {
         spriteShip.setSize(20, 40);
         spriteShip.setOriginCenter();
         spriteShip.setPosition(sector.position.x + 20, sector.position.y - 30);
+        spriteShip.setColor(MagellanColors.YELLOW);
     }
 
     @Override

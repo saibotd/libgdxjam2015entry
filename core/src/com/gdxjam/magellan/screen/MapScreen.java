@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
@@ -86,16 +85,23 @@ public class MapScreen extends BaseScreen {
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.visited && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
+
                 tmp1 = sector.position.cpy().sub(_sector.position);
-                if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector)
-                    pixel.setColor(Color.YELLOW);
-                else
-                    pixel.setColor(Color.CYAN);
-                pixel.setSize(tmp1.len()+1f, 2);
-                pixel.setOrigin(0,1f);
+                if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
+                    pixel.setColor(MagellanColors.YELLOW);
+                    pixel.setSize(tmp1.len()+1f, 2);
+                    pixel.setOrigin(0,1f);
+                } else {
+                    pixel.setColor(Color.WHITE);
+                    pixel.setSize(tmp1.len()+1f, 0.6f);
+                    pixel.setOrigin(0,0.3f);
+                }
+
+
                 pixel.setPosition(_sector.position.x-1f, _sector.position.y-1f);
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(mapBatch);
+
                 dot.setColor(Color.CYAN);
                 dot.setSize(20,20);
                 dot.setPosition(_sector.position.x - 10, _sector.position.y - 10);

@@ -1,19 +1,14 @@
 package com.gdxjam.magellan;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -59,7 +54,6 @@ public class GlobalUi {
 
 
         HorizontalGroup topBar = new HorizontalGroup();
-
         topBar.align(Align.right);
         stage.addActor(topBar);
 
@@ -79,81 +73,24 @@ public class GlobalUi {
         stage.addActor(groupStats);
 
 
-
-        HorizontalGroup groupResource1 = new HorizontalGroup();
-        groupResource1.bottom();
-        groupResource1.space(5);
-        groupResources.addActor(groupResource1);
-        Label labelResource1 = new Label(Statics.resource1 + ":", skin);
         valueResource1 = new Label("0", skin, "value");
-        groupResource1.addActor(labelResource1);
-        groupResource1.addActor(valueResource1);
-
-        HorizontalGroup groupResource2 = new HorizontalGroup();
-        groupResource2.bottom();
-        groupResource2.space(5);
-        groupResources.addActor(groupResource2);
-        Label labelResource2 = new Label(Statics.resource2 + ":", skin);
         valueResource2 = new Label("0", skin, "value");
-        groupResource2.addActor(labelResource2);
-        groupResource2.addActor(valueResource2);
-
-        HorizontalGroup groupResource3 = new HorizontalGroup();
-        groupResource3.bottom();
-        groupResource3.space(5);
-        groupResources.addActor(groupResource3);
-        Label labelResource3 = new Label(Statics.resource3 + ":", skin);
         valueResource3 = new Label("0", skin, "value");
-        groupResource3.addActor(labelResource3);
-        groupResource3.addActor(valueResource3);
+        groupResources.addActor(resourceLabel(1, valueResource1));
+        groupResources.addActor(resourceLabel(2, valueResource2));
+        groupResources.addActor(resourceLabel(3, valueResource3));
 
-
-
-
-        HorizontalGroup groupYear = new HorizontalGroup();
-        groupYear.bottom();
-        groupYear.space(5);
-        groupStats.addActor(groupYear);
-        Label labelYear = new Label("Year:", skin);
         valueYear = new Label("0", skin, "value");
-        groupYear.addActor(labelYear);
-        groupYear.addActor(valueYear);
-
-        HorizontalGroup groupCredits = new HorizontalGroup();
-        groupCredits.bottom();
-        groupCredits.space(5);
-        groupStats.addActor(groupCredits);
-        Label labelCredits = new Label("Credits:", skin);
         valueCredits = new Label("0", skin, "value");
-        groupCredits.addActor(labelCredits);
-        groupCredits.addActor(valueCredits);
-
-        HorizontalGroup groupPopulation = new HorizontalGroup();
-        groupPopulation.bottom();
-        groupPopulation.space(5);
-        groupStats.addActor(groupPopulation);
-        Label labelPopulation = new Label("Population:", skin);
         valuePopulation = new Label("0", skin, "value");
-        groupPopulation.addActor(labelPopulation);
-        groupPopulation.addActor(valuePopulation);
-
-        HorizontalGroup groupDrones = new HorizontalGroup();
-        groupDrones.bottom();
-        groupDrones.space(5);
-        groupStats.addActor(groupDrones);
-        Label labelDrones = new Label("Drones:", skin);
         valueDrones = new Label("0", skin, "value");
-        groupDrones.addActor(labelDrones);
-        groupDrones.addActor(valueDrones);
-
-        HorizontalGroup groupHealth = new HorizontalGroup();
-        groupHealth.bottom();
-        groupHealth.space(5);
-        groupStats.addActor(groupHealth);
-        Label labelHealth = new Label("Health:", skin);
         valueHealth = new Label("0", skin, "value");
-        groupDrones.addActor(labelHealth);
-        groupDrones.addActor(valueHealth);
+        groupStats.addActor(simpleLabel("Year", valueYear));
+        groupStats.addActor(simpleLabel("Credits", valueCredits));
+        groupStats.addActor(simpleLabel("Population", valuePopulation));
+        groupStats.addActor(simpleLabel("Drones", valueDrones));
+        groupStats.addActor(simpleLabel("Health", valueHealth));
+
 
     }
 
@@ -198,6 +135,69 @@ public class GlobalUi {
 
     public void dispose() {
         batch.dispose();
+    }
+
+
+    public HorizontalGroup resourceLabel(int resourceNum, Label valueField) {
+
+        Color color;
+        String label;
+        switch (resourceNum) {
+            case 1:
+                color = MagellanColors.RESOURCE_1;
+                label = Statics.resource1;
+                break;
+            case 2:
+                color = MagellanColors.RESOURCE_2;
+                label = Statics.resource2;
+                break;
+            case 3:
+                color = MagellanColors.RESOURCE_3;
+                label = Statics.resource3;
+                break;
+            default:
+                color = Color.WHITE;
+                label = "";
+                valueField = valueResource1;
+        }
+
+        HorizontalGroup groupResource = new HorizontalGroup();
+        groupResource.bottom();
+        groupResource.space(5);
+        groupResource.setHeight(50);
+
+        Image dot = new Image(MagellanGame.assets.get("dot.png", Texture.class));
+        dot.setColor(color);
+
+        Container<Image> dotContainer = new Container<Image>();
+        dotContainer.size(13,13);
+        dotContainer.padBottom(3);
+        dotContainer.setActor(dot);
+
+        Label labelResource = new Label(label + ":", skin);
+
+        groupResource.addActor(dotContainer);
+        groupResource.addActor(labelResource);
+        groupResource.addActor(valueField);
+
+        return groupResource;
+    }
+
+
+    public HorizontalGroup simpleLabel(String label, Label valueField) {
+
+
+        HorizontalGroup groupResource = new HorizontalGroup();
+        groupResource.bottom();
+        groupResource.space(5);
+        groupResource.setHeight(50);
+
+        Label labelResource = new Label(label + ":", skin);
+
+        groupResource.addActor(labelResource);
+        groupResource.addActor(valueField);
+
+        return groupResource;
     }
 
 }

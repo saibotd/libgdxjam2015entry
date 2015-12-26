@@ -28,13 +28,13 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
         mapSprite.setSize(30,30);
         switch (ressource){
             case 1:
-                mapSprite.setColor(Color.BLUE);
+                mapSprite.setColor(MagellanColors.RESOURCE_1);
                 break;
             case 2:
-                mapSprite.setColor(Color.PURPLE);
+                mapSprite.setColor(MagellanColors.RESOURCE_2);
                 break;
             case 3:
-                mapSprite.setColor(Color.OLIVE);
+                mapSprite.setColor(MagellanColors.RESOURCE_3);
                 break;
         }
     }
@@ -52,13 +52,13 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
         sprite.setSize(200,200);
         switch (ressource){
             case 1:
-                sprite.setColor(Color.BLUE);
+                sprite.setColor(MagellanColors.RESOURCE_1);
                 break;
             case 2:
-                sprite.setColor(Color.PURPLE);
+                sprite.setColor(MagellanColors.RESOURCE_2);
                 break;
             case 3:
-                sprite.setColor(Color.OLIVE);
+                sprite.setColor(MagellanColors.RESOURCE_3);
                 break;
         }
     }
