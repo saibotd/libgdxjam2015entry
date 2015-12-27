@@ -10,22 +10,22 @@ import com.badlogic.gdx.math.MathUtils;
  */
 public class MetroidField extends GameObj implements IDrawableMap, IDrawableWindow {
 
-    public int ressource; // 1 - 3
-    public int ressourcePerTick;
+    public int resource; // 1 - 3
+    public int resourcePerTick;
     private Sprite mapSprite;
     private Sprite sprite;
 
     public MetroidField(Sector sector) {
         super(sector);
-        ressource = MathUtils.random(1, 3);
-        ressourcePerTick = MathUtils.random(10, 100);
+        resource = MathUtils.random(1, 3);
+        resourcePerTick = MathUtils.random(10, 100);
     }
 
     @Override
     public void prepareRenderingOnMap() {
         mapSprite = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         mapSprite.setSize(30,30);
-        switch (ressource){
+        switch (resource){
             case 1:
                 mapSprite.setColor(MagellanColors.RESOURCE_1);
                 break;
@@ -49,7 +49,7 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
         sprite = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
         sprite.setPosition(300,300);
         sprite.setSize(200,200);
-        switch (ressource){
+        switch (resource){
             case 1:
                 sprite.setColor(MagellanColors.RESOURCE_1);
                 break;

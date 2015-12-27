@@ -95,9 +95,9 @@ public class GlobalUi {
     }
 
     public void updateStats() {
-        valueResource1.setText(game.gameState.RESSOURCE1 + "");
-        valueResource2.setText(game.gameState.RESSOURCE2 + "");
-        valueResource3.setText(game.gameState.RESSOURCE3 + "");
+        valueResource1.setText(game.gameState.RESOURCE1 + "");
+        valueResource2.setText(game.gameState.RESOURCE2 + "");
+        valueResource3.setText(game.gameState.RESOURCE3 + "");
         valueYear.setText(game.gameState.YEAR + "");
         valueCredits.setText(game.gameState.CREDITS + "");
         valuePopulation.setText(game.gameState.POPULATION + "");

@@ -11,7 +11,7 @@ import com.gdxjam.magellan.MetroidField;
  */
 public class DroneRoutineMining extends DroneRoutine{
 
-    private int ressourcesPerTick = 2;
+    private int resourcesPerTick = 2;
 
     public DroneRoutineMining(Drone drone) {
         super(drone);
@@ -26,15 +26,15 @@ public class DroneRoutineMining extends DroneRoutine{
             }
         }
         for(MetroidField metroidField:metroidFields){
-            switch (metroidField.ressource){
+            switch (metroidField.resource){
                 case 1:
-                    MagellanGame.gameState.RESSOURCE1 += MathUtils.clamp(metroidField.ressourcePerTick, 0, ressourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE1 += MathUtils.clamp(metroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
                     break;
                 case 2:
-                    MagellanGame.gameState.RESSOURCE2 += MathUtils.clamp(metroidField.ressourcePerTick, 0, ressourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE2 += MathUtils.clamp(metroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
                     break;
                 case 3:
-                    MagellanGame.gameState.RESSOURCE3 += MathUtils.clamp(metroidField.ressourcePerTick, 0, ressourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE3 += MathUtils.clamp(metroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
                     break;
 
             }

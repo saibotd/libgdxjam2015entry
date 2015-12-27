@@ -8,9 +8,9 @@ public class GameState {
     private MagellanGame game;
 
     public int DRONES = 0;
-    public int RESSOURCE1 = 0;
-    public int RESSOURCE2 = 0;
-    public int RESSOURCE3 = 0;
+    public int RESOURCE1 = 0;
+    public int RESOURCE2 = 0;
+    public int RESOURCE3 = 0;
     public int CREDITS = 0;
     public int CREDITS_PER_TICK = 0;
     public int YEAR = 3056;
