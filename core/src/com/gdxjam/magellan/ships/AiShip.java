@@ -2,7 +2,6 @@ package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
 import com.gdxjam.magellan.IDestroyable;
-import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 
 /**
@@ -15,8 +14,8 @@ public class AiShip extends Ship {
     enum States{IDLE, HOSTILE, FLEEING};
     public States state = States.IDLE;
 
-    public AiShip(Sector sector, MagellanGame game) {
-        super(sector, game);
+    public AiShip(Sector sector) {
+        super(sector);
         faction = Factions.ENEMY;
     }
 

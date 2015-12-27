@@ -29,12 +29,12 @@ public class Universe {
                 topRight = sector;
             }
         }
-        playerShip = new PlayerShip(bottomLeft, game);
+        playerShip = new PlayerShip(bottomLeft);
         for(int i = 0; i < 100; i++){
-            new AiShipFighter(topRight, game);
+            new AiShipFighter(topRight);
         }
         for(int i = 0; i < 20; i++){
-            new AiShipSettler(topRight, game);
+            new AiShipSettler(topRight);
         }
     }
 
@@ -83,7 +83,7 @@ public class Universe {
 
     public void tick() {
 
-        game.gameState.progressYear();
+        MagellanGame.gameState.progressYear();
 
         for(int i = 0; i < sectors.size; i++){
             for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
@@ -91,8 +91,8 @@ public class Universe {
             }
         }
 
-        game.gameState.updatePopulationCount();
-        game.gameState.getPlanetIncome();
+        MagellanGame.gameState.updatePopulationCount();
+        MagellanGame.gameState.getPlanetIncome();
 
     }
 
@@ -102,9 +102,9 @@ public class Universe {
         Sector newSector = new Sector(x,y);
         if(addSector(newSector)) {
             if (Math.random() < .3)
-                new MetroidField(newSector, game);
+                new MetroidField(newSector);
             if(Math.random() < .2)
-                new Planet(newSector, game);
+                new Planet(newSector);
         }
     }
 

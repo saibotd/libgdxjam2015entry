@@ -19,7 +19,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
     private Sprite mapSprite;
     public int population = 0;
 
-    public Planet(Sector sector, MagellanGame game) {
+    public Planet(Sector sector) {
         super(sector);
     }
 

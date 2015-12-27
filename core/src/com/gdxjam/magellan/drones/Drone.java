@@ -13,7 +13,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
 
     public Drone(Sector sector, MagellanGame game) {
-        super(sector, game);
+        super(sector);
     }
 
     @Override

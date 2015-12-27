@@ -19,8 +19,8 @@ public class PlayerShip extends Ship {
 
     public int HUMANS = 10000;
 
-    public PlayerShip(Sector sector, MagellanGame game) {
-        super(sector, game);
+    public PlayerShip(Sector sector) {
+        super(sector);
         faction = Factions.PLAYER;
         setSectorsDiscovered();
     }

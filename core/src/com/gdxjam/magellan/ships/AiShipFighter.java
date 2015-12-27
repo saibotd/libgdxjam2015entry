@@ -2,7 +2,6 @@ package com.gdxjam.magellan.ships;
 
 import com.gdxjam.magellan.GameObj;
 import com.gdxjam.magellan.IDestroyable;
-import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 
 /**
@@ -10,8 +9,8 @@ import com.gdxjam.magellan.Sector;
  */
 public class AiShipFighter extends AiShip {
 
-    public AiShipFighter(Sector sector, MagellanGame game) {
-        super(sector, game);
+    public AiShipFighter(Sector sector) {
+        super(sector);
         faction = Factions.ENEMY;
     }
 

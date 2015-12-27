@@ -8,8 +8,8 @@ import com.gdxjam.magellan.*;
  */
 public class AiShipSettler extends AiShip {
 
-    public AiShipSettler(Sector sector, MagellanGame game) {
-        super(sector, game);
+    public AiShipSettler(Sector sector) {
+        super(sector);
         faction = Factions.ENEMY;
     }
 
