@@ -1,13 +1,16 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.ships;
 
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gdxjam.magellan.MagellanColors;
+import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.Sector;
+import com.gdxjam.magellan.SpriteAccessor;
 
 /**
  * Created by lolcorner on 20.12.2015.

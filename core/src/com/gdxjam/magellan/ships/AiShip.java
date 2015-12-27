@@ -1,6 +1,9 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
+import com.gdxjam.magellan.IDestroyable;
+import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.Sector;
 
 /**
  * Created by lolcorner on 20.12.2015.

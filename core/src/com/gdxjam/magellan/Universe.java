@@ -3,6 +3,9 @@ package com.gdxjam.magellan;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.gdxjam.magellan.ships.AiShipFighter;
+import com.gdxjam.magellan.ships.AiShipSettler;
+import com.gdxjam.magellan.ships.PlayerShip;
 
 public class Universe {
     public PlayerShip playerShip;

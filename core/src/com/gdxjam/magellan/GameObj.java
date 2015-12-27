@@ -10,12 +10,10 @@ public class GameObj {
     public Sector sector;
     public enum Factions{NEUTRAL, PLAYER, ENEMY, PIRATE};
     public Factions faction = Factions.NEUTRAL;
-    public MagellanGame game;
     public TweenManager tweenManager;
 
-    public GameObj(Sector sector, MagellanGame game){
+    public GameObj(Sector sector){
         this.sector = sector;
-        this.game = game;
         sector.gameObjs.add(this);
         this.tweenManager = new TweenManager();
     }

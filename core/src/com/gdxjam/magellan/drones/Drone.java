@@ -1,7 +1,8 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.drones;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.gdxjam.magellan.*;
 
 /**
  * Created by saibotd on 26.12.15.

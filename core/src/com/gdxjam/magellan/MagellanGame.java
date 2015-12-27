@@ -16,7 +16,7 @@ public class MagellanGame extends Game{
     public GlobalUi ui;
     private Screen mapScreen;
     private Screen windowScreen;
-    public GameState gameState;
+    public static GameState gameState;
     public static boolean DEBUG = false;
 
     public MagellanGame(){

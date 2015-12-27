@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
-
+import com.gdxjam.magellan.ships.AiShipSettler;
+import com.gdxjam.magellan.ships.PlayerShip;
+import com.gdxjam.magellan.ships.Ship;
 
 
 /**
@@ -18,7 +20,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
     public int population = 0;
 
     public Planet(Sector sector, MagellanGame game) {
-        super(sector, game);
+        super(sector);
     }
 
     @Override
@@ -92,7 +94,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
             faction = ship.faction;
             population += 500;
         }
-        game.gameState.updatePopulationCount();
+        MagellanGame.gameState.updatePopulationCount();
     }
 
     public void boardHumans(Ship ship, int humans){
@@ -102,7 +104,7 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
             population -= humans;
             ((PlayerShip) ship).HUMANS += humans;
         }
-        game.gameState.updatePopulationCount();
+        MagellanGame.gameState.updatePopulationCount();
     }
 
     public int creditsByTick(){

@@ -1,8 +1,9 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gdxjam.magellan.*;
 
 /**
  * Created by lolcorner on 19.12.2015.

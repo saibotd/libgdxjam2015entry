@@ -1,29 +1,36 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
+import com.gdxjam.magellan.*;
 
 /**
  * Created by lolcorner on 20.12.2015.
  */
-public class AiShipFighter extends AiShip {
+public class AiShipSettler extends AiShip {
 
-    public AiShipFighter(Sector sector, MagellanGame game) {
+    public AiShipSettler(Sector sector, MagellanGame game) {
         super(sector, game);
         faction = Factions.ENEMY;
     }
 
     private void decideState(){
-        for (GameObj gameObj : sector.gameObjs){
+        for (int i = 0; i < sector.gameObjs.size; i++){
+            GameObj gameObj = sector.gameObjs.get(i);
             if(gameObj instanceof IDestroyable && gameObj.faction != faction){
                 if(Math.random() < .5){
                     target = (IDestroyable) gameObj;
                 }
             }
+            if(gameObj instanceof Planet && gameObj.faction == Factions.NEUTRAL){
+                Planet planet = (Planet) gameObj;
+                planet.claim(this);
+                planet.populate(this, 500);
+            }
         }
         if(target != null && target.isAlive()){
-            state = States.HOSTILE;
-            if(health < 20 && Math.random() < .5){
-                state = States.FLEEING;
+            state = States.FLEEING;
+            if(Math.random() < .2){
+                state = States.HOSTILE;
             }
             return;
         }
@@ -38,11 +45,18 @@ public class AiShipFighter extends AiShip {
                 if(Math.random() < .5) super.tick();
                 break;
             case HOSTILE:
-                shootAt(target);
+                target.receiveDamage(attack);
                 break;
             case FLEEING:
                 super.tick();
                 break;
         }
     }
+
+    @Override
+    public void prepareRenderingOnMap() {
+        super.prepareRenderingOnMap();
+        spriteDot.setColor(Color.ORANGE);
+    }
+
 }

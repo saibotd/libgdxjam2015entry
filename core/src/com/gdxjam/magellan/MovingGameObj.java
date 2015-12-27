@@ -8,7 +8,7 @@ public class MovingGameObj extends GameObj {
     public Sector lastSector;
 
     public MovingGameObj(Sector sector, MagellanGame game) {
-        super(sector, game);
+        super(sector);
     }
 
     public void moveTo(Sector sector) {

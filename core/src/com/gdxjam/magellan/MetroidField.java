@@ -1,6 +1,5 @@
 package com.gdxjam.magellan;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +16,7 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
     private Sprite sprite;
 
     public MetroidField(Sector sector, MagellanGame game) {
-        super(sector, game);
+        super(sector);
         ressource = MathUtils.random(1, 3);
         ressourcePerTick = MathUtils.random(10, 100);
     }
