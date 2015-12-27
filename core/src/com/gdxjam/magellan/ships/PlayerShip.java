@@ -7,10 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.SpriteAccessor;
+import com.gdxjam.magellan.drones.Drone;
+import com.gdxjam.magellan.drones.DroneRoutineScouting;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -18,18 +21,19 @@ import com.gdxjam.magellan.SpriteAccessor;
 public class PlayerShip extends Ship {
 
     public int HUMANS = 10000;
+    public Array<Drone> drones = new Array();
 
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
         setSectorsDiscovered();
+        Drone drone = new Drone(this, 3);
+        drone.addRoutine(new DroneRoutineScouting(drone));
     }
 
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         setSectorsDiscovered();
-
-
         Timeline.createSequence()
                 .push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
                 .push(Tween.to(this.spriteShip, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 20, sector.position.y - 30).ease(TweenEquations.easeInOutQuint))

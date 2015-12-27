@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.ships.PlayerShip;
+import com.gdxjam.magellan.ships.Ship;
 
 /**
  * Created by saibotd on 26.12.15.
@@ -12,13 +14,26 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     private int maxNumberOfRoutines;
     private int health = 25;
     public static int price = 1000;
-    private Array<DroneRoutine> routines;
+    private Array<DroneRoutine> routines = new Array();
+    private boolean active = false;
+    private Ship ship;
 
-    public Drone(Sector sector, int level) {
-        super(sector);
+    public Drone(Ship ship, int level) {
+        super(ship.sector);
+        this.ship = ship;
+        faction = ship.faction;
+        if(ship instanceof PlayerShip)
+            ((PlayerShip) ship).drones.add(this);
         // The level of a drone decides how many routines it can handle
         // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
+    }
+
+    public void release(){
+        sector = ship.sector;
+        ship = null;
+        active = true;
+        MagellanGame.gameState.updateNumberOfDrones();
     }
 
     public void addRoutine(DroneRoutine routine){
@@ -30,6 +45,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     public void tick(){
+        if(!active) return;
         for(DroneRoutine routine : routines){
             routine.tick();
         }
@@ -82,6 +98,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
+        if(!active) return null;
         for(DroneRoutine routine : routines){
             routine.getInteractions(with);
         }
@@ -95,6 +112,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void shootAt(IDestroyable target) {
+        if(!active) return;
         for(DroneRoutine routine : routines){
             routine.shootAt(target);
         }

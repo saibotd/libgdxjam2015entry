@@ -21,6 +21,7 @@ import com.gdxjam.magellan.MagellanGame;
 public class BaseScreen implements Screen, InputProcessor {
     private final TextButton btnWindow;
     private final TextButton btnMap;
+    private final TextButton btnReleaseDrone;
     public MagellanGame game;
     public SpriteBatch batch;
     public FitViewport viewport;
@@ -37,8 +38,10 @@ public class BaseScreen implements Screen, InputProcessor {
         menu.setPosition(10,20);
         btnWindow = new TextButton("SHOW SURROUNDINGS", skin);
         btnMap = new TextButton("STAR MAP", skin);
+        btnReleaseDrone = new TextButton("RELEASE DRONE", skin);
         menu.addActor(btnWindow);
         menu.addActor(btnMap);
+        menu.addActor(btnReleaseDrone);
         stage.addActor(menu);
 
         btnWindow.addListener(new ChangeListener() {
@@ -50,6 +53,11 @@ public class BaseScreen implements Screen, InputProcessor {
         btnMap.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.showMapScreen();
+            }
+        });
+        btnReleaseDrone.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                game.universe.playerShip.drones.get(0).release();
             }
         });
 

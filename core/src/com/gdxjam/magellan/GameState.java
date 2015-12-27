@@ -22,7 +22,12 @@ public class GameState {
 
     public void progressYear() {
         YEAR++;
+        updateNumberOfDrones();
 
+    }
+
+    public void updateNumberOfDrones(){
+        DRONES = game.universe.playerShip.drones.size;
     }
 
     public void getPlanetIncome() {
