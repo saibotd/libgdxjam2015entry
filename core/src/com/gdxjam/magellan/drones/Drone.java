@@ -17,7 +17,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     public Drone(Sector sector, int level) {
         super(sector);
         // The level of a drone decides how many routines it can handle
-        // If not all routines are set, the routines should be more powerful
+        // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
     }
 
@@ -25,7 +25,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         if(routines.size < maxNumberOfRoutines)
             routines.add(routine);
         for(DroneRoutine _routine : routines){
-            routine.setPowerLevel((float) maxNumberOfRoutines / routines.size);
+            _routine.setPowerLevel((float) maxNumberOfRoutines / routines.size);
         }
     }
 
