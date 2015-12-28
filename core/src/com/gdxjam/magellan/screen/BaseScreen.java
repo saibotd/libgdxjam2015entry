@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -26,6 +28,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public FitViewport viewport;
     public Skin skin;
     public Stage stage;
+    private static Music bgm;
 
     public BaseScreen(MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
@@ -53,6 +56,14 @@ public class BaseScreen implements Screen, InputProcessor {
             }
         });
 
+        bgm = MagellanGame.assets.get("bgm0.mp3", Music.class);
+
+    }
+
+    public void startBGM(){
+        bgm = MagellanGame.assets.get("bgm" + MathUtils.random(0,3) + ".mp3", Music.class);
+        bgm.setVolume(.2f);
+        bgm.play();
     }
 
     @Override
@@ -111,7 +122,8 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     private void update(float delta) {
-
+        if(!bgm.isPlaying())
+            startBGM();
     }
 
     @Override
