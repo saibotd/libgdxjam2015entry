@@ -1,14 +1,11 @@
 package com.gdxjam.magellan;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -22,6 +19,7 @@ public class GlobalUi {
     public Skin skin;
     public Stage stage;
     private Texture bgTexture;
+    private Sprite bgShape;
     private Label valueResource1;
     private Label valueResource2;
     private Label valueResource3;
@@ -42,6 +40,11 @@ public class GlobalUi {
 
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
         bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+        bgShape = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
+        bgShape.setSize(1280, 720);
+        bgShape.setColor(MagellanColors.MAP_BG);
+        bgShape.setAlpha(0.6f);
 
         createTopBar();
 
@@ -113,6 +116,9 @@ public class GlobalUi {
         batch.begin();
 
         batch.draw(bgTexture, 0, 0, 1280, 720, 0, 0, 2, 2);
+
+        bgShape.draw(batch);
+
 
         batch.end();
 

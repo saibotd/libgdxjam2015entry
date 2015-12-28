@@ -101,10 +101,13 @@ public class Universe {
         int y = (int) Math.round(Math.random() * size);
         Sector newSector = new Sector(x,y);
         if(addSector(newSector)) {
-            if (Math.random() < .3)
-                new MetroidField(newSector);
-            if(Math.random() < .2)
+            if(Math.random() < .2) {
                 new Planet(newSector);
+                newSector.hasPlanet = true;
+            }
+            if (Math.random() < .3) {
+                new MetroidField(newSector);
+            }
         }
     }
 

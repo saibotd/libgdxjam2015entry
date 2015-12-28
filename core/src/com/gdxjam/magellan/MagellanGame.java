@@ -32,6 +32,13 @@ public class MagellanGame extends Game{
         assets.load("dot.png", Texture.class);
         assets.load("circle.png", Texture.class);
         assets.load("map_playership.png", Texture.class);
+        assets.load("map_meteroids_emptysector.png", Texture.class);
+        assets.load("map_meteroids_planetsector.png", Texture.class);
+        assets.load("map_planet_1.png", Texture.class);
+        assets.load("map_planet_2.png", Texture.class);
+        assets.load("map_planet_claimed.png", Texture.class);
+        assets.load("map_sector.png", Texture.class);
+        assets.load("map_sector_notvisited.png", Texture.class);
         assets.load("drone_default.png", Texture.class);
         assets.load("bg.png", Texture.class);
         assets.load("topbarBg.png", Texture.class);

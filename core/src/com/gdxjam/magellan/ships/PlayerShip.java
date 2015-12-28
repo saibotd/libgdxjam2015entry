@@ -64,22 +64,22 @@ public class PlayerShip extends Ship {
 
     @Override
     public void prepareRenderingOnMap() {
-        spriteDot = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
-        spriteDot.setSize(24,24);
-        spriteDot.setColor(Color.YELLOW);
+        //spriteDot = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
+        //spriteDot.setSize(24,24);
+        //spriteDot.setColor(Color.YELLOW);
 
         spriteShip = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
-        spriteShip.setSize(20, 40);
+        spriteShip.setSize(10, 20);
         spriteShip.setOriginCenter();
-        spriteShip.setPosition(sector.position.x + 20, sector.position.y - 30);
-        spriteShip.setColor(MagellanColors.YELLOW);
+        spriteShip.setPosition(sector.position.x + 18, sector.position.y - 28);
+        spriteShip.setColor(MagellanColors.FACTION_PLAYER);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
         super.render(delta);
-        spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
-        spriteDot.draw(batch);
+        //spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
+        //spriteDot.draw(batch);
 
         spriteShip.draw(batch);
     }

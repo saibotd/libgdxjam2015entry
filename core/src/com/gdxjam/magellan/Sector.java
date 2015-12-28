@@ -12,6 +12,8 @@ public class Sector {
     public Array<GameObj> gameObjs = new Array();
     public boolean discovered = false;
     public boolean visited = false;
+    public boolean hasPlanet = false;
+
     public Sector(int x, int y){
         position = new Vector2(x,y);
         circleConnect = new Circle(position, 200);
@@ -36,6 +38,15 @@ public class Sector {
         for(Sector sector: sectors){
             addConnection(sector);
         }
+    }
+
+    public boolean hasGameObjType(Class cls) {
+        for (GameObj obj : gameObjs) {
+            if (cls.isAssignableFrom(obj.getClass())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

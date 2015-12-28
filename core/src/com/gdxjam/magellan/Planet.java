@@ -1,5 +1,6 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,15 +18,29 @@ import com.gdxjam.magellan.ships.Ship;
 public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInteractable {
     private Sprite sprite;
     private Sprite mapSprite;
+    private Sprite mapClaimedSprite;
     public int population = 0;
+    public Color color;
+    public int visualType;
 
     public Planet(Sector sector) {
         super(sector);
+        visualType = MathUtils.random(1,2);
+        switch (MathUtils.random(4)) {
+
+            case 0: color = MagellanColors.PLANET_1; break;
+            case 1: color = MagellanColors.PLANET_2; break;
+            case 2: color = MagellanColors.PLANET_3; break;
+            case 3: color = MagellanColors.PLANET_4; break;
+            case 4: color = MagellanColors.PLANET_5; break;
+            default: color = MagellanColors.PLANET_1; break;
+        }
     }
 
     @Override
     public void prepareRendering() {
-        sprite = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        sprite = new Sprite(MagellanGame.assets.get("map_planet_"+visualType+".png", Texture.class));
+        sprite.setColor(color);
     }
 
     @Override
@@ -42,15 +57,30 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        mapSprite.setSize(24,24);
-        mapSprite.setColor(Color.MAGENTA);
+        mapSprite = new Sprite(MagellanGame.assets.get("map_planet_"+visualType+".png", Texture.class));
+        mapSprite.setColor(color);
+        mapSprite.setSize(30,30);
+
+        mapClaimedSprite = new Sprite(MagellanGame.assets.get("map_planet_claimed.png", Texture.class));
+        mapClaimedSprite.setSize(15, 20);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
         mapSprite.setPosition(sector.position.x - mapSprite.getWidth()/2, sector.position.y - mapSprite.getHeight()/2);
         mapSprite.draw(batch);
+
+
+        if (faction == Factions.PLAYER) {
+            mapClaimedSprite.setColor(MagellanColors.FACTION_PLAYER);
+        }
+        if (faction == Factions.ENEMY) {
+            mapClaimedSprite.setColor(MagellanColors.FACTION_ENEMY);
+        }
+        if (faction == Factions.PLAYER || faction == Factions.ENEMY) {
+            mapClaimedSprite.setPosition(sector.position.x, sector.position.y + mapSprite.getHeight()/4);
+            mapClaimedSprite.draw(batch);
+        }
     }
 
     @Override

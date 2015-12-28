@@ -23,8 +23,14 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
-        mapSprite.setSize(30,30);
+        if (sector.hasPlanet) {
+            mapSprite = new Sprite(MagellanGame.assets.get("map_meteroids_planetsector.png", Texture.class));
+            mapSprite.setSize(45,45);
+        } else {
+            mapSprite = new Sprite(MagellanGame.assets.get("map_meteroids_emptysector.png", Texture.class));
+            mapSprite.setSize(23,23);
+        }
+
         switch (resource){
             case 1:
                 mapSprite.setColor(MagellanColors.RESOURCE_1);
@@ -46,7 +52,7 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
 
     @Override
     public void prepareRendering() {
-        sprite = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
+        sprite = new Sprite(MagellanGame.assets.get("map_meteroids_planetsector.png", Texture.class));
         sprite.setPosition(300,300);
         sprite.setSize(200,200);
         switch (resource){

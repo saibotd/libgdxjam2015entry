@@ -18,6 +18,8 @@ import com.gdxjam.magellan.*;
 public class MapScreen extends BaseScreen {
     private final Sprite pixel;
     private final Sprite dot;
+    private final Sprite sectorNormal;
+    private final Sprite sectorNotVisited;
     private final Viewport mapViewport;
     private float zoom = 1;
     private Vector3 touch = new Vector3();
@@ -41,6 +43,10 @@ public class MapScreen extends BaseScreen {
         mapBatch = new SpriteBatch();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        sectorNormal = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        sectorNotVisited = new Sprite(MagellanGame.assets.get("map_sector_notvisited.png", Texture.class));
+        sectorNormal.setSize(10,10);
+        sectorNotVisited.setSize(20,20);
         camera = new OrthographicCamera();
         mapViewport = new FitViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
@@ -82,43 +88,47 @@ public class MapScreen extends BaseScreen {
 
         mapBatch.begin();
 
+
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.visited && !MagellanGame.DEBUG) continue;
             for(Sector _sector : sector.connectedSectors){
 
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
-                    pixel.setColor(MagellanColors.YELLOW);
+                    pixel.setColor(MagellanColors.MAP_POSSIBLE_MOVEMENT);
                     pixel.setSize(tmp1.len()+1f, 2);
                     pixel.setOrigin(0,1f);
                 } else {
                     pixel.setColor(Color.WHITE);
-                    pixel.setSize(tmp1.len()+1f, 0.6f);
-                    pixel.setOrigin(0,0.3f);
+                    pixel.setSize(tmp1.len()+1f, 0.4f);
+                    pixel.setOrigin(0,0.2f);
                 }
 
-
-                pixel.setPosition(_sector.position.x-1f, _sector.position.y-1f);
+                pixel.setPosition(_sector.position.x - pixel.getOriginX(), _sector.position.y - pixel.getOriginY());
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(mapBatch);
 
-                dot.setColor(Color.CYAN);
+                // Do we need this?
+
+                /*dot.setColor(Color.CYAN);
                 dot.setSize(20,20);
                 dot.setPosition(_sector.position.x - 10, _sector.position.y - 10);
-                dot.draw(mapBatch);
+                dot.draw(mapBatch);*/
             }
         }
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
             if (sector.visited) {
-                dot.setColor(Color.CYAN);
+                sectorNormal.setPosition(sector.position.x - sectorNormal.getWidth()/2, sector.position.y - sectorNormal.getHeight()/2);
+                sectorNormal.draw(mapBatch);
             } else {
-                dot.setColor(Color.LIGHT_GRAY);
+                sectorNotVisited.setPosition(sector.position.x - sectorNotVisited.getWidth()/2, sector.position.y - sectorNotVisited.getHeight()/2);
+                sectorNotVisited.draw(mapBatch);
             }
-            dot.setSize(20,20);
-            dot.setPosition(sector.position.x - 10, sector.position.y - 10);
-            dot.draw(mapBatch);
-            if (sector.visited) {
+
+
+            // Fog of war disabled for debugging
+            if (sector.visited || MagellanGame.DEBUG) {
                 for (GameObj gameObj : sector.gameObjs) {
                     if (gameObj instanceof IDrawableMap) {
                         ((IDrawableMap) gameObj).renderOnMap(mapBatch, delta);
