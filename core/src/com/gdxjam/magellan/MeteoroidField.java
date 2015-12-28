@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.MathUtils;
 /**
  * Created by lolcorner on 22.12.2015.
  */
-public class MetroidField extends GameObj implements IDrawableMap, IDrawableWindow {
+public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow {
 
     public int resource; // 1 - 3
     public int resourcePerTick;
     private Sprite mapSprite;
     private Sprite sprite;
 
-    public MetroidField(Sector sector) {
+    public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
         resourcePerTick = MathUtils.random(10, 100);
@@ -24,10 +24,10 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
     @Override
     public void prepareRenderingOnMap() {
         if (sector.hasPlanet) {
-            mapSprite = new Sprite(MagellanGame.assets.get("map_meteroids_planetsector.png", Texture.class));
+            mapSprite = new Sprite(MagellanGame.assets.get("map_meteoroids_planetsector.png", Texture.class));
             mapSprite.setSize(45,45);
         } else {
-            mapSprite = new Sprite(MagellanGame.assets.get("map_meteroids_emptysector.png", Texture.class));
+            mapSprite = new Sprite(MagellanGame.assets.get("map_meteoroids_emptysector.png", Texture.class));
             mapSprite.setSize(23,23);
         }
 
@@ -52,7 +52,7 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
 
     @Override
     public void prepareRendering() {
-        sprite = new Sprite(MagellanGame.assets.get("map_meteroids_planetsector.png", Texture.class));
+        sprite = new Sprite(MagellanGame.assets.get("map_meteoroids_planetsector.png", Texture.class));
         sprite.setPosition(300,300);
         sprite.setSize(200,200);
         switch (resource){

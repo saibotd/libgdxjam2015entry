@@ -1,11 +1,5 @@
 package com.gdxjam.magellan.drones;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
-import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.MagellanGame;
-import com.gdxjam.magellan.MetroidField;
-
 /**
  * Created by saibotd on 27.12.15.
  */

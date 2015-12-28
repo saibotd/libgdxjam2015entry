@@ -39,10 +39,12 @@ public class PlayerShip extends Ship {
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         setSectorsDiscovered();
+        tweenManager.killAll();
         Timeline.createSequence()
                 .push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
                 .push(Tween.to(this.spriteShip, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 20, sector.position.y - 30).ease(TweenEquations.easeInOutQuint))
-                //.push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.5f).target(0).delay(-0.1f).ease(TweenEquations.easeInOutCubic))
+                .push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 1f).target(50).ease(TweenEquations.easeInOutCubic))
+                .push(Tween.to(this.spriteShip, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 12, sector.position.y - 22).ease(TweenEquations.easeInOutCubic)).delay(-0.2f)
         .start(tweenManager);
     }
 
@@ -71,7 +73,8 @@ public class PlayerShip extends Ship {
         spriteShip = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
         spriteShip.setSize(10, 20);
         spriteShip.setOriginCenter();
-        spriteShip.setPosition(sector.position.x + 18, sector.position.y - 28);
+        spriteShip.setPosition(sector.position.x + 12, sector.position.y - 22);
+        spriteShip.setRotation(50);
         spriteShip.setColor(MagellanColors.FACTION_PLAYER);
     }
 

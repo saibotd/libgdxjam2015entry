@@ -106,7 +106,7 @@ public class Universe {
                 newSector.hasPlanet = true;
             }
             if (Math.random() < .3) {
-                new MetroidField(newSector);
+                new MeteoroidField(newSector);
             }
         }
     }
