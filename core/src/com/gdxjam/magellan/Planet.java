@@ -14,7 +14,7 @@ import com.gdxjam.magellan.ships.Ship;
 /**
  * Created by lolcorner on 19.12.2015.
  */
-public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, IDestroyable, IInteractable {
+public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInteractable {
     private Sprite sprite;
     private Sprite mapSprite;
     public int population = 0;
@@ -33,6 +33,11 @@ public class Planet extends GameObj implements IDrawableMap, IDrawableWindow, ID
         sprite.setPosition(1000, 400);
         sprite.setSize(800,800);
         sprite.draw(batch);
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
     }
 
     @Override

@@ -8,4 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public interface IDrawableWindow {
     void prepareRendering();
     void render(SpriteBatch batch, float delta);
+    String getTitle();
+    String getInfo();
 }

@@ -1,5 +1,7 @@
 package com.gdxjam.magellan.drones;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -10,30 +12,19 @@ import com.gdxjam.magellan.ships.Ship;
 /**
  * Created by saibotd on 26.12.15.
  */
-public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, IDrawableWindow, IInteractable, IArmed {
+public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, IInteractable, IArmed {
     private int maxNumberOfRoutines;
     private int health = 25;
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
-    private boolean active = false;
-    private Ship ship;
+    private Sprite spriteDot;
 
-    public Drone(Ship ship, int level) {
-        super(ship.sector);
-        this.ship = ship;
-        faction = ship.faction;
-        if(ship instanceof PlayerShip)
-            ((PlayerShip) ship).drones.add(this);
+    public Drone(Sector sector, int level) {
+        super(sector);
         // The level of a drone decides how many routines it can handle
         // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
-    }
-
-    public void release(){
-        sector = ship.sector;
-        ship = null;
-        active = true;
-        MagellanGame.gameState.updateNumberOfDrones();
+        prepareRenderingOnMap();
     }
 
     public void addRoutine(DroneRoutine routine){
@@ -45,7 +36,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     public void tick(){
-        if(!active) return;
         for(DroneRoutine routine : routines){
             routine.tick();
         }
@@ -77,13 +67,20 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     @Override
-    public void prepareRenderingOnMap() {
+    public String getTitle() {
+        return "DRONE";
+    }
 
+    @Override
+    public void prepareRenderingOnMap() {
+        spriteDot = new Sprite(MagellanGame.assets.get("drone_default.png", Texture.class));
+        spriteDot.setSize(20,30);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
-
+        spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight());
+        spriteDot.draw(batch);
     }
 
     @Override
@@ -98,7 +95,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
-        if(!active) return null;
         for(DroneRoutine routine : routines){
             routine.getInteractions(with);
         }
@@ -112,7 +108,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void shootAt(IDestroyable target) {
-        if(!active) return;
         for(DroneRoutine routine : routines){
             routine.shootAt(target);
         }

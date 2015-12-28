@@ -66,4 +66,14 @@ public class MetroidField extends GameObj implements IDrawableMap, IDrawableWind
     public void render(SpriteBatch batch, float delta) {
         sprite.draw(batch);
     }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
 }

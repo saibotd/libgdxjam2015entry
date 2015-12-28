@@ -58,6 +58,16 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     }
 
     @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
+
+    @Override
     public void prepareRenderingOnMap() {
         spriteDot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
         spriteDot.setSize(10,10);

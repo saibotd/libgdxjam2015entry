@@ -11,6 +11,16 @@ public class AiShip extends Ship {
 
     public IDestroyable target;
 
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
+
     enum States{IDLE, HOSTILE, FLEEING};
     public States state = States.IDLE;
 

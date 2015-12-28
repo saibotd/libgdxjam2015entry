@@ -6,9 +6,8 @@ import com.badlogic.gdx.utils.ObjectMap;
 /**
  * Created by lolcorner on 20.12.2015.
  */
-public interface IInteractable {
+public interface IInteractable extends IDrawableWindow {
     ObjectMap<String, Interaction> getInteractions(final GameObj with);
-    String getInfo();
     interface Interaction {
         void interact();
     }

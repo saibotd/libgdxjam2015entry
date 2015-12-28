@@ -21,14 +21,19 @@ import com.gdxjam.magellan.drones.DroneRoutineScouting;
 public class PlayerShip extends Ship {
 
     public int HUMANS = 10000;
-    public Array<Drone> drones = new Array();
+    public Array<Integer> drones = new Array();
 
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
         setSectorsDiscovered();
-        Drone drone = new Drone(this, 3);
-        drone.addRoutine(new DroneRoutineScouting(drone));
+        drones.add(1);
+        drones.add(2);
+        drones.add(2);
+        drones.add(2);
+        drones.add(3);
+        drones.add(4);
+        drones.add(5);
     }
 
     public void moveTo(Sector sector) {
@@ -39,8 +44,14 @@ public class PlayerShip extends Ship {
                 .push(Tween.to(this.spriteShip, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 20, sector.position.y - 30).ease(TweenEquations.easeInOutQuint))
                 //.push(Tween.to(this.spriteShip, SpriteAccessor.ROTATION, 0.5f).target(0).delay(-0.1f).ease(TweenEquations.easeInOutCubic))
         .start(tweenManager);
+    }
 
-
+    public void releaseDrone(int level){
+        drones.removeValue(level, false);
+        Drone drone = new Drone(this.sector, level);
+        drone.faction = faction;
+        drone.addRoutine(new DroneRoutineScouting(drone));
+        MagellanGame.gameState.updateNumberOfDrones();
     }
 
     private void setSectorsDiscovered() {
