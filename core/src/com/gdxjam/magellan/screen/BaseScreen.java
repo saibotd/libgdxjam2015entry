@@ -142,8 +142,14 @@ public class BaseScreen implements Screen, InputProcessor {
         windowContainer.clear();
         Window window = new Window(title, skin);
         window.setWidth(500);
+        window.padTop(70);
+        window.padLeft(20);
         windowContainer.setActor(window);
         return window;
+    }
+
+    public void closeWindow() {
+        windowContainer.clear();
     }
 
 

@@ -84,6 +84,8 @@ public class WindowScreen extends BaseScreen {
     public void showInteractionWindow(final IInteractable interactable){
 
         Window window = getWindow(interactable.getTitle());
+        window.setMovable(false);
+        VerticalGroup windowContent = new VerticalGroup();
         Label info = new Label(interactable.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
         for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
@@ -97,8 +99,9 @@ public class WindowScreen extends BaseScreen {
             });
             menu.addActor(button);
         }
-        window.add(info);
-        window.add(menu);
+        windowContent.addActor(info);
+        windowContent.addActor(menu);
+        window.add(windowContent);
     }
 
 
