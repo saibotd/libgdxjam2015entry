@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -66,8 +67,16 @@ public class MapScreen extends BaseScreen {
         super.render(delta);
 
 
-
         mapViewport.apply();
+
+        int border = 50;
+        Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
+        Gdx.gl.glScissor(
+                border,
+                border,
+                Gdx.graphics.getWidth() - border * 2,
+                Gdx.graphics.getHeight() - border * 2
+        );
 
         camera.update();
         mapBatch.setProjectionMatrix(camera.combined);
@@ -87,8 +96,15 @@ public class MapScreen extends BaseScreen {
             camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom * viewport.getWorldWidth() / viewport.getScreenWidth(), dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom * viewport.getWorldHeight() / viewport.getScreenHeight(), 1);
         }
 
-        mapBatch.begin();
+        batch.begin();
+        pixel.setPosition(0,0);
+        pixel.setSize(1280,720);
+        pixel.setColor(0,0,0,.75f);
+        pixel.setRotation(0);
+        pixel.draw(batch);
+        batch.end();
 
+        mapBatch.begin();
 
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.visited && !MagellanGame.DEBUG) continue;
@@ -138,6 +154,8 @@ public class MapScreen extends BaseScreen {
             }
         }
         mapBatch.end();
+
+        Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         viewport.apply();
 

@@ -93,6 +93,7 @@ public class Universe {
 
         MagellanGame.gameState.updatePopulationCount();
         MagellanGame.gameState.getPlanetIncome();
+        MagellanGame.gameState.updateNumberOfDrones();
 
     }
 
