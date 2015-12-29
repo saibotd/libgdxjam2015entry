@@ -3,6 +3,9 @@ package com.gdxjam.magellan.ships;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.gdxjam.magellan.*;
 
 /**
@@ -18,16 +21,6 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     public Ship(Sector sector) {
         super(sector);
-    }
-
-    @Override
-    public void prepareRendering() {
-
-    }
-
-    @Override
-    public void render(SpriteBatch batch, float delta) {
-        super.render(delta);
     }
 
     @Override
@@ -65,6 +58,12 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     @Override
     public String getInfo() {
         return null;
+    }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("dot.png", Texture.class));
+        return image;
     }
 
     @Override

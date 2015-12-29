@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
@@ -16,7 +19,6 @@ import com.gdxjam.magellan.ships.Ship;
  * Created by lolcorner on 19.12.2015.
  */
 public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInteractable {
-    private Sprite sprite;
     private Sprite mapSprite;
     private Sprite mapClaimedSprite;
     public int population = 0;
@@ -38,21 +40,15 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     }
 
     @Override
-    public void prepareRendering() {
-        sprite = new Sprite(MagellanGame.assets.get("map_planet_"+visualType+".png", Texture.class));
-        sprite.setColor(color);
-    }
-
-    @Override
-    public void render(SpriteBatch batch, float delta) {
-        sprite.setPosition(1000, 400);
-        sprite.setSize(800,800);
-        sprite.draw(batch);
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("map_planet_"+visualType+".png", Texture.class));
+        image.setColor(color);
+        return image;
     }
 
     @Override
     public String getTitle() {
-        return null;
+        return "PLANET";
     }
 
     @Override

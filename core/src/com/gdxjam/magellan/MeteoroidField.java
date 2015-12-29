@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Created by lolcorner on 22.12.2015.
@@ -13,7 +15,6 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     public int resource; // 1 - 3
     public int resourcePerTick;
     private Sprite mapSprite;
-    private Sprite sprite;
 
     public MeteoroidField(Sector sector) {
         super(sector);
@@ -51,26 +52,21 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     }
 
     @Override
-    public void prepareRendering() {
-        sprite = new Sprite(MagellanGame.assets.get("map_meteoroids_planetsector.png", Texture.class));
-        sprite.setPosition(300,300);
-        sprite.setSize(200,200);
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("map_meteoroids_planetsector.png", Texture.class));
+        image.setSize(200,200);
         switch (resource){
             case 1:
-                sprite.setColor(MagellanColors.RESOURCE_1);
+                image.setColor(MagellanColors.RESOURCE_1);
                 break;
             case 2:
-                sprite.setColor(MagellanColors.RESOURCE_2);
+                image.setColor(MagellanColors.RESOURCE_2);
                 break;
             case 3:
-                sprite.setColor(MagellanColors.RESOURCE_3);
+                image.setColor(MagellanColors.RESOURCE_3);
                 break;
         }
-    }
-
-    @Override
-    public void render(SpriteBatch batch, float delta) {
-        sprite.draw(batch);
+        return image;
     }
 
     @Override
