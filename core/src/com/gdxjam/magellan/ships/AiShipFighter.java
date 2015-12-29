@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.ships;
 
+import com.gdxjam.magellan.Battle;
 import com.gdxjam.magellan.GameObj;
 import com.gdxjam.magellan.IDestroyable;
 import com.gdxjam.magellan.Sector;
@@ -16,7 +17,7 @@ public class AiShipFighter extends AiShip {
 
     private void decideState(){
         for (GameObj gameObj : sector.gameObjs){
-            if(gameObj instanceof IDestroyable && gameObj.faction != faction){
+            if(gameObj instanceof IDestroyable && gameObj.faction == Factions.PLAYER){
                 if(Math.random() < .5){
                     target = (IDestroyable) gameObj;
                 }
@@ -40,7 +41,7 @@ public class AiShipFighter extends AiShip {
                 if(Math.random() < .5) super.tick();
                 break;
             case HOSTILE:
-                shootAt(target);
+                new Battle(this, target);
                 break;
             case FLEEING:
                 super.tick();
