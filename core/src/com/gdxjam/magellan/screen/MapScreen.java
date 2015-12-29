@@ -45,9 +45,10 @@ public class MapScreen extends BaseScreen {
         mapBatch = new SpriteBatch();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        sectorNormal = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        sectorNormal = new Sprite(MagellanGame.assets.get("map_sector.png", Texture.class));
         sectorNotVisited = new Sprite(MagellanGame.assets.get("map_sector_notvisited.png", Texture.class));
         sectorNormal.setSize(10,10);
+        //sectorNormal.setColor(Color.BLACK);
         sectorNotVisited.setSize(20,20);
         camera = new OrthographicCamera();
         mapViewport = new FitViewport(1280, 720, camera);

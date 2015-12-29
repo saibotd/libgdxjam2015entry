@@ -30,8 +30,12 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     public void addRoutine(DroneRoutine routine){
-        if(routines.size < maxNumberOfRoutines)
-            routines.add(routine);
+        if(routines.size >= maxNumberOfRoutines)
+            return;
+        if (hasRoutine(routine.getClass()))
+            return;
+
+        routines.add(routine);
         for(DroneRoutine _routine : routines){
             _routine.setPowerLevel((float) maxNumberOfRoutines / routines.size);
         }
@@ -125,5 +129,14 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         for(DroneRoutine routine : routines){
             routine.shootAt(target);
         }
+    }
+
+    public boolean hasRoutine(Class routineClass) {
+        for (DroneRoutine routine : routines) {
+            if (routine.getClass() == routineClass) {
+                return true;
+            }
+        }
+        return false;
     }
 }
