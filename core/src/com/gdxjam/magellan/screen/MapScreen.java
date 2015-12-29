@@ -108,7 +108,7 @@ public class MapScreen extends BaseScreen {
         batch.begin();
         pixel.setPosition(0,0);
         pixel.setSize(1280,720);
-        pixel.setColor(Color.BLACK);
+        pixel.setColor(MagellanColors.MAP_BG);
         pixel.setAlpha(0.85f);
         pixel.setRotation(0);
         pixel.draw(batch);

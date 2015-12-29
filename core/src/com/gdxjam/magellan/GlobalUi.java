@@ -19,7 +19,6 @@ public class GlobalUi {
     public Skin skin;
     public Stage stage;
     private Texture bgTexture;
-    private Sprite bgShape;
     private Label valueResource1;
     private Label valueResource2;
     private Label valueResource3;
@@ -41,10 +40,6 @@ public class GlobalUi {
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
         bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 
-        bgShape = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
-        bgShape.setSize(1280, 720);
-        bgShape.setColor(MagellanColors.MAP_BG);
-        bgShape.setAlpha(0.6f);
 
         createTopBar();
 
@@ -117,7 +112,6 @@ public class GlobalUi {
 
         batch.draw(bgTexture, 0, 0, 1280, 720, 0, 0, 2, 2);
 
-        bgShape.draw(batch);
 
 
         batch.end();
