@@ -45,9 +45,10 @@ public class MapScreen extends BaseScreen {
         mapBatch = new SpriteBatch();
         pixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
         dot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        sectorNormal = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
+        sectorNormal = new Sprite(MagellanGame.assets.get("map_sector.png", Texture.class));
         sectorNotVisited = new Sprite(MagellanGame.assets.get("map_sector_notvisited.png", Texture.class));
         sectorNormal.setSize(10,10);
+        //sectorNormal.setColor(Color.BLACK);
         sectorNotVisited.setSize(20,20);
         camera = new OrthographicCamera();
         mapViewport = new FitViewport(1280, 720, camera);
@@ -66,16 +67,25 @@ public class MapScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
 
+        batch.begin();
+        pixel.setPosition(20,20);
+        pixel.setSize(1240,630);
+        pixel.setColor(MagellanColors.MAP_BG);
+        pixel.setAlpha(0.4f);
+        pixel.setRotation(0);
+        pixel.draw(batch);
+        batch.end();
 
         mapViewport.apply();
 
-        int border = 50;
+        int border = Math.round(Gdx.graphics.getWidth() * 0.04f);
+        int bordertop = border*2;
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
         Gdx.gl.glScissor(
                 border,
                 border,
                 Gdx.graphics.getWidth() - border * 2,
-                Gdx.graphics.getHeight() - border * 2
+                Gdx.graphics.getHeight() - (border + bordertop)
         );
 
         camera.update();
@@ -99,7 +109,8 @@ public class MapScreen extends BaseScreen {
         batch.begin();
         pixel.setPosition(0,0);
         pixel.setSize(1280,720);
-        pixel.setColor(0,0,0,.75f);
+        pixel.setColor(MagellanColors.MAP_BG);
+        pixel.setAlpha(0.85f);
         pixel.setRotation(0);
         pixel.draw(batch);
         batch.end();
@@ -113,10 +124,12 @@ public class MapScreen extends BaseScreen {
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
                     pixel.setColor(MagellanColors.MAP_POSSIBLE_MOVEMENT);
+                    pixel.setAlpha(1f);
                     pixel.setSize(tmp1.len()+1f, 2);
                     pixel.setOrigin(0,1f);
                 } else {
                     pixel.setColor(Color.WHITE);
+                    pixel.setAlpha(0.2f);
                     pixel.setSize(tmp1.len()+1f, 0.4f);
                     pixel.setOrigin(0,0.2f);
                 }

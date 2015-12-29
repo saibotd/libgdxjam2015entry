@@ -17,7 +17,6 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     public int health = 100;
     public int attack;
     public Sprite spriteDot;
-    public Sprite spriteShip;
 
     public Ship(Sector sector) {
         super(sector);

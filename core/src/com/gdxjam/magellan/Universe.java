@@ -109,6 +109,9 @@ public class Universe {
             if (Math.random() < .3) {
                 new MeteoroidField(newSector);
             }
+            if (Math.random() < .05) {
+                new Shop(newSector);
+            }
         }
     }
 
