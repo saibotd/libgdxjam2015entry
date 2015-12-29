@@ -3,6 +3,8 @@ package com.gdxjam.magellan;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
@@ -37,17 +39,6 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     }
 
     @Override
-    public void prepareRendering() {
-        windowSprite = new Sprite(MagellanGame.assets.get("map_shop.png", Texture.class));
-    }
-
-    @Override
-    public void render(SpriteBatch batch, float delta) {
-        super.render(delta);
-        windowSprite.draw(batch);
-    }
-
-    @Override
     public String getTitle() {
         return "Trading Post";
     }
@@ -55,5 +46,11 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     @Override
     public String getInfo() {
         return null;
+    }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("map_shop.png", Texture.class));
+        return image;
     }
 }
