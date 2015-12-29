@@ -1,5 +1,8 @@
 package com.gdxjam.magellan.drones;
 
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +20,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     private int health = 25;
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
-    private Sprite spriteDot;
 
     public Drone(Sector sector, int level) {
         super(sector);
@@ -33,6 +35,16 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         for(DroneRoutine _routine : routines){
             _routine.setPowerLevel((float) maxNumberOfRoutines / routines.size);
         }
+    }
+
+    @Override
+    public void moveTo(Sector sector) {
+        super.moveTo(sector);
+        tweenManager.killAll();
+        Timeline.createSequence()
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x - 20, sector.position.y - 20).ease(TweenEquations.easeInOutQuint))
+                .start(tweenManager);
     }
 
     public void tick(){
@@ -73,14 +85,16 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void prepareRenderingOnMap() {
-        spriteDot = new Sprite(MagellanGame.assets.get("drone_default.png", Texture.class));
-        spriteDot.setSize(20,30);
+        spriteVessel = new Sprite(MagellanGame.assets.get("drone_default.png", Texture.class));
+        spriteVessel.setSize(10,15);
+        spriteVessel.setOriginCenter();
+        spriteVessel.setPosition(sector.position.x - 20, sector.position.y - 20);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
-        spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight());
-        spriteDot.draw(batch);
+        super.render(delta);
+        spriteVessel.draw(batch);
     }
 
     @Override

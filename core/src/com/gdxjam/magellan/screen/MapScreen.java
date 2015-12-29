@@ -113,10 +113,12 @@ public class MapScreen extends BaseScreen {
                 tmp1 = sector.position.cpy().sub(_sector.position);
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
                     pixel.setColor(MagellanColors.MAP_POSSIBLE_MOVEMENT);
+                    pixel.setAlpha(1f);
                     pixel.setSize(tmp1.len()+1f, 2);
                     pixel.setOrigin(0,1f);
                 } else {
                     pixel.setColor(Color.WHITE);
+                    pixel.setAlpha(0.2f);
                     pixel.setSize(tmp1.len()+1f, 0.4f);
                     pixel.setOrigin(0,0.2f);
                 }
