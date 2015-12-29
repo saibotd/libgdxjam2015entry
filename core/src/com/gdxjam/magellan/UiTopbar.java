@@ -3,22 +3,22 @@ package com.gdxjam.magellan;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * Created by Felix on 22.12.2015.
  */
-public class GlobalUi {
+public class UiTopbar {
 
     public MagellanGame game;
-    public SpriteBatch batch;
     public FitViewport viewport;
     public Skin skin;
     public Stage stage;
-    private Texture bgTexture;
     private Label valueResource1;
     private Label valueResource2;
     private Label valueResource3;
@@ -30,15 +30,12 @@ public class GlobalUi {
 
     private Sprite topBarBg;
 
-    public GlobalUi(MagellanGame _game) {
-        skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
-        game = _game;
-        batch = new SpriteBatch();
-        viewport = new FitViewport(1280, 720);
-        stage = new Stage(viewport);
+    public UiTopbar(MagellanGame game, Stage stage) {
 
-        bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
-        bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        this.game = game;
+        this.stage = stage;
+        skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
+
 
 
         createTopBar();
@@ -93,48 +90,21 @@ public class GlobalUi {
     }
 
     public void updateStats() {
-        valueResource1.setText(game.gameState.RESOURCE1 + "");
-        valueResource2.setText(game.gameState.RESOURCE2 + "");
-        valueResource3.setText(game.gameState.RESOURCE3 + "");
-        valueYear.setText(game.gameState.YEAR + "");
-        valueCredits.setText(game.gameState.CREDITS + "");
-        valuePopulation.setText(game.gameState.POPULATION + "");
-        valueDrones.setText(game.gameState.DRONES + "");
+        valueResource1.setText(MagellanGame.gameState.RESOURCE1 + "");
+        valueResource2.setText(MagellanGame.gameState.RESOURCE2 + "");
+        valueResource3.setText(MagellanGame.gameState.RESOURCE3 + "");
+        valueYear.setText(MagellanGame.gameState.YEAR + "");
+        valueCredits.setText(MagellanGame.gameState.CREDITS + "");
+        valuePopulation.setText(MagellanGame.gameState.POPULATION + "");
+        valueDrones.setText(MagellanGame.gameState.DRONES + "");
         valueHealth.setText(game.universe.playerShip.health + "");
     }
 
 
 
-    public void renderBG(float delta) {
-
-        viewport.apply();
-        batch.begin();
-
-        batch.draw(bgTexture, 0, 0, 1280, 720, 0, 0, 2, 2);
-
-
-
-        batch.end();
-
-    }
-
-    public void renderOverlays(float delta) {
-
-        updateStats();
-
-        viewport.apply();
-        batch.begin();
-
-        topBarBg.draw(batch);
-
-        batch.end();
-
-        stage.draw();
-    }
-
 
     public void dispose() {
-        batch.dispose();
+
     }
 
 
@@ -198,6 +168,12 @@ public class GlobalUi {
         groupResource.addActor(valueField);
 
         return groupResource;
+    }
+
+    public void renderBg(float delta, SpriteBatch batch) {
+        batch.begin();
+        topBarBg.draw(batch);
+        batch.end();
     }
 
 }

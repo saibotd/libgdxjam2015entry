@@ -6,16 +6,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.UiTopbar;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -29,6 +29,10 @@ public class BaseScreen implements Screen, InputProcessor {
     public Skin skin;
     public Stage stage;
     private static Music bgm;
+    public UiTopbar topbar;
+    private Texture bgTexture;
+    private Container<Window> windowContainer;
+    public Table mainContainer;
 
     public BaseScreen(MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
@@ -43,6 +47,20 @@ public class BaseScreen implements Screen, InputProcessor {
         menu.addActor(btnWindow);
         menu.addActor(btnMap);
         stage.addActor(menu);
+
+        mainContainer = new Table();
+        mainContainer.setSize(1280,720);
+        stage.addActor(mainContainer);
+
+        windowContainer = new Container<Window>();
+        windowContainer.setSize(1280, 720);
+        stage.addActor(windowContainer);
+
+
+        bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
+        bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+        topbar = new UiTopbar(game, stage);
 
         btnWindow.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -111,26 +129,57 @@ public class BaseScreen implements Screen, InputProcessor {
         return false;
     }
 
+    public void renderBG(float delta) {
+
+        viewport.apply();
+        batch.begin();
+        batch.draw(bgTexture, 0, 0, 1280, 720, 0, 0, 2, 2);
+        batch.end();
+
+    }
+
+    public Window getWindow(String title){
+        windowContainer.clear();
+        Window window = new Window(title, skin);
+        window.setWidth(500);
+        windowContainer.setActor(window);
+        return window;
+    }
+
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.ui.renderBG(delta);
+        renderBG(delta);
 
         update(delta);
+
+        viewport.apply();
+
+
+    }
+
+    public void renderUi(float delta) {
+
+        topbar.renderBg(delta, batch);
+        stage.draw();
+
     }
 
     private void update(float delta) {
         if(!bgm.isPlaying())
             startBGM();
+
+        topbar.updateStats();
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
 
-        game.ui.viewport.update(width, height, true);
+
     }
 
     @Override

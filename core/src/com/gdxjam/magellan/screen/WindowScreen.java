@@ -33,10 +33,10 @@ public class WindowScreen extends BaseScreen {
         planetOnScreen.setPosition(800, 600);
         resourcesOnScreen.setPosition(400, 720);
 
-        stage.addActor(dronesOnScreen);
-        stage.addActor(shipsOnScreen);
-        stage.addActor(planetOnScreen);
-        stage.addActor(resourcesOnScreen);
+        mainContainer.addActor(dronesOnScreen);
+        mainContainer.addActor(shipsOnScreen);
+        mainContainer.addActor(planetOnScreen);
+        mainContainer.addActor(resourcesOnScreen);
     }
 
     public void show(){
@@ -82,7 +82,8 @@ public class WindowScreen extends BaseScreen {
     }
 
     public void showInteractionWindow(final IInteractable interactable){
-        Window window = new Window(interactable.getTitle(), skin);
+
+        Window window = getWindow(interactable.getTitle());
         Label info = new Label(interactable.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
         for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
@@ -91,15 +92,16 @@ public class WindowScreen extends BaseScreen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     interactable.getInteractions(game.universe.playerShip).get(key).interact();
+                    showInteractionWindow(interactable);
                 }
             });
             menu.addActor(button);
         }
         window.add(info);
         window.add(menu);
-        window.setWidth(500);
-        stage.addActor(window);
     }
+
+
 
     /*
     private void setupInterfaceMenus(){
@@ -159,7 +161,6 @@ public class WindowScreen extends BaseScreen {
 
     public void render(float delta){
         super.render(delta);
-        stage.draw();
-        game.ui.renderOverlays(delta);
+        renderUi(delta);
     }
 }

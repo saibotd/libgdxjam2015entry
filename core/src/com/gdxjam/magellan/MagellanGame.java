@@ -14,7 +14,6 @@ import com.gdxjam.magellan.screen.WindowScreen;
 public class MagellanGame extends Game{
     public static AssetManager assets;
     public Universe universe;
-    public GlobalUi ui;
     private Screen mapScreen;
     private Screen windowScreen;
     public static GameState gameState;
@@ -51,7 +50,6 @@ public class MagellanGame extends Game{
         assets.load("bgm3.mp3", Music.class);
         assets.load("battle.mp3", Music.class);
         assets.finishLoading();
-        ui = new GlobalUi(this);
         mapScreen = new MapScreen(this);
         windowScreen = new WindowScreen(this);
         setScreen(mapScreen);
