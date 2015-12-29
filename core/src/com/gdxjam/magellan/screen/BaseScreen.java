@@ -86,6 +86,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
+        closeWindow();
         Gdx.input.setInputProcessor(new InputMultiplexer(this, stage));
     }
 

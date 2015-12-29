@@ -7,17 +7,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.gdxjam.magellan.MagellanColors;
-import com.gdxjam.magellan.MagellanGame;
-import com.gdxjam.magellan.Sector;
-import com.gdxjam.magellan.SpriteAccessor;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.drones.DroneRoutineScouting;
 
 /**
  * Created by lolcorner on 20.12.2015.
  */
-public class PlayerShip extends Ship {
+public class PlayerShip extends Ship implements IInteractable {
 
     public int HUMANS = 10000;
     public Array<Integer> drones = new Array();
@@ -70,7 +68,7 @@ public class PlayerShip extends Ship {
         //spriteDot.setColor(Color.YELLOW);
 
         spriteVessel = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
-        spriteVessel.setSize(10, 20);
+        spriteVessel.setSize(20, 20);
         spriteVessel.setOriginCenter();
         spriteVessel.setPosition(sector.position.x + 12, sector.position.y - 22);
         spriteVessel.setRotation(50);
@@ -86,4 +84,26 @@ public class PlayerShip extends Ship {
         spriteVessel.draw(batch);
     }
 
+    @Override
+    public ObjectMap<String, Interaction> getInteractions(GameObj with) {
+        ObjectMap<String, Interaction> interactions = new ObjectMap();
+        interactions.put("release drone", new Interaction() {
+            @Override
+            public void interact() {
+                releaseDrone(1);
+            }
+        });
+
+        return interactions;
+    }
+
+    @Override
+    public String getTitle() {
+        return "The Trinidad";
+    }
+
+    @Override
+    public String getInfo() {
+        return "Your ship.";
+    }
 }
