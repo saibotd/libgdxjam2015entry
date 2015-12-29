@@ -66,16 +66,25 @@ public class MapScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
 
+        batch.begin();
+        pixel.setPosition(20,20);
+        pixel.setSize(1240,630);
+        pixel.setColor(MagellanColors.MAP_BG);
+        pixel.setAlpha(0.4f);
+        pixel.setRotation(0);
+        pixel.draw(batch);
+        batch.end();
 
         mapViewport.apply();
 
-        int border = 50;
+        int border = Math.round(Gdx.graphics.getWidth() * 0.04f);
+        int bordertop = border*2;
         Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
         Gdx.gl.glScissor(
                 border,
                 border,
                 Gdx.graphics.getWidth() - border * 2,
-                Gdx.graphics.getHeight() - border * 2
+                Gdx.graphics.getHeight() - (border + bordertop)
         );
 
         camera.update();
@@ -99,7 +108,8 @@ public class MapScreen extends BaseScreen {
         batch.begin();
         pixel.setPosition(0,0);
         pixel.setSize(1280,720);
-        pixel.setColor(0,0,0,.75f);
+        pixel.setColor(Color.BLACK);
+        pixel.setAlpha(0.85f);
         pixel.setRotation(0);
         pixel.draw(batch);
         batch.end();
