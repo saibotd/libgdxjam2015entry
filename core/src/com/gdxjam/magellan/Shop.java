@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInteractable {
 
     private Sprite mapSprite;
-    private Sprite windowSprite;
 
     public Shop(Sector sector) {
         super(sector);
@@ -21,6 +20,13 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
+        ObjectMap<String, Interaction> interactions = new ObjectMap<String, Interaction>();
+        interactions.put("Trade", new Interaction() {
+            @Override
+            public void interact() {
+
+            }
+        });
         return null;
     }
 

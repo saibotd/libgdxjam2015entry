@@ -23,8 +23,9 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     }
 
     @Override
-    public void shootAt(IDestroyable target) {
+    public int shootAt(IDestroyable target) {
         target.receiveDamage(attack);
+        return attack;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public void dispose() {
-
+        this.sector.gameObjs.removeValue(this, true);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("dot.png", Texture.class));
+        Image image = new Image(MagellanGame.assets.get("map_playership.png", Texture.class));
         return image;
     }
 

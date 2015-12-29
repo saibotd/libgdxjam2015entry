@@ -62,10 +62,10 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public void receiveDamage(int damage) {
         health -= damage;
-        if(health <= 0) destroy();
         for(DroneRoutine routine : routines){
             routine.receiveDamage(damage);
         }
+        if(health <= 0) destroy();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void dispose() {
-
+        this.sector.gameObjs.removeValue(this, true);
     }
 
     @Override
@@ -123,10 +123,11 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     @Override
-    public void shootAt(IDestroyable target) {
+    public int shootAt(IDestroyable target) {
         for(DroneRoutine routine : routines){
             routine.shootAt(target);
         }
+        return 0;
     }
 
     public boolean hasRoutine(Class routineClass) {
