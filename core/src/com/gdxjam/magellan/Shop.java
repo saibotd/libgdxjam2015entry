@@ -25,6 +25,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
             @Override
             public void interact() {
 
+                showInteractionWindow();
             }
         });
         return null;

@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.screen.BaseScreen;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
 
@@ -114,16 +116,56 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
+        final Drone drone = this;
         ObjectMap<String, Interaction> interactions = new ObjectMap();
-        interactions.put("setup", new Interaction() {
-            @Override
-            public void interact() {
 
+        if (submenuOpen == "") {
+            interactions.put("setup", new Interaction() {
+                @Override
+                public void interact() {
+                    submenuOpen = "setup";
+                    showInteractionWindow();
+                }
+            });
+            for (DroneRoutine routine : routines) {
+                interactions.putAll(routine.getInteractions(with));
             }
-        });
-        for(DroneRoutine routine : routines){
-            interactions.putAll(routine.getInteractions(with));
+
         }
+
+        if (submenuOpen == "setup") {
+            interactions.put("Add Scouting Routine", new Interaction() {
+                @Override
+                public void interact() {
+                    addRoutine(new DroneRoutineScouting(drone));
+                    showInteractionWindow();
+                }
+            });
+            interactions.put("Add Fighting Routine", new Interaction() {
+                @Override
+                public void interact() {
+                    addRoutine(new DroneRoutineFighting(drone));
+                    showInteractionWindow();
+                }
+            });
+            interactions.put("Add Mining Routine", new Interaction() {
+                @Override
+                public void interact() {
+                    addRoutine(new DroneRoutineMining(drone));
+                    showInteractionWindow();
+                }
+            });
+            if (routines.size > 0) {
+                interactions.put("Clear Routines", new Interaction() {
+                    @Override
+                    public void interact() {
+                        clearRoutines();
+                        showInteractionWindow();
+                    }
+                });
+            }
+        }
+
         return interactions;
     }
 
@@ -137,7 +179,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         String s = "Faction: " + faction.toString();
         s += "\nHealth: " + health;
         s += "\nLevel: " + maxNumberOfRoutines;
-        s += "\nRoutines: ";
+        s += "\nRoutines: " + routines.size + "/" + maxNumberOfRoutines;
         for(DroneRoutine routine : routines){
             s += "\n" + routine.routine;
         }
@@ -159,5 +201,10 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
             }
         }
         return false;
+    }
+
+    public void clearRoutines() {
+        // TODO: Garbage collection?
+        routines.clear();
     }
 }

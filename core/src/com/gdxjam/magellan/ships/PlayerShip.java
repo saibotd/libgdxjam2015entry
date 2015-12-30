@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.drones.DroneRoutineScouting;
+import com.gdxjam.magellan.screen.BaseScreen;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -91,6 +92,7 @@ public class PlayerShip extends Ship implements IInteractable {
             @Override
             public void interact() {
                 releaseDrone(1);
+                closeWindow();
             }
         });
 

@@ -80,6 +80,7 @@ public class WindowScreen extends BaseScreen {
                             return true;
                         }
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                            gameObj.submenuOpen = "";
                             showInteractionWindow((IDrawableWindow) gameObj);
                         }
                     });
@@ -91,7 +92,7 @@ public class WindowScreen extends BaseScreen {
     public void showInteractionWindow(final IDrawableWindow gameObj){
 
         Window window = getWindow(gameObj.getTitle());
-        window.setMovable(false);
+
         VerticalGroup windowContent = new VerticalGroup();
         Label info = new Label(gameObj.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
@@ -110,7 +111,7 @@ public class WindowScreen extends BaseScreen {
                 menu.addActor(button);
             }
         }
-        if(gameObj instanceof IDestroyable) {
+        if(gameObj instanceof IDestroyable && ((GameObj)gameObj).submenuOpen == "") {
             final IDestroyable destroyable = (IDestroyable) gameObj;
             TextButton button = new TextButton("ATTACK", skin);
             button.addListener(new ChangeListener() {

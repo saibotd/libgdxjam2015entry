@@ -155,6 +155,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 @Override
                 public void interact() {
                     claim((Ship) with);
+                    showInteractionWindow();
                 }
             });
         }
@@ -164,6 +165,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 public void interact() {
                     // TODO: Ask for how many
                     populate((Ship) with, 1000);
+                    closeWindow();
                 }
             });
         }
@@ -173,6 +175,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 public void interact() {
                     // TODO: Ask for how many
                     boardHumans((Ship) with, 100);
+                    closeWindow();
                 }
             });
         }

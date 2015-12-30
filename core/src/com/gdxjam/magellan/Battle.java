@@ -47,6 +47,7 @@ public class Battle {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 screen.game.showMapScreen();
+                screen.closeWindow();
             }
         });
         menu.addActor(buttonAttack);

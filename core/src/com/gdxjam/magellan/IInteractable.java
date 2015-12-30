@@ -11,4 +11,12 @@ public interface IInteractable extends IDrawableWindow {
     interface Interaction {
         void interact();
     }
+
+    interface InputInteraction extends Interaction {
+
+    }
+
+    interface SliderInteraction extends Interaction {
+
+    }
 }

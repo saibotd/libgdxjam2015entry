@@ -15,12 +15,14 @@ import com.gdxjam.magellan.screen.WindowScreen;
 public class MagellanGame extends Game{
     public static AssetManager assets;
     public Universe universe;
-    private Screen mapScreen;
-    private Screen windowScreen;
+    public MapScreen mapScreen;
+    public WindowScreen windowScreen;
     public static GameState gameState;
     public static boolean DEBUG = false;
+    public static MagellanGame instance;
 
     public MagellanGame(){
+        instance = this;
 		universe = new Universe(this);
 	}
 
@@ -64,4 +66,5 @@ public class MagellanGame extends Game{
     public void showMapScreen() {
         setScreen(mapScreen);
     }
+
 }
