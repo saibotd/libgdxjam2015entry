@@ -86,7 +86,6 @@ public class WindowScreen extends BaseScreen {
                 }
             }
         }
-        //setupInterfaceMenus();
     }
 
     public void showInteractionWindow(final IDrawableWindow gameObj){
@@ -96,6 +95,7 @@ public class WindowScreen extends BaseScreen {
         VerticalGroup windowContent = new VerticalGroup();
         Label info = new Label(gameObj.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
+        final WindowScreen screen = this;
         if(gameObj instanceof IInteractable) {
             final IInteractable interactable = (IInteractable) gameObj;
             for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
@@ -116,8 +116,8 @@ public class WindowScreen extends BaseScreen {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    new Battle(game.universe.playerShip, destroyable);
                     closeWindow();
+                    new Battle(screen, game.universe.playerShip, destroyable);
                 }
             });
             menu.addActor(button);

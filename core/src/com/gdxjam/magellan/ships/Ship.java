@@ -14,8 +14,8 @@ import com.gdxjam.magellan.*;
 public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow, IDestroyable, IArmed {
 
     public float shield = .1f;
-    public int health = 100;
-    public int attack;
+    public int health = 3;
+    public int attack = 1;
     public Sprite spriteDot;
 
     public Ship(Sector sector) {
@@ -37,7 +37,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public boolean isAlive() {
-        return health <= 0;
+        return health > 0;
     }
 
     @Override
@@ -48,6 +48,11 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     @Override
     public void dispose() {
         this.sector.gameObjs.removeValue(this, true);
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
     }
 
     @Override

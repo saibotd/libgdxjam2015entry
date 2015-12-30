@@ -19,7 +19,7 @@ import com.gdxjam.magellan.ships.Ship;
  */
 public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, IInteractable, IArmed {
     private int maxNumberOfRoutines;
-    private int health = 25;
+    private int health = 1;
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
 
@@ -70,7 +70,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public boolean isAlive() {
-        return health <= 0;
+        return health > 0;
     }
 
     @Override
@@ -82,6 +82,11 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public void dispose() {
         this.sector.gameObjs.removeValue(this, true);
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
     }
 
     @Override
@@ -110,6 +115,12 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
         ObjectMap<String, Interaction> interactions = new ObjectMap();
+        interactions.put("setup", new Interaction() {
+            @Override
+            public void interact() {
+
+            }
+        });
         for(DroneRoutine routine : routines){
             interactions.putAll(routine.getInteractions(with));
         }

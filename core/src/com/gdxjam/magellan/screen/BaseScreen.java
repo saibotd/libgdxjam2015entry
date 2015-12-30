@@ -31,7 +31,7 @@ public class BaseScreen implements Screen, InputProcessor {
     private static Music bgm;
     public UiTopbar topbar;
     private Texture bgTexture;
-    private Container<Window> windowContainer;
+    public Container<Window> windowContainer;
     public Table mainContainer;
 
     public BaseScreen(MagellanGame _game){
@@ -142,6 +142,8 @@ public class BaseScreen implements Screen, InputProcessor {
     public Window getWindow(String title){
         windowContainer.clear();
         Window window = new Window(title, skin);
+        window.setMovable(false);
+        window.setModal(true);
         window.setWidth(500);
         window.padTop(70);
         window.padLeft(20);

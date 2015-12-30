@@ -10,4 +10,5 @@ public interface IDestroyable extends Disposable {
     boolean isAlive();
     void destroy();
     void dispose();
+    int getHealth();
 }

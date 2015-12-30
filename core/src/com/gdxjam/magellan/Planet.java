@@ -90,7 +90,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     @Override
     public boolean isAlive() {
-        return true;
+        return population > 0;
     }
 
     @Override
@@ -101,6 +101,11 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public int getHealth() {
+        return population;
     }
 
     public void tick(){
