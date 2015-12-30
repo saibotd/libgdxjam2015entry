@@ -39,7 +39,8 @@ public class DroneRoutine {
     }
 
     public ObjectMap<String, IInteractable.Interaction> getInteractions(GameObj with) {
-        return null;
+        ObjectMap<String, IInteractable.Interaction> interactions = new ObjectMap();
+        return interactions;
     }
 
     public void shootAt(IDestroyable target) {

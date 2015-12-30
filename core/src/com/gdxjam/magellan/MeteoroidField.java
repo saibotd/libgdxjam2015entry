@@ -71,11 +71,26 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
 
     @Override
     public String getTitle() {
-        return null;
+        return "Meteoroid field";
     }
 
     @Override
     public String getInfo() {
-        return null;
+        String resourceName = "";
+        switch (resource){
+            case 1:
+                resourceName = Statics.resource1;
+                break;
+            case 2:
+                resourceName = Statics.resource2;
+                break;
+            case 3:
+                resourceName = Statics.resource3;
+                break;
+        }
+        String s = "Faction: " + faction.toString();
+        s += "\nResource: " + resourceName;
+        s += "\nResources per year: " + resourcePerTick;
+        return s;
     }
 }

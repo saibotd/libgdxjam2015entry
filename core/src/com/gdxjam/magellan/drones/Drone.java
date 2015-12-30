@@ -85,11 +85,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     @Override
-    public String getTitle() {
-        return "DRONE";
-    }
-
-    @Override
     public void prepareRenderingOnMap() {
         spriteVessel = new Sprite(MagellanGame.assets.get("drone.png", Texture.class));
         spriteVessel.setSize(28,18);
@@ -114,15 +109,28 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
+        ObjectMap<String, Interaction> interactions = new ObjectMap();
         for(DroneRoutine routine : routines){
-            routine.getInteractions(with);
+            interactions.putAll(routine.getInteractions(with));
         }
-        return null;
+        return interactions;
+    }
+
+    @Override
+    public String getTitle() {
+        return "DRONE";
     }
 
     @Override
     public String getInfo() {
-        return null;
+        String s = "Faction: " + faction.toString();
+        s += "\nHealth: " + health;
+        s += "\nLevel: " + maxNumberOfRoutines;
+        s += "\nRoutines: ";
+        for(DroneRoutine routine : routines){
+            s += "\n" + routine.routine;
+        }
+        return s;
     }
 
     @Override

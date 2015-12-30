@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
+import com.gdxjam.magellan.ships.AiShip;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
 
@@ -20,16 +20,19 @@ public class WindowScreen extends BaseScreen {
     private final VerticalGroup shipsOnScreen;
     private final VerticalGroup planetOnScreen;
     private final VerticalGroup resourcesOnScreen;
+    private final VerticalGroup playerOnScreen;
 
     public WindowScreen(MagellanGame game) {
         super(game);
         dronesOnScreen = new VerticalGroup();
         shipsOnScreen = new VerticalGroup();
+        playerOnScreen = new VerticalGroup();
         planetOnScreen = new VerticalGroup();
         resourcesOnScreen = new VerticalGroup();
 
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
+        playerOnScreen.setPosition(-30, 600);
         planetOnScreen.setPosition(800, 600);
         resourcesOnScreen.setPosition(400, 720);
 
@@ -37,12 +40,14 @@ public class WindowScreen extends BaseScreen {
         mainContainer.addActor(shipsOnScreen);
         mainContainer.addActor(planetOnScreen);
         mainContainer.addActor(resourcesOnScreen);
+        mainContainer.addActor(playerOnScreen);
     }
 
     public void show(){
         super.show();
         dronesOnScreen.clear();
         resourcesOnScreen.clear();
+        playerOnScreen.clear();
         shipsOnScreen.clear();
         planetOnScreen.clear();
         for(final GameObj gameObj : game.universe.playerShip.sector.gameObjs){
@@ -56,7 +61,11 @@ public class WindowScreen extends BaseScreen {
                     dronesOnScreen.setWidth(actor.getWidth());
                     dronesOnScreen.addActor(actor);
                 }
-                if(gameObj instanceof Ship) {
+                if(gameObj instanceof PlayerShip) {
+                    playerOnScreen.setWidth(actor.getWidth());
+                    playerOnScreen.addActor(actor);
+                }
+                if(gameObj instanceof AiShip) {
                     shipsOnScreen.setWidth(actor.getWidth());
                     shipsOnScreen.addActor(actor);
                 }
@@ -64,15 +73,14 @@ public class WindowScreen extends BaseScreen {
                     resourcesOnScreen.setWidth(actor.getWidth());
                     resourcesOnScreen.addActor(actor);
                 }
-                Gdx.app.log("fdsf", actor.getActions().toString());
 
-                if(gameObj instanceof IInteractable) {
+                if(gameObj instanceof IDrawableWindow) {
                     actor.addListener(new InputListener() {
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                             return true;
                         }
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                            showInteractionWindow((IInteractable) gameObj);
+                            showInteractionWindow((IDrawableWindow) gameObj);
                         }
                     });
                 }
@@ -81,20 +89,35 @@ public class WindowScreen extends BaseScreen {
         //setupInterfaceMenus();
     }
 
-    public void showInteractionWindow(final IInteractable interactable){
+    public void showInteractionWindow(final IDrawableWindow gameObj){
 
-        Window window = getWindow(interactable.getTitle());
+        Window window = getWindow(gameObj.getTitle());
         window.setMovable(false);
         VerticalGroup windowContent = new VerticalGroup();
-        Label info = new Label(interactable.getInfo(), skin);
+        Label info = new Label(gameObj.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
-        for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
-            TextButton button = new TextButton(key, skin);
+        if(gameObj instanceof IInteractable) {
+            final IInteractable interactable = (IInteractable) gameObj;
+            for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
+                TextButton button = new TextButton(key, skin);
+                button.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        interactable.getInteractions(game.universe.playerShip).get(key).interact();
+                        show();
+                    }
+                });
+                menu.addActor(button);
+            }
+        }
+        if(gameObj instanceof IDestroyable) {
+            final IDestroyable destroyable = (IDestroyable) gameObj;
+            TextButton button = new TextButton("ATTACK", skin);
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    interactable.getInteractions(game.universe.playerShip).get(key).interact();
-                    showInteractionWindow(interactable);
+                    new Battle(game.universe.playerShip, destroyable);
+                    closeWindow();
                 }
             });
             menu.addActor(button);

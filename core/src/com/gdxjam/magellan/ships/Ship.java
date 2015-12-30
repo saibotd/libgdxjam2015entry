@@ -52,12 +52,16 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public String getTitle() {
-        return null;
+        return "SHIP";
     }
 
     @Override
     public String getInfo() {
-        return null;
+        String s = "Faction: " + faction.toString();
+        s += "\nHealth: " + health;
+        s += "\nAttack: " + attack;
+        s += "\nShield: " + shield;
+        return s;
     }
 
     @Override

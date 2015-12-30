@@ -13,12 +13,7 @@ public class AiShip extends Ship {
 
     @Override
     public String getTitle() {
-        return null;
-    }
-
-    @Override
-    public String getInfo() {
-        return null;
+        return "ENEMY SHIP";
     }
 
     enum States{IDLE, HOSTILE, FLEEING};
