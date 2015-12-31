@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.gdxjam.magellan.IDrawableWindow;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.UiTopbar;
 
@@ -146,6 +146,20 @@ public class BaseScreen implements Screen, InputProcessor {
         window.setWidth(500);
         window.padTop(70);
         window.padLeft(20);
+        Image closeButton = new Image(MagellanGame.assets.get("dot.png", Texture.class));
+        closeButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                closeWindow();
+            }
+        });
+        Group closeContainer = new Group();
+        closeContainer.addActor(closeButton);
+        closeButton.setSize(20,20);
+        closeContainer.setSize(20,20);
+        window.getTitleTable().add(closeContainer);
         windowContainer.setActor(window);
         return window;
     }
