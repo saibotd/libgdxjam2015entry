@@ -29,7 +29,6 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         super(sector);
         visualType = MathUtils.random(1,2);
         switch (MathUtils.random(4)) {
-
             case 0: color = MagellanColors.PLANET_1; break;
             case 1: color = MagellanColors.PLANET_2; break;
             case 2: color = MagellanColors.PLANET_3; break;
