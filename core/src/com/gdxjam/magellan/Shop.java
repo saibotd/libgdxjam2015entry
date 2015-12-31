@@ -1,11 +1,16 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.gdxjam.magellan.drones.DroneRoutine;
 
 /**
  * Created by Felix on 29.12.2015.
@@ -13,22 +18,87 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInteractable {
 
     private Sprite mapSprite;
+    private Array<ShopItem> inventory = new Array<ShopItem>();
 
     public Shop(Sector sector) {
         super(sector);
+        inventory.add(new ShopItemDrone(1));
+        inventory.add(new ShopItemDrone(2));
+        inventory.add(new ShopItemDrone(3));
+        inventory.add(new ShopItemDrone(4));
+        inventory.add(new ShopItemDrone(5));
     }
 
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
         ObjectMap<String, Interaction> interactions = new ObjectMap<String, Interaction>();
-        interactions.put("Trade", new Interaction() {
+        interactions.put("Buy", new Interaction() {
             @Override
             public void interact() {
-
+                showInventoryWindow();
+            }
+        });
+        /*
+        interactions.put("Sell", new Interaction() {
+            @Override
+            public void interact() {
                 showInteractionWindow();
             }
         });
-        return null;
+        */
+        return interactions;
+    }
+
+    public void showInventoryWindow(){
+        Window window = MagellanGame.instance.windowScreen.getWindow("Buy");
+        Skin skin = MagellanGame.instance.windowScreen.skin;
+        VerticalGroup windowContent = new VerticalGroup();
+        HorizontalGroup listAndInfo = new HorizontalGroup();
+        HorizontalGroup menu = new HorizontalGroup();
+        final List list = new List(skin);
+        final Label info = new Label("", skin);
+        info.setSize(300,300);
+        ScrollPane scrollPane = new ScrollPane(list);
+        scrollPane.setSize(300, 300);
+        TextButton buyButton = new TextButton("Buy", skin);
+        TextButton doneButton = new TextButton("Done", skin);
+        listAndInfo.addActor(scrollPane);
+        listAndInfo.addActor(info);
+        Array<String> listItems = new Array<String>();
+        for(ShopItem item:inventory){
+            listItems.add(item.title);
+        }
+        list.setItems(listItems);
+        list.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ShopItem item = inventory.get(list.getSelectedIndex());
+                info.setText(item.description + "\nPrice: " + item.price);
+            }
+        });
+        buyButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ShopItem item = inventory.get(list.getSelectedIndex());
+                if(item.price <= MagellanGame.gameState.CREDITS) {
+                    MagellanGame.gameState.CREDITS -= item.price;
+                    item.buy(MagellanGame.instance.universe.playerShip);
+                }
+                MagellanGame.gameState.updateNumberOfDrones();
+            }
+        });
+        doneButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                MagellanGame.instance.windowScreen.closeWindow();
+            }
+        });
+        list.setSelectedIndex(0);
+        menu.addActor(buyButton);
+        menu.addActor(doneButton);
+        windowContent.addActor(listAndInfo);
+        windowContent.addActor(menu);
+        window.add(windowContent);
     }
 
 

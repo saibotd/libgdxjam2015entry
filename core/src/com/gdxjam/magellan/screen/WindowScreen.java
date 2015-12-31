@@ -21,6 +21,7 @@ public class WindowScreen extends BaseScreen {
     private final VerticalGroup planetOnScreen;
     private final VerticalGroup resourcesOnScreen;
     private final VerticalGroup playerOnScreen;
+    private final VerticalGroup shopOnScreen;
 
     public WindowScreen(MagellanGame game) {
         super(game);
@@ -28,18 +29,21 @@ public class WindowScreen extends BaseScreen {
         shipsOnScreen = new VerticalGroup();
         playerOnScreen = new VerticalGroup();
         planetOnScreen = new VerticalGroup();
+        shopOnScreen = new VerticalGroup();
         resourcesOnScreen = new VerticalGroup();
 
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
         playerOnScreen.setPosition(-30, 600);
         planetOnScreen.setPosition(800, 600);
+        shopOnScreen.setPosition(700, 600);
         resourcesOnScreen.setPosition(400, 720);
 
         mainContainer.addActor(dronesOnScreen);
         mainContainer.addActor(shipsOnScreen);
         mainContainer.addActor(planetOnScreen);
         mainContainer.addActor(resourcesOnScreen);
+        mainContainer.addActor(shopOnScreen);
         mainContainer.addActor(playerOnScreen);
     }
 
@@ -48,6 +52,7 @@ public class WindowScreen extends BaseScreen {
         dronesOnScreen.clear();
         resourcesOnScreen.clear();
         playerOnScreen.clear();
+        shopOnScreen.clear();
         shipsOnScreen.clear();
         planetOnScreen.clear();
         for(final GameObj gameObj : game.universe.playerShip.sector.gameObjs){
@@ -60,6 +65,10 @@ public class WindowScreen extends BaseScreen {
                 if(gameObj instanceof Drone) {
                     dronesOnScreen.setWidth(actor.getWidth());
                     dronesOnScreen.addActor(actor);
+                }
+                if(gameObj instanceof Shop) {
+                    shopOnScreen.setWidth(actor.getWidth());
+                    shopOnScreen.addActor(actor);
                 }
                 if(gameObj instanceof PlayerShip) {
                     playerOnScreen.setWidth(actor.getWidth());

@@ -20,18 +20,12 @@ public class PlayerShip extends Ship implements IInteractable {
 
     public int HUMANS = 10000;
     public Array<Integer> drones = new Array();
+    public Array<ShopItem> inventory;
 
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
         setSectorsDiscovered();
-        drones.add(1);
-        drones.add(2);
-        drones.add(2);
-        drones.add(2);
-        drones.add(3);
-        drones.add(4);
-        drones.add(5);
     }
 
     public void moveTo(Sector sector) {
