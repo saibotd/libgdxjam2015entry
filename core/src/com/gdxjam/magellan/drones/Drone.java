@@ -204,7 +204,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     public void clearRoutines() {
-        // TODO: Garbage collection?
         routines.clear();
     }
 }

@@ -82,13 +82,64 @@ public class PlayerShip extends Ship implements IInteractable {
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
         ObjectMap<String, Interaction> interactions = new ObjectMap();
-        interactions.put("release drone", new Interaction() {
-            @Override
-            public void interact() {
-                releaseDrone(1);
-                closeWindow();
+        if (submenuOpen == "") {
+            if (drones.size > 0) {
+                interactions.put("release drone", new Interaction() {
+                    @Override
+                    public void interact() {
+                        submenuOpen = "releasedrone";
+                        showInteractionWindow();
+                    }
+                });
             }
-        });
+        }
+        if (submenuOpen == "releasedrone") {
+            if (drones.contains(1,true)) {
+                interactions.put("Level 1", new Interaction() {
+                    @Override
+                    public void interact() {
+                        releaseDrone(1);
+                        closeWindow();
+                    }
+                });
+            }
+            if (drones.contains(2,true)) {
+                interactions.put("Level 2", new Interaction() {
+                    @Override
+                    public void interact() {
+                        releaseDrone(2);
+                        closeWindow();
+                    }
+                });
+            }
+            if (drones.contains(3,true)) {
+                interactions.put("Level 3", new Interaction() {
+                    @Override
+                    public void interact() {
+                        releaseDrone(3);
+                        closeWindow();
+                    }
+                });
+            }
+            if (drones.contains(4,true)) {
+                interactions.put("Level 4", new Interaction() {
+                    @Override
+                    public void interact() {
+                        releaseDrone(4);
+                        closeWindow();
+                    }
+                });
+            }
+            if (drones.contains(5,true)) {
+                interactions.put("Level 5", new Interaction() {
+                    @Override
+                    public void interact() {
+                        releaseDrone(5);
+                        closeWindow();
+                    }
+                });
+            }
+        }
 
         return interactions;
     }
