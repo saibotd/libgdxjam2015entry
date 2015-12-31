@@ -168,18 +168,6 @@ public class BaseScreen implements Screen, InputProcessor {
 
         TextureRegionDrawable btnUp = new TextureRegionDrawable(new TextureRegion(MagellanGame.assets.get("skin/uiskin.png", Texture.class), 182, 128, 51, 51));
         TextureRegionDrawable btnDn = new TextureRegionDrawable(new TextureRegion(MagellanGame.assets.get("skin/uiskin.png", Texture.class), 182, 179, 51, 51));
-        Button closeButton = new Button(new Button.ButtonStyle(btnUp, btnDn, null));
-        closeButton.setSize(51, 51);
-        //closeButton.setPosition(10, 10, Align.topRight);
-        closeButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                closeWindow();
-            }
-        });
-
-        window.addActor(closeButton);
-        window.setDebug(true);
         return window;
     }
 
