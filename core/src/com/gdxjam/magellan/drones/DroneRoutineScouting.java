@@ -1,5 +1,8 @@
 package com.gdxjam.magellan.drones;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 
 /**
@@ -12,6 +15,7 @@ public class DroneRoutineScouting extends DroneRoutine{
     public DroneRoutineScouting(Drone drone) {
         super(drone);
         routine = ROUTINES.SCOUTING;
+        sprite = new Sprite(MagellanGame.assets.get("drone_thruster.png", Texture.class));
     }
 
     public void tick(){

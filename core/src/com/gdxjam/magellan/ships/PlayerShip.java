@@ -27,6 +27,7 @@ public class PlayerShip extends Ship implements IInteractable {
         faction = Factions.PLAYER;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
+        drones.add(4);
     }
 
     public void moveTo(Sector sector) {

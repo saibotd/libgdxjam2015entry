@@ -34,17 +34,17 @@ public class WindowScreen extends BaseScreen {
 
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
-        playerOnScreen.setPosition(-30, 600);
+        playerOnScreen.setPosition(-30, 500);
         planetOnScreen.setPosition(800, 600);
         shopOnScreen.setPosition(700, 600);
         resourcesOnScreen.setPosition(400, 720);
 
-        mainContainer.addActor(dronesOnScreen);
-        mainContainer.addActor(shipsOnScreen);
-        mainContainer.addActor(planetOnScreen);
-        mainContainer.addActor(resourcesOnScreen);
-        mainContainer.addActor(shopOnScreen);
-        mainContainer.addActor(playerOnScreen);
+        sectorContainer.addActor(dronesOnScreen);
+        sectorContainer.addActor(shipsOnScreen);
+        sectorContainer.addActor(planetOnScreen);
+        sectorContainer.addActor(resourcesOnScreen);
+        sectorContainer.addActor(shopOnScreen);
+        sectorContainer.addActor(playerOnScreen);
     }
 
     public void show(){

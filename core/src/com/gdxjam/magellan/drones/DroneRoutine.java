@@ -23,6 +23,8 @@ public class DroneRoutine {
     public DroneRoutine(Drone drone){
         this.drone = drone;
         drone.addRoutine(this);
+
+        sprite = new Sprite();
     }
     
 
@@ -48,6 +50,10 @@ public class DroneRoutine {
     }
 
     public void render(SpriteBatch batch, float delta) {
-
+        sprite.setOriginCenter();
+        sprite.setPosition(drone.spriteVessel.getX(), drone.spriteVessel.getY());
+        sprite.setRotation(drone.spriteVessel.getRotation());
+        sprite.setSize(drone.spriteVessel.getWidth(), drone.spriteVessel.getHeight());
+        sprite.draw(batch);
     }
 }

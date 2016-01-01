@@ -37,6 +37,7 @@ public class BaseScreen implements Screen, InputProcessor {
     private Texture bgTexture;
     public Container<Window> windowContainer;
     public Table mainContainer;
+    public Table sectorContainer;
 
     public BaseScreen(MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
@@ -44,13 +45,10 @@ public class BaseScreen implements Screen, InputProcessor {
         batch = new SpriteBatch();
         viewport = new FitViewport(1280, 720);
         stage = new Stage(viewport);
-        HorizontalGroup menu = new HorizontalGroup();
-        menu.setPosition(10,20);
-        btnWindow = new TextButton("SHOW SURROUNDINGS", skin);
-        btnMap = new TextButton("STAR MAP", skin);
-        menu.addActor(btnWindow);
-        menu.addActor(btnMap);
-        stage.addActor(menu);
+
+        sectorContainer = new Table();
+        sectorContainer.setSize(1280,720);
+        stage.addActor(sectorContainer);
 
         mainContainer = new Table();
         mainContainer.setSize(1280,720);
@@ -60,18 +58,22 @@ public class BaseScreen implements Screen, InputProcessor {
         windowContainer.setSize(1280, 720);
         stage.addActor(windowContainer);
 
+        HorizontalGroup menu = new HorizontalGroup();
+        menu.setPosition(10,20);
+        btnWindow = new TextButton("SHOW SURROUNDINGS", skin);
+        btnMap = new TextButton("STAR MAP", skin);
+        menu.addActor(btnWindow);
+        menu.addActor(btnMap);
+        stage.addActor(menu);
 
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
         bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-
         topbar = new UiTopbar(game, stage);
-
         btnWindow.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 game.showWindowScreen();
             }
         });
-
         btnMap.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.showMapScreen();
@@ -150,7 +152,7 @@ public class BaseScreen implements Screen, InputProcessor {
         window.setWidth(500);
         window.padTop(70);
         window.padLeft(20);
-        Image closeButton = new Image(MagellanGame.assets.get("dot.png", Texture.class));
+        Image closeButton = new Image(new TextureRegion(MagellanGame.assets.get("skin/uiskin.png", Texture.class), 182, 128, 51, 51));
         closeButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;

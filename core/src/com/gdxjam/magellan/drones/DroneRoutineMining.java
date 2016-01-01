@@ -1,5 +1,7 @@
 package com.gdxjam.magellan.drones;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.GameObj;
@@ -16,6 +18,7 @@ public class DroneRoutineMining extends DroneRoutine{
     public DroneRoutineMining(Drone drone) {
         super(drone);
         routine = ROUTINES.MINING;
+        sprite = new Sprite(MagellanGame.assets.get("drone_mine.png", Texture.class));
     }
 
     public void tick(){

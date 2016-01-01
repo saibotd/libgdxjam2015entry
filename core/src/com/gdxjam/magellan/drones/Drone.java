@@ -6,7 +6,9 @@ import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
@@ -24,6 +26,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     private int health = 1;
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
+    public Vector2 dimensions = new Vector2(280,170);
 
     public Drone(Sector sector, int level) {
         super(sector);
@@ -110,8 +113,18 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("drone.png", Texture.class));
-        return image;
+        Group group = new Group();
+        Image img = new Image(MagellanGame.assets.get("drone.png", Texture.class));
+        img.setSize(dimensions.x, dimensions.y);
+        group.setSize(dimensions.x, dimensions.y);
+        group.addActor(img);
+        for(DroneRoutine routine:routines) {
+            Image imgRoutine = new Image(routine.sprite);
+            imgRoutine.setSize(dimensions.x, dimensions.y);
+            group.setSize(dimensions.x, dimensions.y);
+            group.addActor(imgRoutine);
+        }
+        return group;
     }
 
     @Override
