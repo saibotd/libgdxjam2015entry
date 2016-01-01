@@ -25,6 +25,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
+        inventory = new Array<ShopItem>();
         setSectorsDiscovered();
     }
 
@@ -151,6 +152,11 @@ public class PlayerShip extends Ship implements IInteractable {
 
     @Override
     public String getInfo() {
-        return "Your ship.";
+        String s = "Your ship.";
+        s += "\nHealth: " + getHealth();
+        s += "\nFrozen Humans: " + HUMANS;
+        s += "\nDrones: " + drones.size;
+        s += "\nEquipment: " + inventory.toString(", ");
+        return s;
     }
 }
