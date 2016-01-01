@@ -105,6 +105,7 @@ public class WindowScreen extends BaseScreen {
         VerticalGroup windowContent = new VerticalGroup();
         Label info = new Label(gameObj.getInfo(), skin);
         HorizontalGroup menu = new HorizontalGroup();
+        menu.padTop(20);
         final WindowScreen screen = this;
         if(gameObj instanceof IInteractable) {
             final IInteractable interactable = (IInteractable) gameObj;
