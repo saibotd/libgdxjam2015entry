@@ -192,6 +192,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         doneButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                clearRoutines();
                 for(DroneRoutine.ROUTINES routine: selectedRoutines){
                     switch (routine){
                         case ATTACKING:
