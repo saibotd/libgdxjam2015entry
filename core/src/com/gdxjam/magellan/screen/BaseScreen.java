@@ -146,7 +146,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
     }
 
-    public Window getWindow(String title){
+    public Window getWindow(String title, String message){
         windowContainer.clear();
         Window window = new Window(title, skin);
         window.setMovable(false);
@@ -168,11 +168,28 @@ public class BaseScreen implements Screen, InputProcessor {
         closeButton.setSize(20,20);
         closeContainer.setSize(20,20);
         window.getTitleTable().add(closeContainer);
-        windowContainer.setActor(window);
 
-        TextureRegionDrawable btnUp = new TextureRegionDrawable(new TextureRegion(MagellanGame.assets.get("skin/uiskin.png", Texture.class), 182, 128, 51, 51));
-        TextureRegionDrawable btnDn = new TextureRegionDrawable(new TextureRegion(MagellanGame.assets.get("skin/uiskin.png", Texture.class), 182, 179, 51, 51));
+        if(message != null){
+            VerticalGroup group = new VerticalGroup();
+            Label labelMessage = new Label(message, skin);
+            TextButton btnOK = new TextButton("OK", skin);
+            btnOK.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    closeWindow();
+                }
+            });
+            group.addActor(labelMessage);
+            group.addActor(btnOK);
+            window.add(group);
+        }
+
+        windowContainer.setActor(window);
         return window;
+    }
+
+    public Window getWindow(String title) {
+        return getWindow(title, null);
     }
 
     public void closeWindow() {
@@ -235,4 +252,5 @@ public class BaseScreen implements Screen, InputProcessor {
     public void dispose() {
         batch.dispose();
     }
+
 }
