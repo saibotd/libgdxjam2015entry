@@ -236,18 +236,20 @@ public class MapScreen extends BaseScreen {
         dragStartMousePos.set((float)x, (float)y);
         dragStartCameraPos.set(camera.position.x, camera.position.y);
         mousePos.set((float)x, (float)y);
-        if(universe.getSectorsInCircle(touchCircle).size > 0){
-            Sector sector = universe.getSectorsInCircle(touchCircle).get(0);
-            if(universe.playerShip.sector.connectedSectors.contains(sector, true)){
-                universe.playerShip.moveTo(sector);
-                universe.tick();
-            }
-        }
         return false;
     }
 
     public boolean touchUp(int x, int y, int pointer, int button) {
         doMousePan = false;
+        if(dragStartMousePos.dst(mousePos) < 10) {
+            if (universe.getSectorsInCircle(touchCircle).size > 0) {
+                Sector sector = universe.getSectorsInCircle(touchCircle).get(0);
+                if (universe.playerShip.sector.connectedSectors.contains(sector, true)) {
+                    universe.playerShip.moveTo(sector);
+                    universe.tick();
+                }
+            }
+        }
         dragStartMousePos.set(mousePos);
         return false;
     }

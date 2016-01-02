@@ -82,7 +82,12 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public void startBGM(){
-        bgm = MagellanGame.assets.get("bgm" + MathUtils.random(0,3) + ".mp3", Music.class);
+        startBGM(MagellanGame.assets.get("bgm" + MathUtils.random(0,3) + ".mp3", Music.class));
+    }
+
+    public void startBGM(Music song){
+        if(bgm != null && bgm.isPlaying()) bgm.stop();
+        bgm = song;
         bgm.setVolume(.2f);
         bgm.play();
     }
@@ -171,6 +176,7 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public void closeWindow() {
+        Gdx.app.log("closeWindow", "called");
         windowContainer.clear();
     }
 
