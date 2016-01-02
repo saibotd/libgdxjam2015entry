@@ -7,15 +7,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.Statics;
+import com.gdxjam.magellan.drones.DroneRoutine;
+import com.gdxjam.magellan.drones.DroneRoutineFighting;
+import com.gdxjam.magellan.drones.DroneRoutineMining;
+import com.gdxjam.magellan.drones.DroneRoutineScouting;
+import com.gdxjam.magellan.ships.PlayerShip;
 
 /**
  * Created by lolcorner on 22.12.2015.
  */
-public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow {
+public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow, IInteractable {
 
     public int resource; // 1 - 3
     public int resourceAmount;
@@ -24,7 +30,7 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
-        resourceAmount = MathUtils.random(5, 100);
+        resourceAmount = MathUtils.random(5, 200);
     }
 
     @Override
@@ -112,5 +118,37 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
             prepareRenderingOnMap();
         }
         return amount;
+    }
+
+    @Override
+    public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
+        final MeteoroidField meteoroidField = this;
+        ObjectMap<String, Interaction> interactions = new ObjectMap();
+
+        if (resourceAmount > 0 && with.faction == Factions.PLAYER) {
+            interactions.put("Mine", new Interaction() {
+                @Override
+                public void interact() {
+                    switch (meteoroidField.resource){
+                        case 1:
+                            MagellanGame.gameState.RESOURCE1 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+                        case 2:
+                            MagellanGame.gameState.RESOURCE2 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+                        case 3:
+                            MagellanGame.gameState.RESOURCE3 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+
+                    }
+                    MagellanGame.instance.universe.tick();
+                    showInteractionWindow();
+
+                }
+            });
+        }
+
+
+        return interactions;
     }
 }
