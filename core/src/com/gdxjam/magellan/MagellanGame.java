@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.screen.BaseScreen;
 import com.gdxjam.magellan.screen.MapScreen;
 import com.gdxjam.magellan.screen.WindowScreen;
@@ -30,6 +31,8 @@ public class MagellanGame extends Game{
 
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
         gameState = new GameState(this);
+        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
+        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
         assets = new AssetManager();
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);

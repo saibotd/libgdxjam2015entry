@@ -1,5 +1,7 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.utils.Array;
+import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.Planet;
 
@@ -18,6 +20,7 @@ public class GameState {
     public int CREDITS_PER_TICK = 0;
     public int YEAR = 3056;
     public int POPULATION = 0;
+    public Array<DroneRoutine.ROUTINES> UNLOCKED_ROUTINES = new Array<DroneRoutine.ROUTINES>();
 
     public GameState(MagellanGame game) {
         this.game = game;

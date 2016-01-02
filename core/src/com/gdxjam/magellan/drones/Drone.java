@@ -3,6 +3,7 @@ package com.gdxjam.magellan.drones;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +11,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.*;
+import com.gdxjam.magellan.shopitem.ShopItem;
 
 /**
  * Created by saibotd on 26.12.15.
@@ -24,6 +27,10 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
     public Vector2 dimensions = new Vector2(280,170);
+    private Array<DroneRoutine.ROUTINES> listItems;
+    private Array<DroneRoutine.ROUTINES> selectedRoutines;
+    private List listRight;
+    private List listLeft;
 
     public Drone(Sector sector, int level) {
         super(sector);
@@ -124,56 +131,110 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         return group;
     }
 
+    private void updateLists(){
+        listItems = new Array<DroneRoutine.ROUTINES>();
+        for(DroneRoutine.ROUTINES  routine: MagellanGame.gameState.UNLOCKED_ROUTINES){
+            if(!selectedRoutines.contains(routine, false))
+                listItems.add(routine);
+        }
+        listLeft.setItems(listItems);
+        listRight.setItems(selectedRoutines);
+    }
+
+    public void showSetupWindow(){
+        Window window = MagellanGame.instance.windowScreen.getWindow("SETUP DRONE LVL " + maxNumberOfRoutines);
+        window.setDebug(true, true);
+        Skin skin = MagellanGame.instance.windowScreen.skin;
+        VerticalGroup windowContent = new VerticalGroup();
+        HorizontalGroup lists = new HorizontalGroup();
+        VerticalGroup leftGroup = new VerticalGroup();
+        VerticalGroup rightGroup = new VerticalGroup();
+        HorizontalGroup menu = new HorizontalGroup();
+
+        listLeft = new List(skin);
+        ScrollPane scrollPaneLeft = new ScrollPane(listLeft);
+
+        listRight = new List(skin);
+        ScrollPane scrollPaneRight = new ScrollPane(listRight);
+
+        leftGroup.addActor(new Label("Available routines", skin));
+        leftGroup.addActor(scrollPaneLeft);
+        rightGroup.addActor(new Label("Drone routines", skin));
+        rightGroup.addActor(scrollPaneRight);
+
+        TextButton doneButton = new TextButton("Done", skin);
+        TextButton addButton = new TextButton("Add routine", skin);
+        TextButton removeButton = new TextButton("Remove routine", skin);
+
+        addButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                DroneRoutine.ROUTINES selectedRoutine = (DroneRoutine.ROUTINES) listLeft.getSelected();
+                if(selectedRoutine == null || selectedRoutines.size >= maxNumberOfRoutines) return;
+                if(!selectedRoutines.contains(selectedRoutine, false))
+                    selectedRoutines.add(selectedRoutine);
+                updateLists();
+            }
+        });
+
+        removeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                DroneRoutine.ROUTINES selectedRoutine = (DroneRoutine.ROUTINES) listRight.getSelected();
+                if(selectedRoutine == null) return;
+                selectedRoutines.removeValue(selectedRoutine, false);
+                updateLists();
+            }
+        });
+
+        final Drone drone = this;
+
+        doneButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                for(DroneRoutine.ROUTINES routine: selectedRoutines){
+                    switch (routine){
+                        case ATTACKING:
+                            addRoutine(new DroneRoutineFighting(drone));
+                            break;
+                        case SCOUTING:
+                            addRoutine(new DroneRoutineScouting(drone));
+                            break;
+                        case MINING:
+                            addRoutine(new DroneRoutineMining(drone));
+                        break;
+                    }
+                }
+                MagellanGame.instance.windowScreen.closeWindow();
+                MagellanGame.instance.windowScreen.show();
+            }
+        });
+
+        selectedRoutines = new Array();
+        updateLists();
+
+        menu.addActor(addButton);
+        menu.addActor(removeButton);
+        menu.addActor(doneButton);
+        lists.addActor(leftGroup);
+        lists.addActor(rightGroup);
+        windowContent.addActor(lists);
+        windowContent.addActor(menu);
+        window.add(windowContent);
+    }
+
     @Override
     public ObjectMap<String, Interaction> getInteractions(GameObj with) {
-        final Drone drone = this;
         ObjectMap<String, Interaction> interactions = new ObjectMap();
 
-        if (submenuOpen == "") {
-            interactions.put("setup", new Interaction() {
-                @Override
-                public void interact() {
-                    submenuOpen = "setup";
-                    showInteractionWindow();
-                }
-            });
-            for (DroneRoutine routine : routines) {
-                interactions.putAll(routine.getInteractions(with));
+        interactions.put("setup", new Interaction() {
+            @Override
+            public void interact() {
+                showSetupWindow();
             }
-
-        }
-
-        if (submenuOpen == "setup") {
-            interactions.put("Add Scouting Routine", new Interaction() {
-                @Override
-                public void interact() {
-                    addRoutine(new DroneRoutineScouting(drone));
-                    showInteractionWindow();
-                }
-            });
-            interactions.put("Add Fighting Routine", new Interaction() {
-                @Override
-                public void interact() {
-                    addRoutine(new DroneRoutineFighting(drone));
-                    showInteractionWindow();
-                }
-            });
-            interactions.put("Add Mining Routine", new Interaction() {
-                @Override
-                public void interact() {
-                    addRoutine(new DroneRoutineMining(drone));
-                    showInteractionWindow();
-                }
-            });
-            if (routines.size > 0) {
-                interactions.put("Clear Routines", new Interaction() {
-                    @Override
-                    public void interact() {
-                        clearRoutines();
-                        showInteractionWindow();
-                    }
-                });
-            }
+        });
+        for (DroneRoutine routine : routines) {
+            interactions.putAll(routine.getInteractions(with));
         }
 
         return interactions;
