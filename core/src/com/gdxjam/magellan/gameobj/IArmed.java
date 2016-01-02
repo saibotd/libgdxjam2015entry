@@ -1,4 +1,4 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
 /**
  * Created by lolcorner on 20.12.2015.

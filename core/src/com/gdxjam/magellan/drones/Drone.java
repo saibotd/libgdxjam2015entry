@@ -10,13 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
-import com.gdxjam.magellan.screen.BaseScreen;
-import com.gdxjam.magellan.ships.PlayerShip;
-import com.gdxjam.magellan.ships.Ship;
+import com.gdxjam.magellan.gameobj.*;
 
 /**
  * Created by saibotd on 26.12.15.

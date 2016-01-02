@@ -2,6 +2,9 @@ package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.IDestroyable;
+import com.gdxjam.magellan.gameobj.Planet;
 
 /**
  * Created by lolcorner on 20.12.2015.

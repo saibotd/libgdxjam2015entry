@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.IDrawableMap;
 
 /**
  * Created by lolcorner on 19.12.2015.

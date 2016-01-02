@@ -1,6 +1,5 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**

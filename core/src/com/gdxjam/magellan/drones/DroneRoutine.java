@@ -1,13 +1,11 @@
 package com.gdxjam.magellan.drones;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.IDestroyable;
-import com.gdxjam.magellan.IInteractable;
-import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.IDestroyable;
+import com.gdxjam.magellan.gameobj.IInteractable;
 
 /**
  * Created by saibotd on 27.12.15.

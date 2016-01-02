@@ -1,16 +1,17 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdxjam.magellan.drones.DroneRoutine;
+import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.Sector;
+import com.gdxjam.magellan.shopitem.ShopItem;
+import com.gdxjam.magellan.shopitem.ShopItemDrone;
 
 /**
  * Created by Felix on 29.12.2015.

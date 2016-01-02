@@ -1,7 +1,7 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
-import aurelienribon.tweenengine.TweenManager;
-import com.gdxjam.magellan.screen.BaseScreen;
+import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.Sector;
 
 /**
  * Created by lolcorner on 19.12.2015.

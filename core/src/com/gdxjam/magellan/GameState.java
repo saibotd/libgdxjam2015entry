@@ -1,5 +1,8 @@
 package com.gdxjam.magellan;
 
+import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.Planet;
+
 /**
  * Created by Felix on 23.12.2015.
  */

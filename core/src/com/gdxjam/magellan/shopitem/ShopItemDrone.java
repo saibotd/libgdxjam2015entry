@@ -1,4 +1,4 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.shopitem;
 
 import com.gdxjam.magellan.ships.PlayerShip;
 

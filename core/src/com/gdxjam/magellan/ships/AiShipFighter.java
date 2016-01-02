@@ -1,8 +1,8 @@
 package com.gdxjam.magellan.ships;
 
 import com.gdxjam.magellan.Battle;
-import com.gdxjam.magellan.GameObj;
-import com.gdxjam.magellan.IDestroyable;
+import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.Sector;
 
 /**

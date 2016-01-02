@@ -1,4 +1,4 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;

@@ -1,7 +1,9 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gdxjam.magellan.Sector;
+import com.gdxjam.magellan.gameobj.GameObj;
 
 /**
  * Created by lolcorner on 19.12.2015.

@@ -1,4 +1,4 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
 import com.badlogic.gdx.utils.Disposable;
 

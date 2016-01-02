@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.gdxjam.magellan.gameobj.IArmed;
+import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.screen.BaseScreen;
-import com.gdxjam.magellan.ships.AiShipFighter;
 import com.gdxjam.magellan.ships.PlayerShip;
 
 /**

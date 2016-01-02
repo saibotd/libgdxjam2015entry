@@ -1,15 +1,16 @@
-package com.gdxjam.magellan;
+package com.gdxjam.magellan.gameobj;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.gdxjam.magellan.MagellanColors;
+import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;

@@ -1,6 +1,5 @@
 package com.gdxjam.magellan.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -8,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
+import com.gdxjam.magellan.gameobj.*;
 import com.gdxjam.magellan.ships.AiShip;
 import com.gdxjam.magellan.ships.PlayerShip;
-import com.gdxjam.magellan.ships.Ship;
 
 /**
  * Created by lolcorner on 20.12.2015.
