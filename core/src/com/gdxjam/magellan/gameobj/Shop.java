@@ -10,8 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
+import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.shopitem.ShopItem;
 import com.gdxjam.magellan.shopitem.ShopItemDrone;
+import com.gdxjam.magellan.shopitem.ShopItemDroneRoutine;
 
 /**
  * Created by Felix on 29.12.2015.
@@ -28,6 +30,9 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         inventory.add(new ShopItemDrone(3));
         inventory.add(new ShopItemDrone(4));
         inventory.add(new ShopItemDrone(5));
+
+        inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
+        inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.DEFENDING, 600));
     }
 
     @Override
