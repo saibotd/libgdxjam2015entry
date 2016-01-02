@@ -211,6 +211,9 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         });
 
         selectedRoutines = new Array();
+        for(DroneRoutine _routines:routines){
+            selectedRoutines.add(_routines.routine);
+        }
         updateLists();
 
         menu.addActor(addButton);
