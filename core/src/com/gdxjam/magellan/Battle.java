@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Disposable;
+import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IArmed;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.screen.BaseScreen;
+import com.gdxjam.magellan.screen.WindowScreen;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.shopitem.ScreenShake;
 
@@ -16,7 +18,7 @@ import com.gdxjam.magellan.shopitem.ScreenShake;
  * Created by saibotd on 29.12.15.
  */
 public class Battle implements Disposable{
-    private BaseScreen screen;
+    private WindowScreen screen;
     private IDestroyable offensive;
     private IDestroyable defensive;
 
@@ -28,6 +30,7 @@ public class Battle implements Disposable{
         if(defensive instanceof PlayerShip){
             MagellanGame.instance.showWindowScreen();
             screen.startBGM(MagellanGame.assets.get("battle.mp3", Music.class));
+            showAlertWindow();
         }
         if(offensive instanceof PlayerShip){
             screen.startBGM(MagellanGame.assets.get("battle.mp3", Music.class));
@@ -37,8 +40,13 @@ public class Battle implements Disposable{
         }
     }
 
+    private boolean isPlayerBattle(){
+        return offensive instanceof PlayerShip || defensive instanceof PlayerShip;
+    }
+
     public void playerTurn(){
         screen.closeWindow();
+        Gdx.app.log("playerTurn", "1");
         Window window = screen.getWindow("Battle");
         VerticalGroup windowContent = new VerticalGroup();
         HorizontalGroup menu = new HorizontalGroup();
@@ -57,6 +65,7 @@ public class Battle implements Disposable{
                 screen.game.showMapScreen();
             }
         });
+        Gdx.app.log("playerTurn", "2");
         menu.addActor(buttonAttack);
         menu.addActor(buttonFlee);
         windowContent.addActor(menu);
@@ -65,6 +74,10 @@ public class Battle implements Disposable{
 
     public void turn(){
         Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS " + defensive.toString());
+        if(((GameObj) offensive).sector != ((GameObj) defensive).sector){
+            dispose();
+            return;
+        }
         if(offensive instanceof IArmed){
             IArmed armedOffensive = (IArmed) offensive;
             int i = armedOffensive.shootAt(defensive);
@@ -76,12 +89,13 @@ public class Battle implements Disposable{
         }
         if(offensive.isAlive() && defensive.isAlive()){
             IDestroyable _offensive = offensive;
-            IDestroyable _defensive = defensive;
-            offensive = _defensive;
+            offensive = defensive;
             defensive = _offensive;
-            if(offensive instanceof PlayerShip)
+            if(offensive instanceof PlayerShip){
+                Gdx.app.log("HERE", "HERE");
                 playerTurn();
-            else
+                return;
+            } else
                 turn();
         } else {
             if(!offensive.isAlive()) offensive.destroy();
@@ -90,14 +104,54 @@ public class Battle implements Disposable{
             dispose();
         }
         if(offensive instanceof PlayerShip){
-            screen.closeWindow();
-            screen.show();
+            screen.drawSurroundings();
         }
+    }
+
+    private void showAlertWindow() {
+        screen.closeWindow();
+        Window window = screen.getWindow("You are under Attack!");
+        VerticalGroup windowContent = new VerticalGroup();
+        HorizontalGroup menu = new HorizontalGroup();
+        TextButton buttonOK = new TextButton("OK", screen.skin);
+        buttonOK.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                playerTurn();
+            }
+        });
+        menu.addActor(buttonOK);
+        windowContent.addActor(menu);
+        window.add(windowContent);
+    }
+
+    private void showOutcomeWindow() {
+        screen.closeWindow();
+        Window window = screen.getWindow("Battle outcome");
+        VerticalGroup windowContent = new VerticalGroup();
+        HorizontalGroup menu = new HorizontalGroup();
+        TextButton buttonOK = new TextButton("OK", screen.skin);
+        buttonOK.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.closeWindow();
+                screen.drawSurroundings();
+            }
+        });
+        menu.addActor(buttonOK);
+        windowContent.addActor(menu);
+        window.add(windowContent);
     }
 
     @Override
     public void dispose() {
-        screen.closeWindow();
-        screen.startBGM();
+        Gdx.app.log("BATTLE", "DISPOSE");
+        if(isPlayerBattle()){
+            screen.drawSurroundings();
+            showOutcomeWindow();
+            screen.startBGM();
+        }
+        offensive = null;
+        defensive = null;
     }
 }

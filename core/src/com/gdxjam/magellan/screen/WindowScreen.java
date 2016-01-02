@@ -50,6 +50,11 @@ public class WindowScreen extends BaseScreen {
 
     public void show(){
         super.show();
+        closeWindow();
+        drawSurroundings();
+    }
+
+    public void drawSurroundings(){
         dronesOnScreen.clear();
         resourcesOnScreen.clear();
         playerOnScreen.clear();
@@ -123,7 +128,7 @@ public class WindowScreen extends BaseScreen {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         interactable.getInteractions(game.universe.playerShip).get(key).interact();
-                        show();
+                        drawSurroundings();
                     }
                 });
                 menu.addActor(button);

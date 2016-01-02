@@ -28,6 +28,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
+        health = 10;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(4);
@@ -49,7 +50,6 @@ public class PlayerShip extends Ship implements IInteractable {
         drones.removeValue(level, false);
         Drone drone = new Drone(this.sector, level);
         drone.faction = faction;
-        drone.addRoutine(new DroneRoutineScouting(drone));
         MagellanGame.gameState.updateNumberOfDrones();
     }
 

@@ -176,6 +176,7 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public void closeWindow() {
+        Gdx.app.log("closeWindow", "called");
         windowContainer.clear();
     }
 
