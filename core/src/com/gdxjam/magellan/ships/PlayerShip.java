@@ -23,7 +23,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public int HUMANS = 10000;
     public Array<Integer> drones = new Array();
     public Array<ShopItem> inventory;
-    public int mineResourcesPerTick = 2;
+    public int mineResourcesPerTick = 10;
 
     public PlayerShip(Sector sector) {
         super(sector);

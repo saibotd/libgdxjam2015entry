@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,9 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.gdxjam.magellan.MagellanColors;
-import com.gdxjam.magellan.MagellanGame;
-import com.gdxjam.magellan.Sector;
+import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
@@ -25,6 +24,10 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     public int population = 0;
     public Color color;
     public int visualType;
+    public int resource1;
+    public int resource2;
+    public int resource3;
+    public int minResourcesForSettling = 100;
 
     public Planet(Sector sector) {
         super(sector);
@@ -37,6 +40,9 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
             case 4: color = MagellanColors.PLANET_5; break;
             default: color = MagellanColors.PLANET_1; break;
         }
+        resource1 = MathUtils.random(200);
+        resource2 = MathUtils.random(200);
+        resource3 = MathUtils.random(200);
     }
 
     @Override
@@ -109,10 +115,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     }
 
     public void tick(){
-        if(population <= 1) population = 0;
-        else{
-            population += MathUtils.clamp(Math.round(population/MathUtils.random(200,500)), 1, population);
-        }
+        growPopulation();
     }
 
     public void claim(Ship ship){
@@ -122,6 +125,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     public void populate(Ship ship, int humans){
         if(ship instanceof PlayerShip){
             faction = ship.faction;
+            humans = MathUtils.clamp(humans, 0, getPopulationLimit());
             humans = MathUtils.clamp(humans, 0, ((PlayerShip) ship).HUMANS);
             population += humans;
             ((PlayerShip) ship).HUMANS -= humans;
@@ -143,6 +147,23 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         MagellanGame.gameState.updatePopulationCount();
     }
 
+    public void growPopulation() {
+        if (population <= 1) {
+            population = 0;
+        } else {
+            int popGrowth = MathUtils.floor(population * 0.05f);
+            population = MathUtils.clamp(population + popGrowth, 0, getPopulationLimit());
+        }
+    }
+
+    public int getPopulationLimit() {
+        if (!isHabitable()) {
+            return 0;
+        } else {
+            return resource1 * 10 + resource2 * 10 + resource3 * 10;
+        }
+    }
+
     public int creditsByTick(){
         return Math.round(population/100);
     }
@@ -150,43 +171,118 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     @Override
     public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
         ObjectMap<String, Interaction> interactions = new ObjectMap();
-        if (faction == Factions.NEUTRAL) {
-            interactions.put("claim", new Interaction() {
+
+        if (submenuOpen == "") {
+            if (faction == Factions.NEUTRAL) {
+                interactions.put("claim", new Interaction() {
+                    @Override
+                    public void interact() {
+                        claim((Ship) with);
+                        showInteractionWindow();
+                    }
+                });
+            }
+            if (faction == with.faction && isHabitable()) {
+                interactions.put("populate", new Interaction() {
+                    @Override
+                    public void interact() {
+                        // TODO: Ask for how many
+                        populate((Ship) with, 1000);
+                        closeWindow();
+                    }
+                });
+            }
+            if (faction == with.faction && population > 0) {
+                interactions.put("board humans", new Interaction() {
+                    @Override
+                    public void interact() {
+                        // TODO: Ask for how many
+                        boardHumans((Ship) with, 100);
+                        closeWindow();
+                    }
+                });
+            }
+            if (faction == with.faction) {
+                interactions.put("Upgrade planet", new Interaction() {
+                    @Override
+                    public void interact() {
+                        submenuOpen = "upgrade";
+                        showInteractionWindow();
+                    }
+                });
+            }
+        }
+
+        if (submenuOpen == "upgrade") {
+            interactions.put("Add 10 " + Statics.resource1, new Interaction() {
                 @Override
                 public void interact() {
-                    claim((Ship) with);
+                    addResources(1, MagellanGame.gameState.spendResource(1, 10));
                     showInteractionWindow();
                 }
             });
-        }
-        if (faction == with.faction) {
-            interactions.put("populate", new Interaction() {
+            interactions.put("Add 10 " + Statics.resource2, new Interaction() {
                 @Override
                 public void interact() {
-                    // TODO: Ask for how many
-                    populate((Ship) with, 1000);
-                    closeWindow();
+                    addResources(2, MagellanGame.gameState.spendResource(2, 10));
+                    showInteractionWindow();
                 }
             });
-        }
-        if (faction == with.faction && population > 0) {
-            interactions.put("board humans", new Interaction() {
+            interactions.put("Add 10 " + Statics.resource3, new Interaction() {
                 @Override
                 public void interact() {
-                    // TODO: Ask for how many
-                    boardHumans((Ship) with, 100);
-                    closeWindow();
+                    addResources(3, MagellanGame.gameState.spendResource(3, 10));
+                    showInteractionWindow();
                 }
             });
         }
         return interactions;
     }
 
+    public boolean isHabitable() {
+        if (resource1 >= minResourcesForSettling && resource2 >= minResourcesForSettling && resource3 >= minResourcesForSettling) {
+            return true;
+        }
+        return false;
+    }
     @Override
     public String getInfo() {
         String s = "Faction: " + faction.toString();
-        s += "\nPopulation: " + population;
-        s += "\nCredits production: " + creditsByTick();
+        s += "\nPopulation: " + population + " / " + getPopulationLimit();
+        if (faction == Factions.PLAYER) {
+            s += "\nCredits production: " + creditsByTick();
+        }
+        s += "\n";
+        s += "\n"+ Statics.resource1 + ": " + resource1;
+        s += "\n"+ Statics.resource2 + ": " + resource2;
+        s += "\n"+ Statics.resource3 + ": " + resource3;
+        s += "\n";
+
+        if (faction == Factions.NEUTRAL || (faction == Factions.PLAYER && population == 0)) {
+            if (isHabitable()) {
+                s += "\nThis Planet can support human life.";
+            } else {
+                s += "\nThis Planet is inhabitable right now.";
+                s += "\n(Need " + minResourcesForSettling + " of each resource for settling here)";
+            }
+        }
+
+
         return s;
+    }
+
+    public void addResources(int resourcetype, int amount) {
+
+        switch (resourcetype) {
+            case 1:
+                resource1 += amount;
+                break;
+            case 2:
+                resource2 += amount;
+                break;
+            case 3:
+                resource3 += amount;
+                break;
+        }
     }
 }

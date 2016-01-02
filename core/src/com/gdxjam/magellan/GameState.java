@@ -1,5 +1,6 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.gameobj.GameObj;
@@ -56,6 +57,26 @@ public class GameState {
         }
     }
 
+    // SPEND RESOURCE AND RETURN HOW MANY CAN BE SPENT
+    public int spendResource(int resourcetype, int amount) {
+
+        switch (resourcetype) {
+            case 1:
+                amount = MathUtils.clamp(amount, 0, RESOURCE1);
+                RESOURCE1 -= amount;
+                break;
+            case 2:
+                amount = MathUtils.clamp(amount, 0, RESOURCE2);
+                RESOURCE2 -= amount;
+                break;
+            case 3:
+                amount = MathUtils.clamp(amount, 0, RESOURCE3);
+                RESOURCE3 -= amount;
+                break;
+        }
+
+        return amount;
+    }
 
 
 }
