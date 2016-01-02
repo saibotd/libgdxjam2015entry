@@ -208,6 +208,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
                 }
                 MagellanGame.instance.windowScreen.closeWindow();
                 MagellanGame.instance.windowScreen.drawSurroundings();
+                MagellanGame.soundFx.upgrade.play(0.5f);
             }
         });
 

@@ -127,6 +127,9 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
             faction = ship.faction;
             humans = MathUtils.clamp(humans, 0, getPopulationLimit());
             humans = MathUtils.clamp(humans, 0, ((PlayerShip) ship).HUMANS);
+            if (humans > 0) {
+                MagellanGame.soundFx.population.play(0.6f);
+            }
             population += humans;
             ((PlayerShip) ship).HUMANS -= humans;
         }
@@ -260,7 +263,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
         if (faction == Factions.NEUTRAL || (faction == Factions.PLAYER && population == 0)) {
             if (isHabitable()) {
-                s += "\nThis Planet can support human life.";
+                s += "\nThis Planet should support human life.";
             } else {
                 s += "\nThis Planet is inhabitable right now.";
                 s += "\n(Need " + minResourcesForSettling + " of each resource for settling here)";

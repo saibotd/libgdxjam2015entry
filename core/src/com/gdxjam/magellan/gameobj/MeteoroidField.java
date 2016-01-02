@@ -142,6 +142,7 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
 
                     }
                     MagellanGame.instance.universe.tick();
+                    MagellanGame.soundFx.mine.play(0.4f);
                     showInteractionWindow();
 
                 }
