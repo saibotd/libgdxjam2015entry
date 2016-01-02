@@ -1,29 +1,36 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.Statics;
+import com.gdxjam.magellan.drones.DroneRoutine;
+import com.gdxjam.magellan.drones.DroneRoutineFighting;
+import com.gdxjam.magellan.drones.DroneRoutineMining;
+import com.gdxjam.magellan.drones.DroneRoutineScouting;
+import com.gdxjam.magellan.ships.PlayerShip;
 
 /**
  * Created by lolcorner on 22.12.2015.
  */
-public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow {
+public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow, IInteractable {
 
     public int resource; // 1 - 3
-    public int resourcePerTick;
+    public int resourceAmount;
     private Sprite mapSprite;
 
     public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
-        resourcePerTick = MathUtils.random(10, 100);
+        resourceAmount = MathUtils.random(5, 200);
     }
 
     @Override
@@ -36,6 +43,10 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
             mapSprite.setSize(23,23);
         }
 
+        if (resourceAmount == 0) {
+            mapSprite.setColor(Color.LIGHT_GRAY);
+            return;
+        }
         switch (resource){
             case 1:
                 mapSprite.setColor(MagellanColors.RESOURCE_1);
@@ -94,7 +105,50 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
         }
         String s = "Faction: " + faction.toString();
         s += "\nResource: " + resourceName;
-        s += "\nResources per year: " + resourcePerTick;
+        s += "\nResource amount: " + resourceAmount;
         return s;
+    }
+
+    public int mine(int amount) {
+        if (amount > resourceAmount) {
+            amount = resourceAmount;
+        }
+        resourceAmount -= amount;
+        if (resourceAmount == 0) {
+            prepareRenderingOnMap();
+        }
+        return amount;
+    }
+
+    @Override
+    public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
+        final MeteoroidField meteoroidField = this;
+        ObjectMap<String, Interaction> interactions = new ObjectMap();
+
+        if (resourceAmount > 0 && with.faction == Factions.PLAYER) {
+            interactions.put("Mine", new Interaction() {
+                @Override
+                public void interact() {
+                    switch (meteoroidField.resource){
+                        case 1:
+                            MagellanGame.gameState.RESOURCE1 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+                        case 2:
+                            MagellanGame.gameState.RESOURCE2 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+                        case 3:
+                            MagellanGame.gameState.RESOURCE3 += meteoroidField.mine(((PlayerShip) with).mineResourcesPerTick);
+                            break;
+
+                    }
+                    MagellanGame.instance.universe.tick();
+                    showInteractionWindow();
+
+                }
+            });
+        }
+
+
+        return interactions;
     }
 }

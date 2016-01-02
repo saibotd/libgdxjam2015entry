@@ -31,13 +31,13 @@ public class DroneRoutineMining extends DroneRoutine{
         for(MeteoroidField meteoroidField :metroidFields){
             switch (meteoroidField.resource){
                 case 1:
-                    MagellanGame.gameState.RESOURCE1 += MathUtils.clamp(meteoroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE1 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
                     break;
                 case 2:
-                    MagellanGame.gameState.RESOURCE2 += MathUtils.clamp(meteoroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE2 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
                     break;
                 case 3:
-                    MagellanGame.gameState.RESOURCE3 += MathUtils.clamp(meteoroidField.resourcePerTick, 0, resourcesPerTick * powerLevel);
+                    MagellanGame.gameState.RESOURCE3 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
                     break;
 
             }
