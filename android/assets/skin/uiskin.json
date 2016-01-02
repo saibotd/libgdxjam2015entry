@@ -19,12 +19,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: button-down, up: button },
 	yellow: { down: button-yellow-down, up: button-yellow },
-	toggle: { down: default-round-down, checked: default-round-down, up: default-round }
+	red: { down: button-red-down, up: button-red }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: button-down, up: button, font: button-font, fontColor: white },
-	yellow: { down: button-yellow-down, up: button-yellow, font: default-font, fontColor: white },
-	toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red }
+	yellow: { down: button-yellow-down, up: button-yellow, font: button-font, fontColor: black },
+	red: { down: button-red-down, up: button-red, font: button-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { vScroll: default-scroll, hScrollKnob: default-round-large, background: default-rect, hScroll: default-scroll, vScrollKnob: default-round-large }

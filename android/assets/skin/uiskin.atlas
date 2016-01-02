@@ -43,6 +43,22 @@ button-yellow-down
   orig: 28, 28
   offset: 0, 0
   index: -1
+button-red
+  rotate: false
+  xy: 0, 184
+  size: 28, 28
+  split: 7, 14, 7, 14
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+button-red-down
+  rotate: false
+  xy: 0, 212
+  size: 28, 28
+  split: 7, 14, 7, 14
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
 default
   rotate: false
   xy: 1, 50

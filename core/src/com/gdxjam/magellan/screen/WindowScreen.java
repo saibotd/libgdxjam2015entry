@@ -100,17 +100,20 @@ public class WindowScreen extends BaseScreen {
 
     public void showInteractionWindow(final IDrawableWindow gameObj){
 
-        Window window = getWindow(gameObj.getTitle());
-
+        Window window = getWindow(gameObj.getTitle() + "    ");
+        window.getTitleLabel().setEllipsis(false);
         VerticalGroup windowContent = new VerticalGroup();
+        windowContent.fill();
         Label info = new Label(gameObj.getInfo(), skin);
-        HorizontalGroup menu = new HorizontalGroup();
+        VerticalGroup menu = new VerticalGroup();
         menu.padTop(20);
+        menu.space(6);
+        menu.fill();
         final WindowScreen screen = this;
         if(gameObj instanceof IInteractable) {
             final IInteractable interactable = (IInteractable) gameObj;
             for (final String key : interactable.getInteractions(game.universe.playerShip).keys()) {
-                TextButton button = new TextButton(key, skin);
+                TextButton button = new TextButton(key, skin, "yellow");
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -123,7 +126,7 @@ public class WindowScreen extends BaseScreen {
         }
         if(gameObj instanceof IDestroyable && ((GameObj)gameObj).submenuOpen == "") {
             final IDestroyable destroyable = (IDestroyable) gameObj;
-            TextButton button = new TextButton("ATTACK", skin);
+            TextButton button = new TextButton("ATTACK", skin, "red");
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -135,7 +138,7 @@ public class WindowScreen extends BaseScreen {
         }
         windowContent.addActor(info);
         windowContent.addActor(menu);
-        window.add(windowContent);
+        window.add(windowContent).expandX().fill();
     }
 
 
