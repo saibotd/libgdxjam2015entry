@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,13 +18,13 @@ import com.gdxjam.magellan.Statics;
 public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWindow {
 
     public int resource; // 1 - 3
-    public int resourcePerTick;
+    public int resourceAmount;
     private Sprite mapSprite;
 
     public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
-        resourcePerTick = MathUtils.random(10, 100);
+        resourceAmount = MathUtils.random(5, 100);
     }
 
     @Override
@@ -36,6 +37,10 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
             mapSprite.setSize(23,23);
         }
 
+        if (resourceAmount == 0) {
+            mapSprite.setColor(Color.LIGHT_GRAY);
+            return;
+        }
         switch (resource){
             case 1:
                 mapSprite.setColor(MagellanColors.RESOURCE_1);
@@ -94,7 +99,18 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
         }
         String s = "Faction: " + faction.toString();
         s += "\nResource: " + resourceName;
-        s += "\nResources per year: " + resourcePerTick;
+        s += "\nResource amount: " + resourceAmount;
         return s;
+    }
+
+    public int mine(int amount) {
+        if (amount > resourceAmount) {
+            amount = resourceAmount;
+        }
+        resourceAmount -= amount;
+        if (resourceAmount == 0) {
+            prepareRenderingOnMap();
+        }
+        return amount;
     }
 }
