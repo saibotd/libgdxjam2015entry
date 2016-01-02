@@ -104,7 +104,7 @@ public class WindowScreen extends BaseScreen {
         window.getTitleLabel().setEllipsis(false);
         VerticalGroup windowContent = new VerticalGroup();
         windowContent.fill();
-        Label info = new Label(gameObj.getInfo(), skin);
+        Label info = new Label(gameObj.getInfo(), skin, "window");
         VerticalGroup menu = new VerticalGroup();
         menu.padTop(20);
         menu.space(6);
