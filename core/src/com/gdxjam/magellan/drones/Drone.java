@@ -241,7 +241,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
             @Override
             public void interact() {
                 MagellanGame.instance.universe.playerShip.drones.add(maxNumberOfRoutines);
-                MagellanGame.instance.windowScreen.getWindow("Drone", "Drone LVL " + maxNumberOfRoutines + " loaded boarded your ship");
+                MagellanGame.instance.windowScreen.getWindow("Drone", "Drone LVL " + maxNumberOfRoutines + " boarded.");
                 dispose();
                 MagellanGame.gameState.updateNumberOfDrones();
             }
