@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -10,6 +11,7 @@ import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.*;
 import com.gdxjam.magellan.ships.AiShip;
 import com.gdxjam.magellan.ships.PlayerShip;
+import com.gdxjam.magellan.shopitem.ScreenShake;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -97,6 +99,10 @@ public class WindowScreen extends BaseScreen {
         }
     }
 
+    public void shake(int i){
+        ScreenShake.shakeScreen(30,stage.getCamera().position.cpy(), 10 * i);
+    }
+
     public void showInteractionWindow(final IDrawableWindow gameObj){
 
         Window window = getWindow(gameObj.getTitle() + "    ");
@@ -123,14 +129,14 @@ public class WindowScreen extends BaseScreen {
                 menu.addActor(button);
             }
         }
-        if(gameObj instanceof IDestroyable && ((GameObj)gameObj).submenuOpen == "") {
+        if(gameObj instanceof IDestroyable && gameObj != game.universe.playerShip && ((GameObj)gameObj).submenuOpen == "") {
             final IDestroyable destroyable = (IDestroyable) gameObj;
             TextButton button = new TextButton("ATTACK", skin, "red");
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     closeWindow();
-                    new Battle(screen, game.universe.playerShip, destroyable);
+                    new Battle(game.universe.playerShip, destroyable);
                 }
             });
             menu.addActor(button);
@@ -140,66 +146,9 @@ public class WindowScreen extends BaseScreen {
         window.add(windowContent).expandX().fill();
     }
 
-
-
-    /*
-    private void setupInterfaceMenus(){
-        TextButton btnReleaseDrone = new TextButton("RELEASE DRONE", skin);
-        btnReleaseDrone.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-                game.universe.playerShip.releaseDrone(game.universe.playerShip.drones.random());
-                setupInterfaceMenus();
-            }
-        });
-        if(game.universe.playerShip.drones.size > 0)
-            interactionsMenu.addActor(btnReleaseDrone);
-        for(GameObj gameObj : game.universe.playerShip.sector.gameObjs){
-            if(gameObj != game.universe.playerShip) {
-                VerticalGroup menu = new VerticalGroup();
-                if (gameObj instanceof IDrawableWindow) {
-                    final IDrawableWindow drawableGameObj = (IDrawableWindow) gameObj;
-                    drawableGameObj.prepareRendering();
-                    Label title = new Label(drawableGameObj.getTitle(), skin);
-                    Label info = new Label(drawableGameObj.getInfo(), skin);
-                    menu.addActor(title);
-                    menu.addActor(info);
-                }
-                if (gameObj instanceof IInteractable) {
-                    final IInteractable interactableGameObj = (IInteractable) gameObj;
-                    if(interactableGameObj.getInteractions(game.universe.playerShip) != null) {
-                        for (final String key : interactableGameObj.getInteractions(game.universe.playerShip).keys()) {
-                            TextButton button = new TextButton(key, skin);
-                            button.addListener(new ChangeListener() {
-                                @Override
-                                public void changed(ChangeEvent event, Actor actor) {
-                                    interactableGameObj.getInteractions(game.universe.playerShip).get(key).interact();
-                                    setupInterfaceMenus();
-                                }
-                            });
-                            menu.addActor(button);
-                        }
-                    }
-                }
-                if (gameObj instanceof IDestroyable) {
-                    final IDestroyable destroyableGameObj = (IDestroyable) gameObj;
-                    TextButton button = new TextButton("attack", skin);
-                    button.addListener(new ChangeListener() {
-                        @Override
-                        public void changed(ChangeEvent event, Actor actor) {
-                            game.universe.playerShip.shootAt(destroyableGameObj);
-                            setupInterfaceMenus();
-                        }
-                    });
-                    menu.addActor(button);
-                }
-                interactionsMenu.addActor(menu);
-            }
-        }
-    }
-    */
-
     public void render(float delta){
         super.render(delta);
         renderUi(delta);
+        ScreenShake.update(stage.getCamera());
     }
 }
