@@ -47,7 +47,7 @@ public class WindowScreen extends BaseScreen {
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
         playerOnScreen.setPosition(-30, 500);
-        planetOnScreen.setPosition(800, 600);
+        planetOnScreen.setPosition(818, 720);
         shopOnScreen.setPosition(700, 600);
         resourcesOnScreen.setPosition(400, 720);
 
@@ -76,7 +76,8 @@ public class WindowScreen extends BaseScreen {
             if(gameObj instanceof IDrawableWindow){
                 Actor actor = ((IDrawableWindow) gameObj).getActor();
                 if(gameObj instanceof Planet){
-                    planetOnScreen.setWidth(actor.getWidth());
+                    planetOnScreen.setWidth(actor.getWidth()/3);
+                    planetOnScreen.setHeight(720.0f);
                     planetOnScreen.addActor(actor);
                 }
                 if(gameObj instanceof Drone) {
@@ -196,5 +197,9 @@ public class WindowScreen extends BaseScreen {
         batch.end();
         renderUi(delta);
         ScreenShake.update(stage.getCamera());
+    }
+
+    public int assetToGameSize(int size) {
+        return size/3;
     }
 }

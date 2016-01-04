@@ -31,7 +31,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     public Planet(Sector sector) {
         super(sector);
-        visualType = MathUtils.random(1,2);
+        visualType = MathUtils.random(1,4);
         switch (MathUtils.random(4)) {
             case 0: color = MagellanColors.PLANET_1; break;
             case 1: color = MagellanColors.PLANET_2; break;
@@ -47,7 +47,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("map_planet_"+visualType+".png", Texture.class));
+        Image image = new Image(MagellanGame.assets.get("sectorview_planet_"+visualType+".png", Texture.class));
         image.setColor(color);
         return image;
     }

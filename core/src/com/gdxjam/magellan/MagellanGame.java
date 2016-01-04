@@ -42,6 +42,8 @@ public class MagellanGame extends Game{
         assets.load("map_meteoroids_planetsector.png", Texture.class);
         assets.load("map_planet_1.png", Texture.class);
         assets.load("map_planet_2.png", Texture.class);
+        assets.load("map_planet_3.png", Texture.class);
+        assets.load("map_planet_4.png", Texture.class);
         assets.load("map_planet_claimed.png", Texture.class);
         assets.load("map_sector.png", Texture.class);
         assets.load("map_sector_notvisited.png", Texture.class);
