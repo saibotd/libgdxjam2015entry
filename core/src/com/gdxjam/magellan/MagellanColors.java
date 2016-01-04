@@ -13,6 +13,7 @@ public class MagellanColors {
     public static Color FACTION_NEUTRAL = new Color(0xb3b3b3ff);
     public static Color BLUE = new Color(0x22626fff);
     public static Color DARK_BG = new Color(0x0d1213ff);
+    public static Color UNIVERSE_BG = new Color(0x05030bff);
 
     public static Color MAP_POSSIBLE_MOVEMENT = new Color(0x25e7e9ff);
     public static Color MAP_BG = new Color(0x05030bff);

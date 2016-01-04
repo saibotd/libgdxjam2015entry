@@ -1,6 +1,12 @@
 package com.gdxjam.magellan.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,9 +29,14 @@ public class WindowScreen extends BaseScreen {
     private final VerticalGroup resourcesOnScreen;
     private final VerticalGroup playerOnScreen;
     private final VerticalGroup shopOnScreen;
+    private Sprite starfield;
 
     public WindowScreen(MagellanGame game) {
         super(game);
+
+        starfield = createStarfield();
+        starfield.setSize(1280,720);
+
         dronesOnScreen = new VerticalGroup();
         shipsOnScreen = new VerticalGroup();
         playerOnScreen = new VerticalGroup();
@@ -151,8 +162,38 @@ public class WindowScreen extends BaseScreen {
         window.add(windowContent).expandX().fill();
     }
 
+    public Sprite createStarfield() {
+        int width = 1280*4;
+        int height = 720*4;
+        int amount_small = 300;
+        int amount_mid = 150;
+        int amount_big = 20;
+
+        Pixmap bg = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        bg.setColor(MagellanColors.UNIVERSE_BG);
+        bg.fillRectangle(0,0,width,height);
+
+        bg.setColor(Color.WHITE);
+        for(int i = 0; i < amount_small; i++) {
+            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 1);
+        }
+        for(int i = 0; i < amount_mid; i++) {
+            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 2);
+        }
+        for(int i = 0; i < amount_big; i++) {
+            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 5);
+        }
+        Texture field = new Texture(bg);
+        bg.dispose();
+
+        return new Sprite(field);
+    }
+
     public void render(float delta){
         super.render(delta);
+        batch.begin();
+        starfield.draw(batch);
+        batch.end();
         renderUi(delta);
         ScreenShake.update(stage.getCamera());
     }
