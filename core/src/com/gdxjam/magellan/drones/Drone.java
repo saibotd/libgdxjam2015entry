@@ -143,13 +143,23 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     public void showSetupWindow(){
         Window window = MagellanGame.instance.windowScreen.getWindow("SETUP DRONE LVL " + maxNumberOfRoutines);
-        window.setDebug(true, true);
+        //window.setDebug(true, true);
         Skin skin = MagellanGame.instance.windowScreen.skin;
         VerticalGroup windowContent = new VerticalGroup();
+        windowContent.fill();
         HorizontalGroup lists = new HorizontalGroup();
+        lists.space(20);
+        lists.fill();
+        //lists.debugAll();
         VerticalGroup leftGroup = new VerticalGroup();
         VerticalGroup rightGroup = new VerticalGroup();
+        leftGroup.space(10);
+        rightGroup.space(10);
+        //leftGroup.debugAll();
+        leftGroup.fill();
+        rightGroup.fill();
         HorizontalGroup menu = new HorizontalGroup();
+        menu.padTop(20);
 
         listLeft = new List(skin);
         ScrollPane scrollPaneLeft = new ScrollPane(listLeft);
@@ -157,9 +167,10 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         listRight = new List(skin);
         ScrollPane scrollPaneRight = new ScrollPane(listRight);
 
+
         leftGroup.addActor(new Label("Available routines", skin));
         leftGroup.addActor(scrollPaneLeft);
-        rightGroup.addActor(new Label("Drone routines", skin));
+        rightGroup.addActor(new Label("Installed routines", skin));
         rightGroup.addActor(scrollPaneRight);
 
         TextButton doneButton = new TextButton("Done", skin);
