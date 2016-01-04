@@ -22,6 +22,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     private Sprite mapSprite;
     private Array<ShopItem> inventory = new Array<ShopItem>();
+    private Label info;
 
     public Shop(Sector sector) {
         super(sector);
@@ -33,6 +34,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
         inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
         inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.DEFENDING, 600));
+
     }
 
     @Override
@@ -60,16 +62,20 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         Skin skin = MagellanGame.instance.windowScreen.skin;
         VerticalGroup windowContent = new VerticalGroup();
         HorizontalGroup listAndInfo = new HorizontalGroup();
+        listAndInfo.space(20);
         HorizontalGroup menu = new HorizontalGroup();
+        menu.padTop(20);
         final List list = new List(skin);
-        final Label info = new Label("", skin);
-        info.setSize(300,300);
+        info = new Label("", skin, "inlay");
+
         ScrollPane scrollPane = new ScrollPane(list);
-        scrollPane.setSize(300, 300);
+
         TextButton buyButton = new TextButton("Buy", skin);
         TextButton doneButton = new TextButton("Done", skin);
         listAndInfo.addActor(scrollPane);
         listAndInfo.addActor(info);
+        info.setFillParent(true);
+        //scrollPane.setFillParent(true);
         Array<String> listItems = new Array<String>();
         for(ShopItem item:inventory){
             listItems.add(item.title);
@@ -78,8 +84,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         list.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ShopItem item = inventory.get(list.getSelectedIndex());
-                info.setText(item.description + "\nPrice: " + item.price);
+                selectItem(list.getSelectedIndex());
             }
         });
         buyButton.addListener(new ChangeListener() {
@@ -102,11 +107,18 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
             }
         });
         list.setSelectedIndex(0);
+        selectItem(0);
         menu.addActor(buyButton);
         menu.addActor(doneButton);
         windowContent.addActor(listAndInfo);
         windowContent.addActor(menu);
         window.add(windowContent);
+    }
+
+
+    private void selectItem(int index) {
+        ShopItem item = inventory.get(index);
+        info.setText(item.description + "\nPrice: " + item.price);
     }
 
 

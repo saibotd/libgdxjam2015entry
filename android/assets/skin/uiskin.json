@@ -47,6 +47,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: datalabel-font, fontColor: white }
 	value: { font: datavalue-font, fontColor: white }
 	window: { font: default-font, fontColor: white }
+	inlay: { background: inlay, font: default-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }
@@ -55,7 +56,7 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: { checkboxOn: check-on, checkboxOff: check-off, font: default-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	default: { fontColorUnselected: white, selection: default-rect-pad, fontColorSelected: white, font: default-font }
+	default: { background: inlay, fontColorUnselected: white, selection: yellow, fontColorSelected: black, font: default-font }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: { background: default-pane, knob: default-round-large }
