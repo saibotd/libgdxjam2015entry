@@ -68,16 +68,20 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
         Stack group = new Stack();
         Image image = new Image(MagellanGame.assets.get("sectorview_asteroids.png", Texture.class));
         Image image2 = new Image(MagellanGame.assets.get("sectorview_asteroids_resources.png", Texture.class));
-        switch (resource){
-            case 1:
-                image2.setColor(MagellanColors.RESOURCE_1);
-                break;
-            case 2:
-                image2.setColor(MagellanColors.RESOURCE_2);
-                break;
-            case 3:
-                image2.setColor(MagellanColors.RESOURCE_3);
-                break;
+        if (resourceAmount == 0) {
+            image2.setColor(Color.LIGHT_GRAY);
+        } else {
+            switch (resource) {
+                case 1:
+                    image2.setColor(MagellanColors.RESOURCE_1);
+                    break;
+                case 2:
+                    image2.setColor(MagellanColors.RESOURCE_2);
+                    break;
+                case 3:
+                    image2.setColor(MagellanColors.RESOURCE_3);
+                    break;
+            }
         }
         group.addActor(image);
         group.addActor(image2);
