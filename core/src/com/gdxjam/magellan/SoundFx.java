@@ -16,6 +16,7 @@ public class SoundFx {
     public Sound mine;
     public Sound population;
     public Sound upgrade;
+    public Sound nope;
 
     public SoundFx() {
         ship_jump = MagellanGame.assets.get("sounds/ship_jump_2.mp3", Sound.class);
@@ -24,6 +25,7 @@ public class SoundFx {
         mine = MagellanGame.assets.get("sounds/mine.mp3", Sound.class);
         population = MagellanGame.assets.get("sounds/population.mp3", Sound.class);
         upgrade = MagellanGame.assets.get("sounds/upgrade.mp3", Sound.class);
+        nope = MagellanGame.assets.get("sounds/nope.mp3", Sound.class);
 
     }
 

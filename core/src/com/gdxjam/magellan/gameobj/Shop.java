@@ -94,10 +94,13 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
                 if(item.price <= MagellanGame.gameState.CREDITS) {
                     MagellanGame.gameState.CREDITS -= item.price;
                     item.buy(MagellanGame.instance.universe.playerShip);
+                    MagellanGame.soundFx.buy_sell.play(0.7f);
+                } else {
+                    MagellanGame.soundFx.nope.play(0.7f);
                 }
                 MagellanGame.gameState.updateNumberOfDrones();
 
-                MagellanGame.soundFx.buy_sell.play(0.7f);
+
             }
         });
         doneButton.addListener(new ChangeListener() {

@@ -46,7 +46,7 @@ public class PlayerShip extends Ship implements IInteractable {
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 1f).target(50).ease(TweenEquations.easeInOutCubic))
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 12, sector.position.y - 22).ease(TweenEquations.easeInOutCubic)).delay(-0.2f)
         .start(tweenManager);
-        MagellanGame.soundFx.ship_jump.play(0.2f);
+        MagellanGame.soundFx.ship_jump.play(0.3f);
     }
 
     public void releaseDrone(int level){
