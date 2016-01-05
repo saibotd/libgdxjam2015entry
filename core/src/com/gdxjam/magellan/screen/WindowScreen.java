@@ -1,11 +1,15 @@
 package com.gdxjam.magellan.screen;
 
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,6 +22,8 @@ import com.gdxjam.magellan.gameobj.*;
 import com.gdxjam.magellan.ships.AiShip;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.shopitem.ScreenShake;
+import com.gdxjam.magellan.tweening.ActorAccessor;
+import com.gdxjam.magellan.tweening.SpriteAccessor;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -30,6 +36,7 @@ public class WindowScreen extends BaseScreen {
     private final Container<Actor> playerOnScreen;
     private final VerticalGroup shopOnScreen;
     private Sprite starfield;
+    private Sector lastShownSector;
 
     public WindowScreen(MagellanGame game) {
         super(game);
@@ -46,9 +53,9 @@ public class WindowScreen extends BaseScreen {
 
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
-        playerOnScreen.setPosition(-100, -40);
+        playerOnScreen.setPosition(-600, -110);
         playerOnScreen.setSize(assetToGameSize(2523), assetToGameSize(2064));
-        planetOnScreen.setPosition(1280 - assetToGameSize(1386), 720 - assetToGameSize(1677) - 60);
+        planetOnScreen.setPosition(1280 - assetToGameSize(1386), 720 - assetToGameSize(1677));
         planetOnScreen.setSize(assetToGameSize(1386), assetToGameSize(1677));
         shopOnScreen.setPosition(700, 600);
         resourcesOnScreen.setPosition(1280 - assetToGameSize(2341), 0);
@@ -66,7 +73,18 @@ public class WindowScreen extends BaseScreen {
         super.show();
         closeWindow();
         drawSurroundings();
+        playerOnScreen.setPosition(-500, -110);
+        tweenManager.killAll();
+        if (lastShownSector != MagellanGame.instance.universe.playerShip.sector) {
+            Tween.to(playerOnScreen, ActorAccessor.POSITION_XY, 0.8f).target(-300, -100).ease(TweenEquations.easeOutCubic).start(tweenManager);
+        } else {
+            playerOnScreen.setPosition(-300, -100);
+        }
+        Tween.to(playerOnScreen, ActorAccessor.POSITION_Y,5f).target(-80).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
+        Tween.to(playerOnScreen, ActorAccessor.POSITION_X,7f).target(-290).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
+        lastShownSector = game.universe.playerShip.sector;
     }
+
 
     public void drawSurroundings(){
         dronesOnScreen.clear();

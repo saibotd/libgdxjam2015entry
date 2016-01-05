@@ -3,7 +3,6 @@ package com.gdxjam.magellan.drones;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.*;
-import com.gdxjam.magellan.shopitem.ShopItem;
+import com.gdxjam.magellan.tweening.SpriteAccessor;
 
 /**
  * Created by saibotd on 26.12.15.

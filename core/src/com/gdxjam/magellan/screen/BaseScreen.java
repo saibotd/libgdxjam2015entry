@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.screen;
 
+import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -35,6 +36,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public Container<Window> windowContainer;
     public Table mainContainer;
     public Table sectorContainer;
+    public TweenManager tweenManager;
 
     public BaseScreen(MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
@@ -43,8 +45,11 @@ public class BaseScreen implements Screen, InputProcessor {
         viewport = new FitViewport(1280, 720);
         stage = new Stage(viewport);
 
+        tweenManager = new TweenManager();
+
         sectorContainer = new Table();
-        sectorContainer.setSize(1280,720);
+        sectorContainer.setSize(1280,720-60);
+        sectorContainer.setClip(true);
         stage.addActor(sectorContainer);
 
         mainContainer = new Table();
@@ -226,6 +231,7 @@ public class BaseScreen implements Screen, InputProcessor {
             startBGM();
 
         topbar.updateStats();
+        tweenManager.update(delta);
     }
 
     @Override

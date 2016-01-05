@@ -12,10 +12,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
-import com.gdxjam.magellan.drones.DroneRoutineScouting;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IInteractable;
 import com.gdxjam.magellan.shopitem.ShopItem;
+import com.gdxjam.magellan.tweening.SpriteAccessor;
 
 /**
  * Created by lolcorner on 20.12.2015.
