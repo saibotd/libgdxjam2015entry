@@ -18,7 +18,7 @@ public class UiTopbar {
     public MagellanGame game;
     public FitViewport viewport;
     public Skin skin;
-    public Stage stage;
+    public Table table;
     private Label valueResource1;
     private Label valueResource2;
     private Label valueResource3;
@@ -30,10 +30,10 @@ public class UiTopbar {
 
     private Sprite topBarBg;
 
-    public UiTopbar(MagellanGame game, Stage stage) {
+    public UiTopbar(MagellanGame game, Table table) {
 
         this.game = game;
-        this.stage = stage;
+        this.table = table;
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
 
 
@@ -47,10 +47,10 @@ public class UiTopbar {
         topBarBg.setPosition(0, 720 - 60);
         topBarBg.setSize(1280, 60);
 
-
+        
         HorizontalGroup topBar = new HorizontalGroup();
         topBar.align(Align.right);
-        stage.addActor(topBar);
+        table.addActor(topBar);
 
 
         HorizontalGroup groupResources = new HorizontalGroup();
@@ -58,14 +58,14 @@ public class UiTopbar {
         groupResources.setPosition(0, 720 - 60);
         groupResources.setSize(640, 60);
         groupResources.pad(20);
-        stage.addActor(groupResources);
+        table.addActor(groupResources);
 
         HorizontalGroup groupStats = new HorizontalGroup();
         groupStats.space(15);
         groupStats.setPosition(640, 720 - 60);
         groupStats.setSize(640, 60);
         groupStats.pad(20);
-        stage.addActor(groupStats);
+        table.addActor(groupStats);
 
 
         valueResource1 = new Label("0", skin, "value");

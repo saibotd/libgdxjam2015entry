@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
@@ -68,20 +70,23 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("map_meteoroids_planetsector.png", Texture.class));
-        image.setSize(200,200);
+        Stack group = new Stack();
+        Image image = new Image(MagellanGame.assets.get("sectorview_asteroids.png", Texture.class));
+        Image image2 = new Image(MagellanGame.assets.get("sectorview_asteroids_resources.png", Texture.class));
         switch (resource){
             case 1:
-                image.setColor(MagellanColors.RESOURCE_1);
+                image2.setColor(MagellanColors.RESOURCE_1);
                 break;
             case 2:
-                image.setColor(MagellanColors.RESOURCE_2);
+                image2.setColor(MagellanColors.RESOURCE_2);
                 break;
             case 3:
-                image.setColor(MagellanColors.RESOURCE_3);
+                image2.setColor(MagellanColors.RESOURCE_3);
                 break;
         }
-        return image;
+        group.addActor(image);
+        group.addActor(image2);
+        return group;
     }
 
     @Override

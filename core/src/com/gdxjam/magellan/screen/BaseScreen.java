@@ -65,7 +65,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
         bgTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        topbar = new UiTopbar(game, stage);
+        topbar = new UiTopbar(game,mainContainer);
         btnWindow.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 game.showWindowScreen();
@@ -215,7 +215,9 @@ public class BaseScreen implements Screen, InputProcessor {
     public void renderUi(float delta) {
 
         topbar.renderBg(delta, batch);
+
         stage.draw();
+
 
     }
 

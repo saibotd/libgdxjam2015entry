@@ -49,6 +49,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_planet_"+visualType+".png", Texture.class));
         image.setColor(color);
+        image.setFillParent(true);
         return image;
     }
 

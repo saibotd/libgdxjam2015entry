@@ -25,9 +25,9 @@ import com.gdxjam.magellan.shopitem.ScreenShake;
 public class WindowScreen extends BaseScreen {
     private final VerticalGroup dronesOnScreen;
     private final VerticalGroup shipsOnScreen;
-    private final VerticalGroup planetOnScreen;
-    private final VerticalGroup resourcesOnScreen;
-    private final VerticalGroup playerOnScreen;
+    private final Container<Actor> planetOnScreen;
+    private final Container<Actor> resourcesOnScreen;
+    private final Container<Actor> playerOnScreen;
     private final VerticalGroup shopOnScreen;
     private Sprite starfield;
 
@@ -39,17 +39,20 @@ public class WindowScreen extends BaseScreen {
 
         dronesOnScreen = new VerticalGroup();
         shipsOnScreen = new VerticalGroup();
-        playerOnScreen = new VerticalGroup();
-        planetOnScreen = new VerticalGroup();
+        playerOnScreen = new Container<Actor>();
+        planetOnScreen = new Container<Actor>();
         shopOnScreen = new VerticalGroup();
-        resourcesOnScreen = new VerticalGroup();
+        resourcesOnScreen = new Container<Actor>();
 
         dronesOnScreen.setPosition(100, 720);
         shipsOnScreen.setPosition(200, 720);
-        playerOnScreen.setPosition(-30, 500);
-        planetOnScreen.setPosition(818, 720);
+        playerOnScreen.setPosition(-100, -40);
+        playerOnScreen.setSize(assetToGameSize(2523), assetToGameSize(2064));
+        planetOnScreen.setPosition(1280 - assetToGameSize(1386), 720 - assetToGameSize(1677) - 60);
+        planetOnScreen.setSize(assetToGameSize(1386), assetToGameSize(1677));
         shopOnScreen.setPosition(700, 600);
-        resourcesOnScreen.setPosition(400, 720);
+        resourcesOnScreen.setPosition(1280 - assetToGameSize(2341), 0);
+        resourcesOnScreen.setSize(assetToGameSize(2341), assetToGameSize(1318));
 
         sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(shipsOnScreen);
@@ -76,9 +79,7 @@ public class WindowScreen extends BaseScreen {
             if(gameObj instanceof IDrawableWindow){
                 Actor actor = ((IDrawableWindow) gameObj).getActor();
                 if(gameObj instanceof Planet){
-                    planetOnScreen.setWidth(actor.getWidth()/3);
-                    planetOnScreen.setHeight(720.0f);
-                    planetOnScreen.addActor(actor);
+                    planetOnScreen.setActor(actor);
                 }
                 if(gameObj instanceof Drone) {
                     dronesOnScreen.setWidth(actor.getWidth());
@@ -89,16 +90,14 @@ public class WindowScreen extends BaseScreen {
                     shopOnScreen.addActor(actor);
                 }
                 if(gameObj instanceof PlayerShip) {
-                    playerOnScreen.setWidth(actor.getWidth());
-                    playerOnScreen.addActor(actor);
+                    playerOnScreen.setActor(actor);
                 }
                 if(gameObj instanceof AiShip) {
                     shipsOnScreen.setWidth(actor.getWidth());
                     shipsOnScreen.addActor(actor);
                 }
                 if(gameObj instanceof MeteoroidField) {
-                    resourcesOnScreen.setWidth(actor.getWidth());
-                    resourcesOnScreen.addActor(actor);
+                    resourcesOnScreen.setActor(actor);
                 }
 
                 if(gameObj instanceof IDrawableWindow) {

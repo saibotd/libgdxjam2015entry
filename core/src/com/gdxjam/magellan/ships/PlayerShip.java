@@ -6,6 +6,8 @@ import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.gdxjam.magellan.*;
@@ -60,6 +62,12 @@ public class PlayerShip extends Ship implements IInteractable {
         for(Sector _sector : sector.connectedSectors){
             _sector.discovered = true;
         }
+    }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("sectorview_ship.png", Texture.class));
+        return image;
     }
 
     @Override
