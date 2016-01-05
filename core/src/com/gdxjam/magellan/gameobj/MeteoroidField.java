@@ -6,18 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.Statics;
-import com.gdxjam.magellan.drones.DroneRoutine;
-import com.gdxjam.magellan.drones.DroneRoutineFighting;
-import com.gdxjam.magellan.drones.DroneRoutineMining;
-import com.gdxjam.magellan.drones.DroneRoutineScouting;
 import com.gdxjam.magellan.ships.PlayerShip;
 
 /**
@@ -126,9 +121,9 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     }
 
     @Override
-    public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
+    public OrderedMap<String, Interaction> getInteractions(final GameObj with) {
         final MeteoroidField meteoroidField = this;
-        ObjectMap<String, Interaction> interactions = new ObjectMap();
+        OrderedMap<String, Interaction> interactions = new OrderedMap();
 
         if (resourceAmount > 0 && with.faction == Factions.PLAYER) {
             interactions.put("Mine", new Interaction() {

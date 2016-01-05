@@ -2,7 +2,7 @@ package com.gdxjam.magellan.drones;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.gameobj.IInteractable;
@@ -38,8 +38,8 @@ public class DroneRoutine {
 
     }
 
-    public ObjectMap<String, IInteractable.Interaction> getInteractions(GameObj with) {
-        ObjectMap<String, IInteractable.Interaction> interactions = new ObjectMap();
+    public OrderedMap<String, IInteractable.Interaction> getInteractions(GameObj with) {
+        OrderedMap<String, IInteractable.Interaction> interactions = new OrderedMap();
         return interactions;
     }
 

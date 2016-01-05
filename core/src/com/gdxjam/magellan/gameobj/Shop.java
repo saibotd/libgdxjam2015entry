@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.drones.DroneRoutine;
@@ -38,8 +38,8 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     }
 
     @Override
-    public ObjectMap<String, Interaction> getInteractions(GameObj with) {
-        ObjectMap<String, Interaction> interactions = new ObjectMap<String, Interaction>();
+    public OrderedMap<String, Interaction> getInteractions(GameObj with) {
+        OrderedMap<String, Interaction> interactions = new OrderedMap<String, Interaction>();
         interactions.put("Buy", new Interaction() {
             @Override
             public void interact() {

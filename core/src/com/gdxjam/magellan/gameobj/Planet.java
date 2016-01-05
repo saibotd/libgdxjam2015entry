@@ -1,6 +1,5 @@
 package com.gdxjam.magellan.gameobj;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
@@ -173,8 +172,8 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     }
 
     @Override
-    public ObjectMap<String, Interaction> getInteractions(final GameObj with) {
-        ObjectMap<String, Interaction> interactions = new ObjectMap();
+    public OrderedMap<String, Interaction> getInteractions(final GameObj with) {
+        OrderedMap<String, Interaction> interactions = new OrderedMap();
 
         if (submenuOpen == "") {
             if (faction == Factions.NEUTRAL) {

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.GameObj;
@@ -94,8 +94,8 @@ public class PlayerShip extends Ship implements IInteractable {
     }
 
     @Override
-    public ObjectMap<String, Interaction> getInteractions(GameObj with) {
-        ObjectMap<String, Interaction> interactions = new ObjectMap();
+    public OrderedMap<String, Interaction> getInteractions(GameObj with) {
+        OrderedMap<String, Interaction> interactions = new OrderedMap();
         if (submenuOpen == "") {
             if (drones.size > 0) {
                 interactions.put("release drone", new Interaction() {
