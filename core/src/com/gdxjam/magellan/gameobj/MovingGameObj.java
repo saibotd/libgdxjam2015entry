@@ -71,7 +71,7 @@ public class MovingGameObj extends GameObj {
         float dy = distance * MathUtils.sinDeg(angle);
 
         parkingPosition = sector.position.cpy().sub(spriteVessel.getWidth()/2, spriteVessel.getHeight()/2).add(dx, dy);
-        parkingAngle = angle - 90;
+        parkingAngle = angle + 90;
     }
 
 }

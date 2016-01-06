@@ -104,8 +104,7 @@ public class PlayerShip extends Ship implements IInteractable {
         getParkingPosition();
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
-        spriteVessel.setRotation(50);
-        spriteVessel.setColor(MagellanColors.FACTION_PLAYER);
+        spriteVessel.setRotation(parkingAngle);
     }
 
     @Override
