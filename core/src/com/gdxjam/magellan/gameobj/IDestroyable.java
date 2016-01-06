@@ -11,4 +11,5 @@ public interface IDestroyable extends Disposable {
     void destroy();
     void dispose();
     int getHealth();
+    float getShield();
 }

@@ -98,6 +98,11 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     }
 
     @Override
+    public float getShield() {
+        return 0;
+    }
+
+    @Override
     public void prepareRenderingOnMap() {
         spriteVessel = new Sprite(MagellanGame.assets.get("drone.png", Texture.class));
         spriteVessel.setSize(28,18);
@@ -289,6 +294,11 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         for(DroneRoutine routine : routines){
             routine.shootAt(target);
         }
+        return 0;
+    }
+
+    @Override
+    public int getAttack() {
         return 0;
     }
 

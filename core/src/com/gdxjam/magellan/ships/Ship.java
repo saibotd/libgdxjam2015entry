@@ -29,6 +29,11 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     }
 
     @Override
+    public int getAttack() {
+        return attack;
+    }
+
+    @Override
     public void receiveDamage(int damage) {
         if(Math.random() < shield) return;
         health -= damage;
@@ -56,6 +61,11 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     }
 
     @Override
+    public float getShield() {
+        return shield;
+    }
+
+    @Override
     public String getTitle() {
         return "SHIP";
     }
@@ -65,13 +75,14 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
         String s = "Faction: " + faction.toString();
         s += "\nHealth: " + health;
         s += "\nAttack: " + attack;
-        s += "\nShield: " + shield;
+        s += "\nShield: " + Math.round(shield * 100) + "%";
         return s;
     }
 
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("map_playership.png", Texture.class));
+        image.setUserObject(this);
         return image;
     }
 

@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDrawableMap;
+import com.gdxjam.magellan.ships.AiShipFighter;
+import com.gdxjam.magellan.ships.Ship;
 
 /**
  * Created by lolcorner on 19.12.2015.
@@ -218,6 +220,10 @@ public class MapScreen extends BaseScreen {
                 break;
             case Input.Keys.D:
                 keyboardPanX = 0;
+                break;
+            case Input.Keys.K:
+                Ship ship = new AiShipFighter(universe.playerShip.sector);
+                ship.prepareRenderingOnMap();
                 break;
             case Input.Keys.F:
                 if(Gdx.graphics.isFullscreen())

@@ -114,6 +114,11 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         return population;
     }
 
+    @Override
+    public float getShield() {
+        return 0;
+    }
+
     public void tick(){
         growPopulation();
     }

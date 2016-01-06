@@ -1,8 +1,6 @@
 package com.gdxjam.magellan.screen;
 
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -218,5 +216,22 @@ public class WindowScreen extends BaseScreen {
 
     public int assetToGameSize(int size) {
         return size/3;
+    }
+
+    public void showDamage(final IDestroyable target, int damage) {
+        final Label l = new Label("-"+damage, skin);
+        l.setFontScale(4);
+        if(target instanceof PlayerShip) {
+            l.setPosition(100, 100);
+        } else {
+            l.setPosition(500, 500);
+        }
+        stage.addActor(l);
+        Tween.to(l, ActorAccessor.POSITION_Y, 1).target(l.getY()+50).ease(TweenEquations.easeInOutCubic).setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                l.remove();
+            }
+        }).start(tweenManager);
     }
 }

@@ -5,4 +5,5 @@ package com.gdxjam.magellan.gameobj;
  */
 public interface IArmed {
     int shootAt(IDestroyable target);
+    int getAttack();
 }
