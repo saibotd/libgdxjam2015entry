@@ -6,6 +6,7 @@ import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
@@ -34,6 +35,26 @@ public class PlayerShip extends Ship implements IInteractable {
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
+        drones.add(4);
     }
 
     public void moveTo(Sector sector) {
@@ -42,9 +63,8 @@ public class PlayerShip extends Ship implements IInteractable {
         tweenManager.killAll();
         Timeline.createSequence()
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 20, sector.position.y - 30).ease(TweenEquations.easeInOutQuint))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 1f).target(50).ease(TweenEquations.easeInOutCubic))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x + 12, sector.position.y - 22).ease(TweenEquations.easeInOutCubic)).delay(-0.2f)
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(parkingPosition.x, parkingPosition.y).ease(TweenEquations.easeInOutQuint))
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 1f).target(parkingAngle).ease(TweenEquations.easeInOutCubic))
         .start(tweenManager);
         MagellanGame.soundFx.ship_jump.play(0.3f);
     }
@@ -79,7 +99,11 @@ public class PlayerShip extends Ship implements IInteractable {
         spriteVessel = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
         spriteVessel.setSize(20, 20);
         spriteVessel.setOriginCenter();
-        spriteVessel.setPosition(sector.position.x + 12, sector.position.y - 22);
+
+        sectorSlot = 0;
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
         spriteVessel.setRotation(50);
         spriteVessel.setColor(MagellanColors.FACTION_PLAYER);
     }

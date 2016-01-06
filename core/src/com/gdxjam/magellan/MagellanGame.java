@@ -63,6 +63,10 @@ public class MagellanGame extends Game{
         assets.load("sectorview_planet_3.png", Texture.class);
         assets.load("sectorview_planet_4.png", Texture.class);
         assets.load("sectorview_ship.png", Texture.class);
+        assets.load("sectorview_drone.png", Texture.class);
+        assets.load("sectorview_drone_gun.png", Texture.class);
+        assets.load("sectorview_drone_mine.png", Texture.class);
+        assets.load("sectorview_drone_thruster.png", Texture.class);
         assets.load("bg.png", Texture.class);
         assets.load("topbarBg.png", Texture.class);
         assets.load("skin/uiskin.json", Skin.class);

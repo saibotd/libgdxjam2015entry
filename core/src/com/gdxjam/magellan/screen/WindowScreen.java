@@ -49,7 +49,7 @@ public class WindowScreen extends BaseScreen {
         shopOnScreen = new VerticalGroup();
         resourcesOnScreen = new Container<Actor>();
 
-        dronesOnScreen.setPosition(100, 720);
+        dronesOnScreen.setPosition(500, 720);
         shipsOnScreen.setPosition(200, 720);
         playerOnScreen.setPosition(-600, -110);
         playerOnScreen.setSize(assetToGameSize(2523), assetToGameSize(2064));
@@ -59,10 +59,10 @@ public class WindowScreen extends BaseScreen {
         resourcesOnScreen.setPosition(1280 - assetToGameSize(2341), 0);
         resourcesOnScreen.setSize(assetToGameSize(2341), assetToGameSize(1318));
 
-        sectorContainer.addActor(dronesOnScreen);
-        sectorContainer.addActor(shipsOnScreen);
         sectorContainer.addActor(planetOnScreen);
         sectorContainer.addActor(resourcesOnScreen);
+        sectorContainer.addActor(shipsOnScreen);
+        sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(shopOnScreen);
         sectorContainer.addActor(playerOnScreen);
     }

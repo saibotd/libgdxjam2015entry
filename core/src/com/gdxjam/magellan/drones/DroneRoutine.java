@@ -14,6 +14,7 @@ public class DroneRoutine {
     public Drone drone;
     public float powerLevel;
     public Sprite sprite;
+    public Sprite windowSprite;
 
     public enum ROUTINES{ MINING, SCOUTING, ATTACKING, ADVSCOUTING, FOLLOWING }
     public ROUTINES routine;
@@ -23,6 +24,7 @@ public class DroneRoutine {
         drone.addRoutine(this);
 
         sprite = new Sprite();
+        windowSprite = new Sprite();
     }
     
 
