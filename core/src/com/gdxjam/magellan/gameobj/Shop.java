@@ -29,6 +29,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     public Shop(Sector sector) {
         super(sector);
+        lastSelectedIndex = -1;
     }
 
     private void fillInventory(){
@@ -38,6 +39,8 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         inventory.add(new ShopItemDrone(3));
         inventory.add(new ShopItemDrone(4));
         inventory.add(new ShopItemDrone(5));
+
+
 
         if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.ATTACKING, false))
             inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
@@ -105,7 +108,6 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         buyButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                lastSelectedIndex = list.getSelectedIndex();
                 ShopItem item = inventory.get(list.getSelectedIndex());
                 if(item.price <= MagellanGame.gameState.CREDITS) {
                     MagellanGame.gameState.CREDITS -= item.price;
@@ -125,8 +127,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
             }
         });
 
-        // Todo: find out wtf this doesn't work
-        if(listItems.size < lastSelectedIndex){
+        if(lastSelectedIndex != -1){
             list.setSelectedIndex(lastSelectedIndex);
             selectItem(lastSelectedIndex);
         } else{
@@ -145,6 +146,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     private void selectItem(int index) {
         ShopItem item = inventory.get(index);
         info.setText(item.description + "\nPrice: " + item.price);
+        lastSelectedIndex = index;
     }
 
 
