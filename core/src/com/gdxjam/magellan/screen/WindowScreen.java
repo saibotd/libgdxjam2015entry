@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.*;
@@ -35,6 +37,7 @@ public class WindowScreen extends BaseScreen {
     private final VerticalGroup shopOnScreen;
     private Sprite starfield;
     private Sector lastShownSector;
+    private Array<ParticleEffect> effects;
 
     public WindowScreen(MagellanGame game) {
         super(game);
@@ -70,6 +73,7 @@ public class WindowScreen extends BaseScreen {
     public void show(){
         super.show();
         closeWindow();
+        effects = new Array<ParticleEffect>();
         drawSurroundings();
         playerOnScreen.setPosition(-500, -110);
         tweenManager.killAll();
@@ -211,6 +215,12 @@ public class WindowScreen extends BaseScreen {
         starfield.draw(batch);
         batch.end();
         renderUi(delta);
+        batch.begin();
+        for(ParticleEffect pe : effects){
+            pe.draw(batch, delta);
+            if(pe.isComplete()) effects.removeValue(pe, true);
+        }
+        batch.end();
         ScreenShake.update(stage.getCamera());
     }
 
@@ -219,12 +229,18 @@ public class WindowScreen extends BaseScreen {
     }
 
     public void showDamage(final IDestroyable target, int damage) {
+        ParticleEffect pe = new ParticleEffect();
+        pe.load(Gdx.files.internal("explosion"),Gdx.files.internal(""));
         final Label l = new Label("-"+damage, skin);
         l.setFontScale(4);
         if(target instanceof PlayerShip) {
             l.setPosition(100, 100);
+            pe.setPosition(100, 100);
+            pe.scaleEffect(6);
         } else {
             l.setPosition(500, 500);
+            pe.setPosition(500, 500);
+            pe.scaleEffect(3);
         }
         stage.addActor(l);
         Tween.to(l, ActorAccessor.POSITION_Y, 1).target(l.getY()+50).ease(TweenEquations.easeInOutCubic).setCallback(new TweenCallback() {
@@ -233,5 +249,7 @@ public class WindowScreen extends BaseScreen {
                 l.remove();
             }
         }).start(tweenManager);
+        effects.add(pe);
+        pe.start();
     }
 }
