@@ -1,6 +1,10 @@
 package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.gdxjam.magellan.MagellanColors;
+import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.Sector;
 
@@ -30,7 +34,17 @@ public class AiShip extends Ship {
 
     @Override
     public void prepareRenderingOnMap() {
-        super.prepareRenderingOnMap();
-        spriteDot.setColor(Color.RED);
+        //super.prepareRenderingOnMap();
+        //spriteDot.setColor(Color.RED);
+        spriteVessel = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
+        spriteVessel.setSize(20, 20);
+        spriteVessel.setOriginCenter();
+
+        sectorSlot = 0;
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
+        spriteVessel.setRotation(50);
+        spriteVessel.setColor(MagellanColors.FACTION_ENEMY);
     }
 }

@@ -3,6 +3,7 @@ package com.gdxjam.magellan.drones;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +27,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
     public Vector2 dimensions = new Vector2(280,170);
+    public Vector2 dimensionsWindow = new Vector2(250,170);
     private Array<DroneRoutine.ROUTINES> listItems;
     private Array<DroneRoutine.ROUTINES> selectedRoutines;
     private List listRight;
@@ -37,6 +39,8 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
         prepareRenderingOnMap();
+
+        Gdx.app.log(this.toString(), parkingPosition.toString());
     }
 
     public void addRoutine(DroneRoutine routine){
@@ -57,7 +61,8 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         tweenManager.killAll();
         Timeline.createSequence()
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(sector.position.x - 20, sector.position.y - 20).ease(TweenEquations.easeInOutQuint))
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(parkingPosition.x, parkingPosition.y).ease(TweenEquations.easeInOutQuint))
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.6f).target(parkingAngle).ease(TweenEquations.easeInOutQuint))
                 .start(tweenManager);
     }
 
@@ -107,7 +112,12 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         spriteVessel = new Sprite(MagellanGame.assets.get("drone.png", Texture.class));
         spriteVessel.setSize(28,18);
         spriteVessel.setOriginCenter();
-        spriteVessel.setPosition(sector.position.x - 20, sector.position.y - 20);
+
+        getFreeSectorSlot();
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
+        spriteVessel.setRotation(parkingAngle);
     }
 
     @Override
@@ -122,14 +132,14 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public Actor getActor() {
         Group group = new Group();
-        Image img = new Image(MagellanGame.assets.get("drone.png", Texture.class));
-        img.setSize(dimensions.x, dimensions.y);
-        group.setSize(dimensions.x, dimensions.y);
+        Image img = new Image(MagellanGame.assets.get("sectorview_drone.png", Texture.class));
+        img.setSize(dimensionsWindow.x, dimensionsWindow.y);
+        group.setSize(dimensionsWindow.x, dimensionsWindow.y);
         group.addActor(img);
         for(DroneRoutine routine:routines) {
-            Image imgRoutine = new Image(routine.sprite);
-            imgRoutine.setSize(dimensions.x, dimensions.y);
-            group.setSize(dimensions.x, dimensions.y);
+            Image imgRoutine = new Image(routine.windowSprite);
+            imgRoutine.setSize(dimensionsWindow.x, dimensionsWindow.y);
+            group.setSize(dimensionsWindow.x, dimensionsWindow.y);
             group.addActor(imgRoutine);
         }
         return group;

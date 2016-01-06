@@ -19,6 +19,7 @@ public class DroneRoutineMining extends DroneRoutine{
         super(drone);
         routine = ROUTINES.MINING;
         sprite = new Sprite(MagellanGame.assets.get("drone_mine.png", Texture.class));
+        windowSprite = new Sprite(MagellanGame.assets.get("sectorview_drone_mine.png", Texture.class));
     }
 
     public void tick(){

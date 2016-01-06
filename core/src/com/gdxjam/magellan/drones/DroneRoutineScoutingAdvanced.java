@@ -18,6 +18,7 @@ public class DroneRoutineScoutingAdvanced extends DroneRoutine{
         super(drone);
         routine = ROUTINES.ADVSCOUTING;
         sprite = new Sprite(MagellanGame.assets.get("drone_thruster.png", Texture.class));
+        windowSprite = new Sprite(MagellanGame.assets.get("sectorview_drone_thruster.png", Texture.class));
     }
 
     public void tick(){

@@ -15,6 +15,7 @@ public class DroneRoutineFighting extends DroneRoutine{
         super(drone);
         routine = ROUTINES.ATTACKING;
         sprite = new Sprite(MagellanGame.assets.get("drone_gun.png", Texture.class));
+        windowSprite = new Sprite(MagellanGame.assets.get("sectorview_drone_gun.png", Texture.class));
     }
 
     public void tick(){
