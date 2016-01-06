@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.shopitem.ShopItem;
 import com.gdxjam.magellan.shopitem.ShopItemDrone;
 import com.gdxjam.magellan.shopitem.ShopItemDroneRoutine;
+import com.gdxjam.magellan.shopitem.ShopItemUpgrade;
 
 /**
  * Created by Felix on 29.12.2015.
@@ -23,18 +25,29 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     private Sprite mapSprite;
     private Array<ShopItem> inventory = new Array<ShopItem>();
     private Label info;
+    private int lastSelectedIndex;
 
     public Shop(Sector sector) {
         super(sector);
+    }
+
+    private void fillInventory(){
+        inventory.clear();
         inventory.add(new ShopItemDrone(1));
         inventory.add(new ShopItemDrone(2));
         inventory.add(new ShopItemDrone(3));
         inventory.add(new ShopItemDrone(4));
         inventory.add(new ShopItemDrone(5));
 
-        inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
-        inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.DEFENDING, 600));
+        if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.ATTACKING, false))
+            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
+        if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.ADVSCOUTING, false))
+            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ADVSCOUTING, 600));
 
+        inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.ATTACK));
+        inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.HEALTH));
+        if(MagellanGame.instance.universe == null || MagellanGame.instance.universe.playerShip.health < .5)
+            inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.SHIELD));
     }
 
     @Override
@@ -58,6 +71,8 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     }
 
     public void showInventoryWindow(){
+        fillInventory();
+        MagellanGame.instance.windowScreen.closeWindow();
         Window window = MagellanGame.instance.windowScreen.getWindow("Buy");
         Skin skin = MagellanGame.instance.windowScreen.skin;
         VerticalGroup windowContent = new VerticalGroup();
@@ -90,6 +105,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         buyButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                lastSelectedIndex = list.getSelectedIndex();
                 ShopItem item = inventory.get(list.getSelectedIndex());
                 if(item.price <= MagellanGame.gameState.CREDITS) {
                     MagellanGame.gameState.CREDITS -= item.price;
@@ -99,8 +115,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
                     MagellanGame.soundFx.nope.play(0.7f);
                 }
                 MagellanGame.gameState.updateNumberOfDrones();
-
-
+                showInventoryWindow();
             }
         });
         doneButton.addListener(new ChangeListener() {
@@ -109,8 +124,16 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
                 MagellanGame.instance.windowScreen.closeWindow();
             }
         });
-        list.setSelectedIndex(0);
-        selectItem(0);
+
+        // Todo: find out wtf this doesn't work
+        if(listItems.size < lastSelectedIndex){
+            list.setSelectedIndex(lastSelectedIndex);
+            selectItem(lastSelectedIndex);
+        } else{
+            list.setSelectedIndex(0);
+            selectItem(0);
+        }
+
         menu.addActor(buyButton);
         menu.addActor(doneButton);
         windowContent.addActor(listAndInfo);

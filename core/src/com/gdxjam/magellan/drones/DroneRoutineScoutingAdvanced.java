@@ -16,7 +16,7 @@ public class DroneRoutineScoutingAdvanced extends DroneRoutine{
 
     public DroneRoutineScoutingAdvanced(Drone drone) {
         super(drone);
-        routine = ROUTINES.SCOUTING;
+        routine = ROUTINES.ADVSCOUTING;
         sprite = new Sprite(MagellanGame.assets.get("drone_thruster.png", Texture.class));
     }
 

@@ -15,7 +15,7 @@ public class DroneRoutine {
     public float powerLevel;
     public Sprite sprite;
 
-    public enum ROUTINES{ MINING, DEFENDING, SCOUTING, ATTACKING }
+    public enum ROUTINES{ MINING, SCOUTING, ATTACKING, ADVSCOUTING, FOLLOWING }
     public ROUTINES routine;
 
     public DroneRoutine(Drone drone){

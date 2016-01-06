@@ -27,6 +27,9 @@ public class MagellanGame extends Game{
 
     public MagellanGame(){
         instance = this;
+        gameState = new GameState(this);
+        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
+        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
 		universe = new Universe(this);
 	}
 
@@ -34,9 +37,6 @@ public class MagellanGame extends Game{
 
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
         Tween.registerAccessor(Actor.class, new ActorAccessor());
-        gameState = new GameState(this);
-        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
-        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
         assets = new AssetManager();
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);

@@ -211,6 +211,9 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
                         case SCOUTING:
                             addRoutine(new DroneRoutineScouting(drone));
                             break;
+                        case ADVSCOUTING:
+                            addRoutine(new DroneRoutineScoutingAdvanced(drone));
+                            break;
                         case MINING:
                             addRoutine(new DroneRoutineMining(drone));
                         break;

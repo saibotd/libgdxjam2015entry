@@ -167,6 +167,8 @@ public class PlayerShip extends Ship implements IInteractable {
     public String getInfo() {
         String s = "Your ship.";
         s += "\nHealth: " + getHealth();
+        s += "\nAttack: " + attack;
+        s += "\nShield: " + Math.round(shield * 100);
         s += "\nFrozen Humans: " + HUMANS;
         s += "\nDrones: " + drones.toString(", ");
         s += "\nEquipment: " + inventory.toString(", ");
