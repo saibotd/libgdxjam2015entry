@@ -25,6 +25,7 @@ import com.gdxjam.magellan.UiTopbar;
 public class BaseScreen implements Screen, InputProcessor {
     private final TextButton btnWindow;
     private final TextButton btnMap;
+    private final TextButton btnWait;
     public MagellanGame game;
     public SpriteBatch batch;
     public FitViewport viewport;
@@ -64,8 +65,10 @@ public class BaseScreen implements Screen, InputProcessor {
         menu.setPosition(10,20);
         btnWindow = new TextButton("SHOW SURROUNDINGS", skin);
         btnMap = new TextButton("STAR MAP", skin);
+        btnWait = new TextButton("Wait", skin);
         menu.addActor(btnWindow);
         menu.addActor(btnMap);
+        menu.addActor(btnWait);
         stage.addActor(menu);
 
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);
@@ -79,6 +82,11 @@ public class BaseScreen implements Screen, InputProcessor {
         btnMap.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.showMapScreen();
+            }
+        });
+        btnWait.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                game.universe.tick();
             }
         });
 
