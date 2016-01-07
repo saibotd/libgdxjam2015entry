@@ -194,14 +194,26 @@ public class WindowScreen extends BaseScreen {
         bg.fillRectangle(0,0,width,height);
 
         bg.setColor(Color.WHITE);
+        int posx;
+        int posy;
+
         for(int i = 0; i < amount_small; i++) {
-            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 1);
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.fillCircle(posx, posy, 1);
         }
         for(int i = 0; i < amount_mid; i++) {
-            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 2);
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.fillCircle(posx, posy, 2);
         }
         for(int i = 0; i < amount_big; i++) {
-            bg.fillCircle(MathUtils.floor(width * MathUtils.random()), MathUtils.floor(height * MathUtils.random()), 5);
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.setColor(MathUtils.random(0.7f, 1f),MathUtils.random(0.1f, 0.5f),MathUtils.random(0.0f, 0.0f),0.3f);
+            bg.fillCircle(posx, posy, 8);
+            bg.setColor(1,1,1,1);
+            bg.fillCircle(posx, posy, 4);
         }
         Texture field = new Texture(bg);
         bg.dispose();
