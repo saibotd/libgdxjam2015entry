@@ -40,7 +40,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         maxNumberOfRoutines = level;
         prepareRenderingOnMap();
 
-        Gdx.app.log(this.toString(), parkingPosition.toString());
     }
 
     public void addRoutine(DroneRoutine routine){
@@ -58,12 +57,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public void moveTo(Sector sector) {
         super.moveTo(sector);
-        tweenManager.killAll();
-        Timeline.createSequence()
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(parkingPosition.x, parkingPosition.y).ease(TweenEquations.easeInOutQuint))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.6f).target(parkingAngle).ease(TweenEquations.easeInOutQuint))
-                .start(tweenManager);
     }
 
     public void tick(){

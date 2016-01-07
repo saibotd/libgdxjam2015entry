@@ -34,38 +34,12 @@ public class PlayerShip extends Ship implements IInteractable {
         health = 10;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
-        drones.add(4);
+        drones.add(1);
     }
 
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         setSectorsDiscovered();
-        tweenManager.killAll();
-        Timeline.createSequence()
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target((float)Math.atan2(sector.position.y - lastSector.position.y, sector.position.x - lastSector.position.x)*180f/(float)Math.PI-90f))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(parkingPosition.x, parkingPosition.y).ease(TweenEquations.easeInOutQuint))
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 1f).target(parkingAngle).ease(TweenEquations.easeInOutCubic))
-        .start(tweenManager);
         MagellanGame.soundFx.ship_jump.play(0.3f);
     }
 
