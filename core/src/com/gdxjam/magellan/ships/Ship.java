@@ -1,10 +1,13 @@
 package com.gdxjam.magellan.ships;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.*;
 
@@ -17,6 +20,8 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     public int health = 3;
     public int attack = 1;
     public Sprite spriteDot;
+    public Array<ParticleEffect> effects;
+    public ParticleEffect trail;
 
     public Ship(Sector sector) {
         super(sector);
@@ -88,13 +93,22 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public void prepareRenderingOnMap() {
-        //spriteDot = new Sprite(MagellanGame.assets.get("dot.png", Texture.class));
-        //spriteDot.setSize(10,10);
+        trail = new ParticleEffect();
+        trail.load(Gdx.files.internal("effects.p"),Gdx.files.internal(""));
+        effects.add(trail);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
-        //spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
-        //spriteDot.draw(batch);
+        for(ParticleEffect pe : effects){
+            pe.draw(batch, delta);
+            if(pe.isComplete()) effects.removeValue(pe, true);
+        }
+    }
+
+    @Override
+    public void moveTo(Sector sector) {
+        super.moveTo(sector);
+        trail.start();
     }
 }
