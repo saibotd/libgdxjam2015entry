@@ -56,6 +56,9 @@ public class MagellanGame extends Game{
         assets.load("drone_gun.png", Texture.class);
         assets.load("drone_mine.png", Texture.class);
         assets.load("drone_thruster.png", Texture.class);
+        assets.load("enemy_fighter.png", Texture.class);
+        assets.load("enemy_transport.png", Texture.class);
+        assets.load("shop.png", Texture.class);
         assets.load("sectorview_asteroids.png", Texture.class);
         assets.load("sectorview_asteroids_resources.png", Texture.class);
         assets.load("sectorview_planet_1.png", Texture.class);
@@ -67,6 +70,9 @@ public class MagellanGame extends Game{
         assets.load("sectorview_drone_gun.png", Texture.class);
         assets.load("sectorview_drone_mine.png", Texture.class);
         assets.load("sectorview_drone_thruster.png", Texture.class);
+        assets.load("sectorview_enemy_fighter.png", Texture.class);
+        assets.load("sectorview_enemy_transporter.png", Texture.class);
+        assets.load("sectorview_shop.png", Texture.class);
         assets.load("bg.png", Texture.class);
         assets.load("topbarBg.png", Texture.class);
         assets.load("skin/uiskin.json", Skin.class);

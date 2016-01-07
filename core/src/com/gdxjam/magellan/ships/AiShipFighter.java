@@ -1,6 +1,12 @@
 package com.gdxjam.magellan.ships;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.gdxjam.magellan.Battle;
+import com.gdxjam.magellan.MagellanColors;
+import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.Sector;
@@ -13,6 +19,26 @@ public class AiShipFighter extends AiShip {
     public AiShipFighter(Sector sector) {
         super(sector);
         faction = Factions.ENEMY;
+    }
+
+    @Override
+    public void prepareRenderingOnMap() {
+        super.prepareRenderingOnMap();
+        spriteVessel = new Sprite(MagellanGame.assets.get("enemy_fighter.png", Texture.class));
+        spriteVessel.setSize(12, 18);
+        spriteVessel.setOriginCenter();
+
+        sectorSlot = 0;
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
+        spriteVessel.setRotation(parkingAngle);
+    }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("sectorview_enemy_fighter.png", Texture.class));
+        return image;
     }
 
     private void decideState(){

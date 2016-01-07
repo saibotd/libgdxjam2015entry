@@ -44,17 +44,6 @@ public class AiShip extends Ship {
     @Override
     public void prepareRenderingOnMap() {
         super.prepareRenderingOnMap();
-        //spriteDot.setColor(Color.RED);
-        spriteVessel = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
-        spriteVessel.setSize(20, 20);
-        spriteVessel.setOriginCenter();
-
-        sectorSlot = 0;
-        getParkingPosition();
-
-        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
-        spriteVessel.setRotation(parkingAngle);
-        spriteVessel.setColor(MagellanColors.FACTION_ENEMY);
     }
 
     @Override

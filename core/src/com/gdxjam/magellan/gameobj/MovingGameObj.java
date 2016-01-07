@@ -23,7 +23,6 @@ public class MovingGameObj extends GameObj {
     public Vector2 parkingPosition;
     public Vector2 lastParkingPosition;
     public float parkingAngle;
-    public float lastParkingAngle;
 
     public MovingGameObj(Sector sector) {
         super(sector);
@@ -77,7 +76,7 @@ public class MovingGameObj extends GameObj {
     }
 
     public void getParkingPosition() {
-        int shipsPerRow = 12;
+        int shipsPerRow = 8;
         float angle = 360 / shipsPerRow * sectorSlot;
         float row = MathUtils.floor(sectorSlot/shipsPerRow);
         if (row % 2 == 0) angle += (360 / shipsPerRow) / 2;
@@ -85,8 +84,6 @@ public class MovingGameObj extends GameObj {
 
         while (angle < -180) angle += 360;
         while (angle > 180) angle -= 360;
-
-
 
 
         float dx = distance * MathUtils.cosDeg(angle);

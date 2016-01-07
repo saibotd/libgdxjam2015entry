@@ -1,6 +1,10 @@
 package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
@@ -14,6 +18,26 @@ public class AiShipSettler extends AiShip {
     public AiShipSettler(Sector sector) {
         super(sector);
         faction = Factions.ENEMY;
+    }
+
+    @Override
+    public void prepareRenderingOnMap() {
+        super.prepareRenderingOnMap();
+        spriteVessel = new Sprite(MagellanGame.assets.get("enemy_transport.png", Texture.class));
+        spriteVessel.setSize(20, 20);
+        spriteVessel.setOriginCenter();
+
+        sectorSlot = 0;
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
+        spriteVessel.setRotation(parkingAngle);
+    }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("sectorview_enemy_transporter.png", Texture.class));
+        return image;
     }
 
     private void decideState(){
@@ -54,12 +78,6 @@ public class AiShipSettler extends AiShip {
                 super.tick();
                 break;
         }
-    }
-
-    @Override
-    public void prepareRenderingOnMap() {
-        super.prepareRenderingOnMap();
-        //spriteDot.setColor(Color.ORANGE);
     }
 
 }

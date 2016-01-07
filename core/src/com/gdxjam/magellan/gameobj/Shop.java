@@ -152,10 +152,17 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("map_shop.png", Texture.class));
-        mapSprite.setSize(14, 14);
+        mapSprite = new Sprite(MagellanGame.assets.get("shop.png", Texture.class));
+        mapSprite.setSize(16, 16);
         mapSprite.setPosition(sector.position.x - 20, sector.position.y + 20);
     }
+
+    @Override
+    public Actor getActor() {
+        Image image = new Image(MagellanGame.assets.get("sectorview_shop.png", Texture.class));
+        return image;
+    }
+
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
@@ -173,9 +180,5 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         return null;
     }
 
-    @Override
-    public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("map_shop.png", Texture.class));
-        return image;
-    }
+
 }
