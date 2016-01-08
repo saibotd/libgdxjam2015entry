@@ -29,12 +29,12 @@ import com.gdxjam.magellan.tweening.SpriteAccessor;
  * Created by lolcorner on 20.12.2015.
  */
 public class WindowScreen extends BaseScreen {
-    private final VerticalGroup dronesOnScreen;
-    private final VerticalGroup shipsOnScreen;
+    private final HorizontalGroup dronesOnScreen;
+    private final Array<Container<Actor>> shipsOnScreen;
     private final Container<Actor> planetOnScreen;
     private final Container<Actor> resourcesOnScreen;
     private final Container<Actor> playerOnScreen;
-    private final VerticalGroup shopOnScreen;
+    private final Container<Actor> shopOnScreen;
     private Sprite starfield;
     private Sector lastShownSector;
     private Array<ParticleEffect> effects;
@@ -45,28 +45,41 @@ public class WindowScreen extends BaseScreen {
         starfield = createStarfield();
         starfield.setSize(1280,720);
 
-        dronesOnScreen = new VerticalGroup();
-        shipsOnScreen = new VerticalGroup();
+        dronesOnScreen = new HorizontalGroup();
+        shipsOnScreen = new Array<Container<Actor>>();
+        shipsOnScreen.add(new Container<Actor>());
+        shipsOnScreen.add(new Container<Actor>());
+        shipsOnScreen.add(new Container<Actor>());
         playerOnScreen = new Container<Actor>();
         planetOnScreen = new Container<Actor>();
-        shopOnScreen = new VerticalGroup();
+        shopOnScreen = new Container<Actor>();
         resourcesOnScreen = new Container<Actor>();
+        dronesOnScreen.setPosition(500, 200);
 
-        dronesOnScreen.setPosition(500, 720);
-        shipsOnScreen.setPosition(200, 720);
+        shipsOnScreen.get(0).setPosition(600,200);
+        shipsOnScreen.get(1).setPosition(740,100);
+        shipsOnScreen.get(2).setPosition(800,400);
+
+        shipsOnScreen.get(0).setSize(assetToGameSize(959),assetToGameSize(649));
+        shipsOnScreen.get(1).setSize(assetToGameSize(959),assetToGameSize(649));
+        shipsOnScreen.get(2).setSize(assetToGameSize(959),assetToGameSize(649));
+
         playerOnScreen.setPosition(-600, -110);
         playerOnScreen.setSize(assetToGameSize(2523), assetToGameSize(2064));
         planetOnScreen.setPosition(1280 - assetToGameSize(1386), 720 - assetToGameSize(1677));
         planetOnScreen.setSize(assetToGameSize(1386), assetToGameSize(1677));
-        shopOnScreen.setPosition(700, 600);
+        shopOnScreen.setPosition(530, 360);
+        shopOnScreen.setSize(assetToGameSize(717), assetToGameSize(790));
         resourcesOnScreen.setPosition(1280 - assetToGameSize(2341), 0);
         resourcesOnScreen.setSize(assetToGameSize(2341), assetToGameSize(1318));
 
         sectorContainer.addActor(planetOnScreen);
         sectorContainer.addActor(resourcesOnScreen);
-        sectorContainer.addActor(shipsOnScreen);
         sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(shopOnScreen);
+        sectorContainer.addActor(shipsOnScreen.get(0));
+        sectorContainer.addActor(shipsOnScreen.get(1));
+        sectorContainer.addActor(shipsOnScreen.get(2));
         sectorContainer.addActor(playerOnScreen);
     }
 
@@ -79,11 +92,22 @@ public class WindowScreen extends BaseScreen {
         tweenManager.killAll();
         if (lastShownSector != MagellanGame.instance.universe.playerShip.sector) {
             Tween.to(playerOnScreen, ActorAccessor.POSITION_XY, 0.8f).target(-300, -100).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_XY, 0.8f).target(600,200).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_XY, 0.8f).target(740,100).ease(TweenEquations.easeOutCubic).start(tweenManager);
+            Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_XY, 0.8f).target(800,400).ease(TweenEquations.easeOutCubic).start(tweenManager);
         } else {
             playerOnScreen.setPosition(-300, -100);
+            shipsOnScreen.get(0).setPosition(600,200);
+            shipsOnScreen.get(1).setPosition(740,100);
+            shipsOnScreen.get(2).setPosition(800,400);
         }
         Tween.to(playerOnScreen, ActorAccessor.POSITION_Y,5f).target(-80).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
         Tween.to(playerOnScreen, ActorAccessor.POSITION_X,7f).target(-290).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
+
+        Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(215).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(115).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
+
         lastShownSector = game.universe.playerShip.sector;
     }
 
@@ -92,9 +116,13 @@ public class WindowScreen extends BaseScreen {
         dronesOnScreen.clear();
         resourcesOnScreen.clear();
         playerOnScreen.clear();
-        shopOnScreen.clear();
-        shipsOnScreen.clear();
         planetOnScreen.clear();
+        shopOnScreen.clear();
+        shipsOnScreen.get(0).clear();
+        shipsOnScreen.get(1).clear();
+        shipsOnScreen.get(2).clear();
+
+        int i = 0;
         for(final GameObj gameObj : game.universe.playerShip.sector.gameObjs){
             if(gameObj instanceof IDrawableWindow){
                 Actor actor = ((IDrawableWindow) gameObj).getActor();
@@ -106,15 +134,17 @@ public class WindowScreen extends BaseScreen {
                     dronesOnScreen.addActor(actor);
                 }
                 if(gameObj instanceof Shop) {
-                    shopOnScreen.setWidth(actor.getWidth());
-                    shopOnScreen.addActor(actor);
+                    shopOnScreen.setActor(actor);
                 }
                 if(gameObj instanceof PlayerShip) {
                     playerOnScreen.setActor(actor);
                 }
                 if(gameObj instanceof AiShip) {
-                    shipsOnScreen.setWidth(actor.getWidth());
-                    shipsOnScreen.addActor(actor);
+                    if(i < 3) {
+                        shipsOnScreen.get(i).setSize(actor.getWidth(), actor.getHeight());
+                        shipsOnScreen.get(i).setActor(actor);
+                        i++;
+                    }
                 }
                 if(gameObj instanceof MeteoroidField) {
                     resourcesOnScreen.setActor(actor);
@@ -246,13 +276,21 @@ public class WindowScreen extends BaseScreen {
         final Label l = new Label("-"+damage, skin);
         l.setFontScale(4);
         if(target instanceof PlayerShip) {
-            l.setPosition(100, 100);
-            pe.setPosition(100, 100);
+            l.setPosition(200, 200);
+            pe.setPosition(200, 200);
             pe.scaleEffect(6);
         } else {
-            l.setPosition(500, 500);
-            pe.setPosition(500, 500);
+            l.setPosition(700, 500);
+            pe.setPosition(700, 500);
             pe.scaleEffect(3);
+            for (Container<Actor> c : shipsOnScreen){
+                if(c.getActor() != null
+                        && c.getActor().getUserObject() != null
+                        && c.getActor().getUserObject() == target){
+                    l.setPosition(c.getX() + 200, c.getY() + 100);
+                    pe.setPosition(c.getX() + 200, c.getY() + 100);
+                }
+            }
         }
         stage.addActor(l);
         Tween.to(l, ActorAccessor.POSITION_Y, 1).target(l.getY()+50).ease(TweenEquations.easeInOutCubic).setCallback(new TweenCallback() {
