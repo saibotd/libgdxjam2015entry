@@ -3,7 +3,10 @@ package com.gdxjam.magellan.ships;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -27,6 +30,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public Array<Integer> drones = new Array();
     public Array<ShopItem> inventory;
     public int mineResourcesPerTick = 10;
+    public ParticleEffect trail;
 
     public PlayerShip(Sector sector) {
         super(sector);
@@ -41,6 +45,13 @@ public class PlayerShip extends Ship implements IInteractable {
         super.moveTo(sector);
         setSectorsDiscovered();
         MagellanGame.soundFx.ship_jump.play(0.3f);
+        Vector2 particlePosition = lastParkingPosition.cpy().lerp(parkingPosition, 0.10f);
+        for (ParticleEmitter em : trail.getEmitters()) {
+            em.setPosition(particlePosition.x + spriteVessel.getWidth()/2, particlePosition.y + spriteVessel.getHeight()/2);
+            em.getAngle().setHigh(flightAngle - 90 - 10, flightAngle - 90 + 10);
+            em.getAngle().setLow(flightAngle - 90);
+        }
+        trail.start();
     }
 
     public void releaseDrone(int level){
@@ -66,9 +77,7 @@ public class PlayerShip extends Ship implements IInteractable {
 
     @Override
     public void prepareRenderingOnMap() {
-        //spriteDot = new Sprite(MagellanGame.assets.get("circle.png", Texture.class));
-        //spriteDot.setSize(24,24);
-        //spriteDot.setColor(Color.YELLOW);
+        super.prepareRenderingOnMap();
 
         spriteVessel = new Sprite(MagellanGame.assets.get("map_playership.png", Texture.class));
         spriteVessel.setSize(20, 20);
@@ -79,15 +88,21 @@ public class PlayerShip extends Ship implements IInteractable {
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
         spriteVessel.setRotation(parkingAngle);
+
+        trail = new ParticleEffect();
+        trail.load(Gdx.files.internal("ship_trail.p"),Gdx.files.internal(""));
+        trail.setPosition(parkingPosition.x, parkingPosition.y);
+        trail.scaleEffect(0.3f);
     }
 
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
         super.render(delta);
-        //spriteDot.setPosition(sector.position.x - spriteDot.getWidth()/2, sector.position.y - spriteDot.getHeight()/2);
-        //spriteDot.draw(batch);
 
         spriteVessel.draw(batch);
+
+        trail.draw(batch, delta);
+        //if (trail.isComplete()) trail.reset();
     }
 
     @Override

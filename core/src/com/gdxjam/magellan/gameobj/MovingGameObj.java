@@ -25,6 +25,7 @@ public class MovingGameObj extends GameObj {
     public Vector2 parkingPosition;
     public Vector2 lastParkingPosition;
     public float parkingAngle;
+    public float flightAngle;
 
     public MovingGameObj(Sector sector) {
         super(sector);
@@ -44,13 +45,13 @@ public class MovingGameObj extends GameObj {
         getFreeSectorSlot();
         getParkingPosition();
 
-        float flightAngle = (float)Math.atan2(parkingPosition.y - lastParkingPosition.y, parkingPosition.x - lastParkingPosition.x)*180f/(float)Math.PI-90f;
+        flightAngle = (float)Math.atan2(parkingPosition.y - lastParkingPosition.y, parkingPosition.x - lastParkingPosition.x)*180f/(float)Math.PI-90f;
         while (flightAngle < -180) flightAngle += 360;
         while (flightAngle > 180) flightAngle -= 360;
 
         tweenManager.killAll();
         Timeline.createSequence()
-                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.3f).target(flightAngle))
+                .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 0.2f).target(flightAngle))
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.POSITION_XY, 0.5f).target(parkingPosition.x, parkingPosition.y).ease(TweenEquations.easeInOutQuint))
                 .push(Tween.to(this.spriteVessel, SpriteAccessor.ROTATION, 1f).target(parkingAngle).ease(TweenEquations.easeInOutCubic))
                 .start(tweenManager);
