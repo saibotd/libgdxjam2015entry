@@ -14,7 +14,7 @@ import com.gdxjam.magellan.ships.PlayerShip;
 public class Universe {
     public PlayerShip playerShip;
     public Array<Sector> sectors;
-    public int size = 4000;
+    public int size = 3000;
     private MagellanGame game;
     public Universe(MagellanGame game){
         this.game = game;

@@ -62,7 +62,7 @@ public class UiTopbar {
 
         HorizontalGroup groupStats = new HorizontalGroup();
         groupStats.space(15);
-        groupStats.setPosition(640, 720 - 60);
+        groupStats.setPosition(740, 720 - 60);
         groupStats.setSize(640, 60);
         groupStats.pad(20);
         table.addActor(groupStats);
@@ -78,13 +78,13 @@ public class UiTopbar {
         valueYear = new Label("0", skin, "value");
         valueCredits = new Label("0", skin, "value");
         valuePopulation = new Label("0", skin, "value");
-        valueDrones = new Label("0", skin, "value");
-        valueHealth = new Label("0", skin, "value");
+        //valueDrones = new Label("0", skin, "value");
+        //valueHealth = new Label("0", skin, "value");
         groupStats.addActor(simpleLabel("Year", valueYear));
         groupStats.addActor(simpleLabel("Credits", valueCredits));
         groupStats.addActor(simpleLabel("Population", valuePopulation));
-        groupStats.addActor(simpleLabel("Drones", valueDrones));
-        groupStats.addActor(simpleLabel("Health", valueHealth));
+        //groupStats.addActor(simpleLabel("Drones", valueDrones));
+        //groupStats.addActor(simpleLabel("Health", valueHealth));
 
 
     }
@@ -96,8 +96,8 @@ public class UiTopbar {
         valueYear.setText(MagellanGame.gameState.YEAR + "");
         valueCredits.setText(MagellanGame.gameState.CREDITS + "");
         valuePopulation.setText(MagellanGame.gameState.POPULATION + "");
-        valueDrones.setText(MagellanGame.gameState.DRONES + "");
-        valueHealth.setText(game.universe.playerShip.health + "");
+        //valueDrones.setText(MagellanGame.gameState.DRONES + "");
+        //valueHealth.setText(game.universe.playerShip.health + "");
     }
 
 
