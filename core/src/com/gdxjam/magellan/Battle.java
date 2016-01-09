@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Timer;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IArmed;
 import com.gdxjam.magellan.gameobj.IDestroyable;
@@ -55,36 +56,46 @@ public class Battle implements Disposable{
             dispose();
             return;
         }
-        if(offensive instanceof IArmed){
-            IArmed armedOffensive = (IArmed) offensive;
-            int i = armedOffensive.shootAt(defensive);
-            Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS FOR " + i);
-            Gdx.app.log("BATTLE", defensive.toString() + " HEALTH AT " + defensive.getHealth());
-            if(defensive instanceof PlayerShip){
-                MagellanGame.instance.windowScreen.shake(i);
+
+        screen.closeWindow();
+
+        IArmed armedOffensive = (IArmed) offensive;
+        int i = armedOffensive.shootAt(defensive);
+        Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS FOR " + i);
+        Gdx.app.log("BATTLE", defensive.toString() + " HEALTH AT " + defensive.getHealth());
+        if(defensive instanceof PlayerShip){
+            MagellanGame.instance.windowScreen.shake(i);
+        }
+        if(isPlayerBattle()) MagellanGame.instance.windowScreen.showDamage(defensive, i);
+
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                if(offensive.isAlive() && defensive.isAlive()){
+                    IDestroyable _offensive = offensive;
+                    offensive = defensive;
+                    defensive = _offensive;
+                    if(offensive instanceof PlayerShip){
+                        Gdx.app.log("HERE", "HERE");
+                        screen.closeWindow();
+                        playerTurn();
+                        return;
+                    } else
+                        turn();
+                } else {
+                    if(!offensive.isAlive()) offensive.destroy();
+                    if(!defensive.isAlive()) defensive.destroy();
+                    Gdx.app.log("BATTLE", "OVER");
+                    dispose();
+                }
+                if(offensive instanceof PlayerShip){
+                    screen.drawSurroundings();
+                }
             }
-            if(isPlayerBattle()) MagellanGame.instance.windowScreen.showDamage(defensive, i);
-        }
-        if(offensive.isAlive() && defensive.isAlive()){
-            IDestroyable _offensive = offensive;
-            offensive = defensive;
-            defensive = _offensive;
-            if(offensive instanceof PlayerShip){
-                Gdx.app.log("HERE", "HERE");
-                screen.closeWindow();
-                playerTurn();
-                return;
-            } else
-                turn();
-        } else {
-            if(!offensive.isAlive()) offensive.destroy();
-            if(!defensive.isAlive()) defensive.destroy();
-            Gdx.app.log("BATTLE", "OVER");
-            dispose();
-        }
-        if(offensive instanceof PlayerShip){
-            screen.drawSurroundings();
-        }
+        }, 1);
+
+
     }
 
     public void playerTurn(){
