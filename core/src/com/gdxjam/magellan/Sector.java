@@ -40,15 +40,5 @@ public class Sector {
             addConnection(sector);
         }
     }
-
-    public boolean hasGameObjType(Class cls) {
-        for (GameObj obj : gameObjs) {
-            if (cls.isAssignableFrom(obj.getClass())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
 

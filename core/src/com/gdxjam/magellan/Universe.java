@@ -76,7 +76,7 @@ public class Universe {
         Array<GameObj> result = new Array();
         for(Sector sector : sectors){
             for (GameObj gameObj: sector.gameObjs) {
-                if (objType.isAssignableFrom(gameObj.getClass())) {
+                if (objType == gameObj.getClass()) {
                     result.add(gameObj);
                 }
             }

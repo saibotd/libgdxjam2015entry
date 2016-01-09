@@ -2,8 +2,11 @@ package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.gdxjam.magellan.Battle;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
@@ -38,6 +41,8 @@ public class AiShipFighter extends AiShip {
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_enemy_fighter.png", Texture.class));
+        image.setScale(.4f);
+        image.setUserObject(this);
         return image;
     }
 

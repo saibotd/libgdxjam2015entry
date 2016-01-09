@@ -37,6 +37,7 @@ public class AiShipSettler extends AiShip {
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_enemy_transporter.png", Texture.class));
+        image.setUserObject(this);
         return image;
     }
 

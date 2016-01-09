@@ -160,6 +160,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_shop.png", Texture.class));
+        //image.setScale(.4f);
         return image;
     }
 
