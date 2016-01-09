@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.screen.MapScreen;
+import com.gdxjam.magellan.screen.TitleScreen;
 import com.gdxjam.magellan.screen.WindowScreen;
 import com.gdxjam.magellan.tweening.ActorAccessor;
 import com.gdxjam.magellan.tweening.SpriteAccessor;
@@ -24,6 +25,7 @@ public class MagellanGame extends Game{
     public static boolean DEBUG = false;
     public static MagellanGame instance;
     public static SoundFx soundFx;
+    public TitleScreen titleScreen;
 
     public MagellanGame(){
         instance = this;
@@ -41,6 +43,7 @@ public class MagellanGame extends Game{
         assets.load("pixel.png", Texture.class);
         assets.load("dot.png", Texture.class);
         assets.load("circle.png", Texture.class);
+        assets.load("title.png", Texture.class);
         assets.load("map_playership.png", Texture.class);
         assets.load("map_meteoroids_emptysector.png", Texture.class);
         assets.load("map_meteoroids_planetsector.png", Texture.class);
@@ -90,9 +93,10 @@ public class MagellanGame extends Game{
         assets.load("sounds/nope.mp3", Sound.class);
         assets.finishLoading();
         soundFx = new SoundFx();
+        titleScreen = new TitleScreen(this);
         mapScreen = new MapScreen(this);
         windowScreen = new WindowScreen(this);
-        setScreen(mapScreen);
+        setScreen(titleScreen);
 
 	}
 
