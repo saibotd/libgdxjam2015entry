@@ -145,7 +145,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     private void selectItem(int index) {
         ShopItem item = inventory.get(index);
-        info.setText(item.description + "\nPrice: " + item.price);
+        info.setText(item.description + "\n\nPrice: " + item.price);
         lastSelectedIndex = index;
     }
 

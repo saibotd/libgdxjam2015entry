@@ -13,7 +13,7 @@ public class ShopItemUpgrade extends ShopItem {
     public enum upgradeType{ATTACK, HEALTH, SHIELD};
 
     public ShopItemUpgrade(int _price, upgradeType type){
-        super("SHIP UPGRADE " + type, "+1 TO YOUR " + type, _price);
+        super("Ship Upgrade " + type, "+1 to your " + type, _price);
         this.type = type;
     }
     public void buy(PlayerShip buyer){
