@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.UiTopbar;
@@ -150,7 +149,7 @@ public class BaseScreen implements Screen, InputProcessor {
         return false;
     }
 
-    public void renderBG(float delta) {
+    public void renderBG() {
 
         viewport.apply();
         batch.begin();
@@ -216,7 +215,7 @@ public class BaseScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderBG(delta);
+        renderBG();
 
         update(delta);
 
