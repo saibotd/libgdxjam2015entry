@@ -35,15 +35,14 @@ public class WindowScreen extends BaseScreen {
     private final Container<Actor> resourcesOnScreen;
     private final Container<Actor> playerOnScreen;
     private final Container<Actor> shopOnScreen;
-    private Sprite starfield;
     private Sector lastShownSector;
     private Array<ParticleEffect> effects;
 
     public WindowScreen(MagellanGame game) {
         super(game);
 
-        starfield = createStarfield();
-        starfield.setSize(1280,720);
+        createStarfield();
+
 
         dronesOnScreen = new HorizontalGroup();
         shipsOnScreen = new Array<Container<Actor>>();
@@ -212,44 +211,7 @@ public class WindowScreen extends BaseScreen {
         window.add(windowContent).expandX().fill();
     }
 
-    public Sprite createStarfield() {
-        int width = 1280*4;
-        int height = 720*4;
-        int amount_small = 300;
-        int amount_mid = 150;
-        int amount_big = 20;
 
-        Pixmap bg = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        bg.setColor(MagellanColors.UNIVERSE_BG);
-        bg.fillRectangle(0,0,width,height);
-
-        bg.setColor(Color.WHITE);
-        int posx;
-        int posy;
-
-        for(int i = 0; i < amount_small; i++) {
-            posx = MathUtils.floor(width * MathUtils.random());
-            posy = MathUtils.floor(height * MathUtils.random());
-            bg.fillCircle(posx, posy, 1);
-        }
-        for(int i = 0; i < amount_mid; i++) {
-            posx = MathUtils.floor(width * MathUtils.random());
-            posy = MathUtils.floor(height * MathUtils.random());
-            bg.fillCircle(posx, posy, 2);
-        }
-        for(int i = 0; i < amount_big; i++) {
-            posx = MathUtils.floor(width * MathUtils.random());
-            posy = MathUtils.floor(height * MathUtils.random());
-            bg.setColor(MathUtils.random(0.7f, 1f),MathUtils.random(0.1f, 0.5f),MathUtils.random(0.0f, 0.0f),0.3f);
-            bg.fillCircle(posx, posy, 8);
-            bg.setColor(1,1,1,1);
-            bg.fillCircle(posx, posy, 4);
-        }
-        Texture field = new Texture(bg);
-        bg.dispose();
-
-        return new Sprite(field);
-    }
 
     public void render(float delta){
         super.render(delta);

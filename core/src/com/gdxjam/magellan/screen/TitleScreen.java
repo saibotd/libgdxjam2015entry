@@ -24,13 +24,14 @@ public class TitleScreen extends BaseScreen {
     public TitleScreen(final MagellanGame game) {
         super(game);
         stage.clear();
+        createStarfield();
         bg = new Sprite(MagellanGame.assets.get("sectorview_planet_"+ MathUtils.random(1,4)+".png", Texture.class));
         bg.setSize(600,600);
-        bg.setColor(MagellanColors.PLANET_3);
+        bg.setColor(MagellanColors.PLANET_2);
         bg.setPosition(1280-bg.getWidth(),720-bg.getHeight());
         title = new Sprite(MagellanGame.assets.get("title.png", Texture.class));
-        title.setSize(800,200);
-        title.setPosition(200,400);
+        title.setSize(721*0.7f, 317*.7f);
+        title.setPosition((1280 - title.getWidth())/2, 350);
         String infoText = "Created for libGDXJam 2015/16";
         infoText += "\nIdea and programming by Felix Schittig and Tobias Duehr";
         infoText += "\nArtwork by Kilian Wilde";
@@ -43,6 +44,7 @@ public class TitleScreen extends BaseScreen {
         VerticalGroup mainMenu = new VerticalGroup();
 
         mainMenu.pad(20);
+        mainMenu.space(10);
         mainMenu.setWidth(200);
         mainMenu.setPosition(1280/2-100,300);
 
@@ -69,6 +71,7 @@ public class TitleScreen extends BaseScreen {
     public void render(float delta){
         renderBG();
         batch.begin();
+        starfield.draw(batch);
         bg.draw(batch);
         title.draw(batch);
         batch.end();

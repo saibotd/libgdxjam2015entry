@@ -6,8 +6,11 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.UiTopbar;
 
@@ -37,6 +41,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public Table mainContainer;
     public Table sectorContainer;
     public TweenManager tweenManager;
+    public Sprite starfield;
 
     public BaseScreen(MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
@@ -207,6 +212,46 @@ public class BaseScreen implements Screen, InputProcessor {
     public void closeWindow() {
         Gdx.app.log("closeWindow", "called");
         windowContainer.clear();
+    }
+
+    public void createStarfield() {
+        int width = 1280*4;
+        int height = 720*4;
+        int amount_small = 400;
+        int amount_mid = 150;
+        int amount_big = 20;
+
+        Pixmap bg = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        bg.setColor(MagellanColors.UNIVERSE_BG);
+        bg.fillRectangle(0,0,width,height);
+
+        bg.setColor(Color.WHITE);
+        int posx;
+        int posy;
+
+        for(int i = 0; i < amount_small; i++) {
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.fillCircle(posx, posy, 1);
+        }
+        for(int i = 0; i < amount_mid; i++) {
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.fillCircle(posx, posy, 2);
+        }
+        for(int i = 0; i < amount_big; i++) {
+            posx = MathUtils.floor(width * MathUtils.random());
+            posy = MathUtils.floor(height * MathUtils.random());
+            bg.setColor(MathUtils.random(0.7f, 1f),MathUtils.random(0.1f, 0.5f),MathUtils.random(0.0f, 0.0f),0.3f);
+            bg.fillCircle(posx, posy, 8);
+            bg.setColor(1,1,1,1);
+            bg.fillCircle(posx, posy, 4);
+        }
+        Texture field = new Texture(bg);
+        bg.dispose();
+
+        starfield = new Sprite(field);
+        starfield.setSize(1280,720);
     }
 
 
