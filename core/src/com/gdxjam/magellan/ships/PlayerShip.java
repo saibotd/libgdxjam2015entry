@@ -1,8 +1,5 @@
 package com.gdxjam.magellan.ships;
 
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -19,7 +16,6 @@ import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IInteractable;
 import com.gdxjam.magellan.shopitem.ShopItem;
-import com.gdxjam.magellan.tweening.SpriteAccessor;
 
 /**
  * Created by lolcorner on 20.12.2015.
@@ -44,7 +40,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public void moveTo(Sector sector) {
         super.moveTo(sector);
         setSectorsDiscovered();
-        MagellanGame.soundFx.ship_jump.play(0.3f);
+        MagellanGame.soundFx.shipJump.play(0.3f);
         Vector2 particlePosition = lastParkingPosition.cpy().lerp(parkingPosition, 0.10f);
         for (ParticleEmitter em : trail.getEmitters()) {
             em.setPosition(particlePosition.x + spriteVessel.getWidth()/2, particlePosition.y + spriteVessel.getHeight()/2);
@@ -52,6 +48,12 @@ public class PlayerShip extends Ship implements IInteractable {
             em.getAngle().setLow(flightAngle - 90);
         }
         trail.start();
+    }
+
+    @Override
+    public void destroy() {
+        MagellanGame.soundFx.doomed.play();
+        dispose();
     }
 
     public void releaseDrone(int level){

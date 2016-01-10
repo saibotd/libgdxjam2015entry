@@ -91,6 +91,15 @@ public class MagellanGame extends Game{
         assets.load("sounds/population.mp3", Sound.class);
         assets.load("sounds/upgrade.mp3", Sound.class);
         assets.load("sounds/nope.mp3", Sound.class);
+        assets.load("sounds/doomed.wav", Sound.class);
+        assets.load("sounds/explosion1.wav", Sound.class);
+        assets.load("sounds/explosion2.wav", Sound.class);
+        assets.load("sounds/explosion3.wav", Sound.class);
+        assets.load("sounds/explosion4.wav", Sound.class);
+        assets.load("sounds/weaponfire2.wav", Sound.class);
+        assets.load("sounds/weaponfire3.wav", Sound.class);
+        assets.load("sounds/weaponfire5.wav", Sound.class);
+        assets.load("sounds/weaponfire6.wav", Sound.class);
         assets.finishLoading();
         soundFx = new SoundFx();
         titleScreen = new TitleScreen(this);
