@@ -20,6 +20,7 @@ public class GameState {
     public int CREDITS = 10000;
     public int CREDITS_PER_TICK = 0;
     public int YEAR = 3056;
+    public int YEARS_PASSED = 0;
     public int POPULATION = 0;
     public Array<DroneRoutine.ROUTINES> UNLOCKED_ROUTINES = new Array<DroneRoutine.ROUTINES>();
 
@@ -29,6 +30,7 @@ public class GameState {
 
     public void progressYear() {
         YEAR++;
+        YEARS_PASSED++;
         updateNumberOfDrones();
 
     }

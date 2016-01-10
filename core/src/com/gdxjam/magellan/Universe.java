@@ -16,6 +16,8 @@ public class Universe {
     public Array<Sector> sectors;
     public int size = 3000;
     private MagellanGame game;
+    public Sector bottomLeft;
+    public Sector topRight;
     public Universe(MagellanGame game){
         this.game = game;
         sectors = new Array();
@@ -23,8 +25,8 @@ public class Universe {
             addRandomSector();
         }
         connectSectors();
-        Sector bottomLeft = sectors.random();
-        Sector topRight = sectors.random();
+        bottomLeft = sectors.random();
+        topRight = sectors.random();
         for(Sector sector : sectors){
             if(sector.position.x < bottomLeft.position.x && sector.position.y < bottomLeft.position.y){
                 bottomLeft = sector;
@@ -34,12 +36,7 @@ public class Universe {
             }
         }
         playerShip = new PlayerShip(bottomLeft);
-        for(int i = 0; i < 100; i++){
-            new AiShipFighter(topRight);
-        }
-        for(int i = 0; i < 20; i++){
-            new AiShipSettler(topRight);
-        }
+        addEnemies(50,5);
     }
 
     public boolean addSector(Sector sector) {
@@ -89,6 +86,8 @@ public class Universe {
 
         MagellanGame.gameState.progressYear();
 
+
+
         for(int i = 0; i < sectors.size; i++){
             for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
                 sectors.get(i).gameObjs.get(j).tick();
@@ -98,6 +97,13 @@ public class Universe {
         MagellanGame.gameState.updatePopulationCount();
         MagellanGame.gameState.getPlanetIncome();
         MagellanGame.gameState.updateNumberOfDrones();
+
+        /*
+        if (MagellanGame.gameState.YEARS_PASSED % 10 == 0) {
+            addEnemies(10, 1);
+        }
+        */
+
 
     }
 
@@ -134,5 +140,16 @@ public class Universe {
         }
 
     }
+
+
+    public void addEnemies(int numberFighters, int numberSettlers) {
+        for(int i = 0; i < numberFighters; i++){
+            new AiShipFighter(topRight);
+        }
+        for(int i = 0; i < numberSettlers; i++){
+            new AiShipSettler(topRight);
+        }
+    }
+
 
 }
