@@ -165,7 +165,8 @@ public class BaseScreen implements Screen, InputProcessor {
 
     public Window getWindow(String title, String message){
         windowContainer.clear();
-        Window window = new Window(title, skin);
+        Window window = new Window(title + "    ", skin);
+        window.getTitleLabel().setEllipsis(false);
         window.setMovable(false);
         window.setModal(true);
         window.setWidth(500);

@@ -1,5 +1,6 @@
 package com.gdxjam.magellan;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -36,7 +37,6 @@ public class Universe {
             }
         }
         playerShip = new PlayerShip(bottomLeft);
-        addEnemies(50,5);
     }
 
     public boolean addSector(Sector sector) {
@@ -98,11 +98,17 @@ public class Universe {
         MagellanGame.gameState.getPlanetIncome();
         MagellanGame.gameState.updateNumberOfDrones();
 
-        /*
-        if (MagellanGame.gameState.YEARS_PASSED % 10 == 0) {
+
+
+
+
+        if (MagellanGame.gameState.YEARS_PASSED == 1) {
+            addEnemies(50, 5);
+        }
+
+        if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
             addEnemies(10, 1);
         }
-        */
 
 
     }
@@ -144,10 +150,12 @@ public class Universe {
 
     public void addEnemies(int numberFighters, int numberSettlers) {
         for(int i = 0; i < numberFighters; i++){
-            new AiShipFighter(topRight);
+            final AiShipFighter fighter = new AiShipFighter(topRight);
+            fighter.prepareRenderingOnMap();
         }
         for(int i = 0; i < numberSettlers; i++){
-            new AiShipSettler(topRight);
+            final AiShipSettler settler = new AiShipSettler(topRight);
+            settler.prepareRenderingOnMap();
         }
     }
 

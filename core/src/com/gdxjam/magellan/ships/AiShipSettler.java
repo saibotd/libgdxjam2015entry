@@ -27,7 +27,7 @@ public class AiShipSettler extends AiShip {
         spriteVessel.setSize(20, 20);
         spriteVessel.setOriginCenter();
 
-        sectorSlot = 0;
+        getFreeSectorSlot();
         getParkingPosition();
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);

@@ -31,7 +31,7 @@ public class AiShipFighter extends AiShip {
         spriteVessel.setSize(12, 18);
         spriteVessel.setOriginCenter();
 
-        sectorSlot = 0;
+        getFreeSectorSlot();
         getParkingPosition();
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);

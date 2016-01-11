@@ -170,8 +170,8 @@ public class WindowScreen extends BaseScreen {
 
     public void showInteractionWindow(final IDrawableWindow gameObj){
 
-        Window window = getWindow(gameObj.getTitle() + "    ");
-        window.getTitleLabel().setEllipsis(false);
+        Window window = getWindow(gameObj.getTitle());
+
         VerticalGroup windowContent = new VerticalGroup();
         windowContent.fill();
         Label info = new Label(gameObj.getInfo(), skin, "window");
