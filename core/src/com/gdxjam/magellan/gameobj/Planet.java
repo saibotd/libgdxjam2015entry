@@ -39,9 +39,9 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
             case 4: color = MagellanColors.PLANET_5; break;
             default: color = MagellanColors.PLANET_1; break;
         }
-        resource1 = MathUtils.random(200);
-        resource2 = MathUtils.random(200);
-        resource3 = MathUtils.random(200);
+        resource1 = MathUtils.random(50,200);
+        resource2 = MathUtils.random(50,200);
+        resource3 = MathUtils.random(50,200);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     }
 
     public int creditsByTick(){
-        return Math.round(population/100);
+        return Math.round(population/30);
     }
 
     @Override
