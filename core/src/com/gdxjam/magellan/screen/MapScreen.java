@@ -41,6 +41,7 @@ public class MapScreen extends BaseScreen {
     public SpriteBatch mapBatch;
     private Rectangle cameraFrame = new Rectangle();
     private float cameraFramePadding = 200;
+    float lineWidth = 2;
 
     public MapScreen(MagellanGame game){
         super(game);
@@ -128,13 +129,13 @@ public class MapScreen extends BaseScreen {
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
                     pixel.setColor(MagellanColors.MAP_POSSIBLE_MOVEMENT);
                     pixel.setAlpha(1f);
-                    pixel.setSize(tmp1.len()+1f, 2);
-                    pixel.setOrigin(0,1f);
+                    pixel.setSize(tmp1.len()+lineWidth/2, lineWidth);
+                    pixel.setOrigin(0,lineWidth/2);
                 } else {
                     pixel.setColor(Color.WHITE);
                     pixel.setAlpha(0.2f);
-                    pixel.setSize(tmp1.len()+1f, 0.4f);
-                    pixel.setOrigin(0,0.2f);
+                    pixel.setSize(tmp1.len()+lineWidth/2, lineWidth);
+                    pixel.setOrigin(0,lineWidth/2);
                 }
 
                 pixel.setPosition(_sector.position.x - pixel.getOriginX(), _sector.position.y - pixel.getOriginY());
