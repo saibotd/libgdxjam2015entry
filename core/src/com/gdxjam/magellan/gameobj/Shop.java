@@ -3,6 +3,7 @@ package com.gdxjam.magellan.gameobj;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -41,16 +42,16 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
 
 
         if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.ATTACKING, false))
-            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 400));
+            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ATTACKING, 6000));
         if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.ADVSCOUTING, false))
-            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ADVSCOUTING, 600));
+            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.ADVSCOUTING, 1200));
         if(!MagellanGame.gameState.UNLOCKED_ROUTINES.contains(DroneRoutine.ROUTINES.FOLLOWING, false))
-            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.FOLLOWING, 800));
+            inventory.add(new ShopItemDroneRoutine(DroneRoutine.ROUTINES.FOLLOWING, 4000));
 
-        inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.ATTACK));
-        inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.HEALTH));
-        if(MagellanGame.instance.universe == null || MagellanGame.instance.universe.playerShip.health < .5)
-            inventory.add(new ShopItemUpgrade(400, ShopItemUpgrade.upgradeType.SHIELD));
+        inventory.add(new ShopItemUpgrade(MagellanGame.instance.universe.playerShip.attack * 2 * 430, ShopItemUpgrade.upgradeType.ATTACK));
+        inventory.add(new ShopItemUpgrade(MagellanGame.instance.universe.playerShip.maxHealth * 2 * 320, ShopItemUpgrade.upgradeType.HEALTH));
+        if(MagellanGame.instance.universe == null || MagellanGame.instance.universe.playerShip.shield < .5)
+            inventory.add(new ShopItemUpgrade((int) ((MagellanGame.instance.universe.playerShip.shield * 10 + 1) * 3500), ShopItemUpgrade.upgradeType.SHIELD));
     }
 
     @Override

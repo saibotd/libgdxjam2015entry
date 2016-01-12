@@ -17,6 +17,8 @@ public class AiShipSettler extends AiShip {
 
     public AiShipSettler(Sector sector) {
         super(sector);
+        health = 14;
+        attack = 2;
         faction = Factions.ENEMY;
     }
 

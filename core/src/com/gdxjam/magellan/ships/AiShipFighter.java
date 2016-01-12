@@ -21,6 +21,8 @@ public class AiShipFighter extends AiShip {
 
     public AiShipFighter(Sector sector) {
         super(sector);
+        health = 8;
+        attack = 3;
         faction = Factions.ENEMY;
     }
 
