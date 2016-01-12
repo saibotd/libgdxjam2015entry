@@ -88,6 +88,9 @@ public class WindowScreen extends BaseScreen {
         effects = new Array<ParticleEffect>();
         drawSurroundings();
         playerOnScreen.setPosition(-500, -110);
+        shipsOnScreen.get(0).setPosition(700,150);
+        shipsOnScreen.get(1).setPosition(840,50);
+        shipsOnScreen.get(2).setPosition(900,350);
         tweenManager.killAll();
         if (lastShownSector != MagellanGame.instance.universe.playerShip.sector) {
             Tween.to(playerOnScreen, ActorAccessor.POSITION_XY, 0.8f).target(-300, -100).ease(TweenEquations.easeOutCubic).start(tweenManager);
@@ -103,9 +106,9 @@ public class WindowScreen extends BaseScreen {
         Tween.to(playerOnScreen, ActorAccessor.POSITION_Y,5f).target(-80).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
         Tween.to(playerOnScreen, ActorAccessor.POSITION_X,7f).target(-290).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
 
-        Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(215).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).start(tweenManager);
-        Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(115).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0f,1f)).start(tweenManager);
-        Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0f,1f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(215).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0.8f,1.3f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(115).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0.8f,1.3f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0.8f,1.3f)).start(tweenManager);
 
         lastShownSector = game.universe.playerShip.sector;
     }
