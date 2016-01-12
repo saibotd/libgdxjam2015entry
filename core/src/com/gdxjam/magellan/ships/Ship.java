@@ -16,7 +16,7 @@ import com.gdxjam.magellan.gameobj.*;
  */
 public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow, IDestroyable, IArmed {
 
-    public float shield = .1f;
+    public float shield = 0;
     public int health = 3;
     public int attack = 1;
     public Sprite spriteDot;
@@ -37,10 +37,11 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     }
 
     @Override
-    public void receiveDamage(int damage) {
-        if(Math.random() < shield) return;
+    public boolean receiveDamage(int damage) {
+        if(Math.random() < shield) return false;
         health -= damage;
         if(health <= 0) destroy();
+        return true;
     }
 
     @Override
