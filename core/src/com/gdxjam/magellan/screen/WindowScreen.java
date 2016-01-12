@@ -246,13 +246,13 @@ public class WindowScreen extends BaseScreen {
         } else {
             l.setPosition(700, 500);
             pe.setPosition(700, 500);
-            pe.scaleEffect(3);
+            pe.scaleEffect(2);
             for (Container<Actor> c : shipsOnScreen){
                 if(c.getActor() != null
                         && c.getActor().getUserObject() != null
                         && c.getActor().getUserObject() == target){
                     l.setPosition(c.getX() + 200, c.getY() + 270);
-                    pe.setPosition(c.getX() + 200, c.getY() + 80);
+                    pe.setPosition(c.getX() + 200, c.getY() + 120);
                 }
             }
         }
