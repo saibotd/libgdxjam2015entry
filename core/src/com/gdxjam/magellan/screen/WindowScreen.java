@@ -103,9 +103,9 @@ public class WindowScreen extends BaseScreen {
         Tween.to(playerOnScreen, ActorAccessor.POSITION_Y,5f).target(-80).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
         Tween.to(playerOnScreen, ActorAccessor.POSITION_X,7f).target(-290).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(1f).start(tweenManager);
 
-        Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(215).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
-        Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(115).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
-        Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(.5f,1f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(0), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(215).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).start(tweenManager);
+        Tween.to(shipsOnScreen.get(1), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(115).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0f,1f)).start(tweenManager);
+        Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0f,1f)).start(tweenManager);
 
         lastShownSector = game.universe.playerShip.sector;
     }
@@ -235,10 +235,9 @@ public class WindowScreen extends BaseScreen {
     public void showDamage(final IDestroyable target, int damage) {
         ParticleEffect pe = new ParticleEffect();
         pe.load(Gdx.files.internal("explosion"),Gdx.files.internal(""));
-        final Label l = new Label("-"+damage, skin);
-        l.setFontScale(4);
+        final Label l = new Label("-"+damage, skin, "damage");
         if(target instanceof PlayerShip) {
-            l.setPosition(200, 200);
+            l.setPosition(200, 400);
             pe.setPosition(200, 200);
             pe.scaleEffect(6);
         } else {
@@ -249,13 +248,14 @@ public class WindowScreen extends BaseScreen {
                 if(c.getActor() != null
                         && c.getActor().getUserObject() != null
                         && c.getActor().getUserObject() == target){
-                    l.setPosition(c.getX() + 200, c.getY() + 100);
-                    pe.setPosition(c.getX() + 200, c.getY() + 100);
+                    l.setPosition(c.getX() + 200, c.getY() + 270);
+                    pe.setPosition(c.getX() + 200, c.getY() + 80);
                 }
             }
         }
         stage.addActor(l);
-        Tween.to(l, ActorAccessor.POSITION_Y, 1).target(l.getY()+50).ease(TweenEquations.easeInOutCubic).setCallback(new TweenCallback() {
+        Tween.to(l, ActorAccessor.ALPHA, 0.5f).target(0).ease(TweenEquations.easeOutCubic).delay(0.5f).start(tweenManager);
+        Tween.to(l, ActorAccessor.POSITION_Y, 1).target(l.getY()+50).ease(TweenEquations.easeInCubic).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 l.remove();

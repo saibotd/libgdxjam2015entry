@@ -48,6 +48,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	value: { font: datavalue-font, fontColor: white }
 	window: { font: default-font, fontColor: white }
 	inlay: { background: inlay, font: default-font, fontColor: white }
+	damage: { font: headline-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }
