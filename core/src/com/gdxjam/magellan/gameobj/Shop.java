@@ -19,9 +19,8 @@ import com.gdxjam.magellan.shopitem.ShopItemUpgrade;
 /**
  * Created by Felix on 29.12.2015.
  */
-public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInteractable {
+public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap, IInteractable {
 
-    private Sprite mapSprite;
     private Array<ShopItem> inventory = new Array<ShopItem>();
     private Label info;
     private int lastSelectedIndex;
@@ -141,6 +140,10 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
         window.add(windowContent);
     }
 
+    @Override
+    public void moveTo(Sector sector) {
+
+    }
 
     private void selectItem(int index) {
         ShopItem item = inventory.get(index);
@@ -151,9 +154,15 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
 
     @Override
     public void prepareRenderingOnMap() {
-        mapSprite = new Sprite(MagellanGame.assets.get("shop.png", Texture.class));
-        mapSprite.setSize(16, 16);
-        mapSprite.setPosition(sector.position.x - 20, sector.position.y + 20);
+        spriteVessel = new Sprite(MagellanGame.assets.get("shop.png", Texture.class));
+        spriteVessel.setSize(16, 16);
+        spriteVessel.setOriginCenter();
+
+        sectorSlot = 0;
+        getParkingPosition();
+
+        spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
+        spriteVessel.setRotation(parkingAngle);
     }
 
     @Override
@@ -167,7 +176,7 @@ public class Shop extends GameObj implements IDrawableWindow, IDrawableMap, IInt
     @Override
     public void renderOnMap(SpriteBatch batch, float delta) {
         super.render(delta);
-        mapSprite.draw(batch);
+        spriteVessel.draw(batch);
     }
 
     @Override
