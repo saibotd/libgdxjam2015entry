@@ -155,6 +155,12 @@ public class WindowScreen extends BaseScreen {
                 if(gameObj instanceof IDrawableWindow) {
                     actor.addListener(new InputListener() {
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            for(GameObj _gameObj : game.universe.playerShip.sector.gameObjs){
+                                if(!(gameObj instanceof AiShip) && _gameObj instanceof AiShip){
+                                    Window window = getWindow("Alert!", "Beware! Enemy ships in sector!");
+                                    return false;
+                                }
+                            }
                             return true;
                         }
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

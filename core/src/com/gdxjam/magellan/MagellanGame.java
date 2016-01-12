@@ -32,6 +32,7 @@ public class MagellanGame extends Game{
         gameState = new GameState(this);
         gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
         gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
+        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.REPAIRING);
 		universe = new Universe(this);
 	}
 

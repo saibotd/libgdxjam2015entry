@@ -37,6 +37,8 @@ public class Universe {
             }
         }
         playerShip = new PlayerShip(bottomLeft);
+        new Shop(bottomLeft);
+        new Planet(topRight);
     }
 
     public boolean addSector(Sector sector) {

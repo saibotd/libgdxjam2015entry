@@ -22,7 +22,7 @@ public class ShopItemUpgrade extends ShopItem {
                 buyer.attack++;
                 break;
             case HEALTH:
-                buyer.health++;
+                buyer.maxHealth++;
                 break;
             case SHIELD:
                 buyer.shield += .025f;

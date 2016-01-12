@@ -141,13 +141,6 @@ public class MapScreen extends BaseScreen {
                 pixel.setPosition(_sector.position.x - pixel.getOriginX(), _sector.position.y - pixel.getOriginY());
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(mapBatch);
-
-                // Do we need this?
-
-                /*dot.setColor(Color.CYAN);
-                dot.setSize(20,20);
-                dot.setPosition(_sector.position.x - 10, _sector.position.y - 10);
-                dot.draw(mapBatch);*/
             }
         }
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){

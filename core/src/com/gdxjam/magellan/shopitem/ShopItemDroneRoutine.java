@@ -27,6 +27,7 @@ public class ShopItemDroneRoutine extends ShopItem {
             case ATTACKING: info = "This routine unlocks the\nDrone's cannon!"; break;
             case ADVSCOUTING: info = "This routine offers\na smarter algorithm\nfor scouting."; break;
             case FOLLOWING: info = "This routine programs\nthe drone to follow\nyour ship."; break;
+            case REPAIRING: info = "This routine programs\nthe drone to repair\nyour ship."; break;
             default: info = "";
         }
         return info;

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,6 +23,7 @@ import com.gdxjam.magellan.shopitem.ShopItem;
  */
 public class PlayerShip extends Ship implements IInteractable {
 
+    public int maxHealth;
     public int HUMANS = 10000;
     public Array<Integer> drones = new Array();
     public Array<ShopItem> inventory;
@@ -31,7 +33,7 @@ public class PlayerShip extends Ship implements IInteractable {
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
-        health = 10;
+        maxHealth = health = 10;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(1);
@@ -180,12 +182,16 @@ public class PlayerShip extends Ship implements IInteractable {
     @Override
     public String getInfo() {
         String s = "Your ship.";
-        s += "\nHealth: " + getHealth();
+        s += "\nHealth: " + getHealth() + "/" + maxHealth;
         s += "\nAttack: " + attack;
         s += "\nShield: " + Math.round(shield * 100) + "%";
         s += "\nFrozen Humans: " + HUMANS;
         s += "\nDrones: " + drones.toString(", ");
         s += "\nEquipment: " + inventory.toString(", ");
         return s;
+    }
+
+    public void heal(float powerLevel) {
+        health = (int) MathUtils.clamp(health + powerLevel, 0, maxHealth);
     }
 }

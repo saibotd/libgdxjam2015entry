@@ -226,6 +226,12 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
                         case MINING:
                             addRoutine(new DroneRoutineMining(drone));
                         break;
+                        case FOLLOWING:
+                            addRoutine(new DroneRoutineFollowing(drone));
+                        break;
+                        case REPAIRING:
+                            addRoutine(new DroneRoutineReparing(drone));
+                        break;
                     }
                 }
                 MagellanGame.instance.windowScreen.closeWindow();
@@ -295,15 +301,17 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public int shootAt(IDestroyable target) {
-        for(DroneRoutine routine : routines){
-            routine.shootAt(target);
-        }
-        return 0;
+        target.receiveDamage(getAttack());
+        return getAttack();
     }
 
     @Override
     public int getAttack() {
-        return 0;
+        int attack = 0;
+        for(DroneRoutine routine : routines){
+            if(routine instanceof DroneRoutineFighting) attack += ((DroneRoutineFighting) routine).getAttack();
+        }
+        return attack;
     }
 
     public boolean hasRoutine(Class routineClass) {
