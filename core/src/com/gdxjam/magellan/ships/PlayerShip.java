@@ -88,7 +88,7 @@ public class PlayerShip extends Ship implements IInteractable {
         spriteVessel.setSize(20, 20);
         spriteVessel.setOriginCenter();
 
-        sectorSlot = 0;
+        sectorSlot = 1;
         getParkingPosition();
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
