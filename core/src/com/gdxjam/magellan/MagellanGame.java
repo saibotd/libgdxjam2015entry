@@ -70,12 +70,15 @@ public class MagellanGame extends Game{
         assets.load("sectorview_planet_3.png", Texture.class);
         assets.load("sectorview_planet_4.png", Texture.class);
         assets.load("sectorview_ship.png", Texture.class);
+        assets.load("sectorview_ship_shield.png", Texture.class);
         assets.load("sectorview_drone.png", Texture.class);
         assets.load("sectorview_drone_gun.png", Texture.class);
         assets.load("sectorview_drone_mine.png", Texture.class);
         assets.load("sectorview_drone_thruster.png", Texture.class);
         assets.load("sectorview_enemy_fighter.png", Texture.class);
         assets.load("sectorview_enemy_transporter.png", Texture.class);
+        assets.load("sectorview_enemy_fighter_shield.png", Texture.class);
+        assets.load("sectorview_enemy_transporter_shield.png", Texture.class);
         assets.load("sectorview_shop.png", Texture.class);
         assets.load("bg.png", Texture.class);
         assets.load("topbarBg.png", Texture.class);
@@ -91,6 +94,8 @@ public class MagellanGame extends Game{
         assets.load("sounds/mine.mp3", Sound.class);
         assets.load("sounds/population.mp3", Sound.class);
         assets.load("sounds/upgrade.mp3", Sound.class);
+        assets.load("sounds/shield_1.mp3", Sound.class);
+        assets.load("sounds/shield_2.mp3", Sound.class);
         assets.load("sounds/nope.mp3", Sound.class);
         assets.load("sounds/doomed.wav", Sound.class);
         assets.load("sounds/explosion1.wav", Sound.class);

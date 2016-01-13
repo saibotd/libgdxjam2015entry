@@ -15,6 +15,7 @@ import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDrawableMap;
 import com.gdxjam.magellan.ships.AiShipFighter;
+import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.Ship;
 
 /**
@@ -218,6 +219,10 @@ public class MapScreen extends BaseScreen {
             case Input.Keys.K:
                 Ship ship = new AiShipFighter(universe.playerShip.sector);
                 ship.prepareRenderingOnMap();
+                break;
+            case Input.Keys.J:
+                Ship ship2 = new AiShipSettler(universe.playerShip.sector);
+                ship2.prepareRenderingOnMap();
                 break;
             case Input.Keys.F:
                 if(Gdx.graphics.isFullscreen())

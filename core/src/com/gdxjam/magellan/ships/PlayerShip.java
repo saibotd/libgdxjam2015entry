@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
@@ -35,6 +36,7 @@ public class PlayerShip extends Ship implements IInteractable {
         faction = Factions.PLAYER;
         maxHealth = health = 15;
         attack = 4;
+        shield = 0.5f;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(1);
@@ -76,8 +78,11 @@ public class PlayerShip extends Ship implements IInteractable {
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("sectorview_ship.png", Texture.class));
-        return image;
+        Stack stack = new Stack();
+        stack.addActor(new Image(MagellanGame.assets.get("sectorview_ship.png", Texture.class)));
+        stack.addActor(new Image(MagellanGame.assets.get("sectorview_ship_shield.png", Texture.class)));
+        stack.getChildren().get(1).setColor(1,1,1,0);
+        return stack;
     }
 
     @Override

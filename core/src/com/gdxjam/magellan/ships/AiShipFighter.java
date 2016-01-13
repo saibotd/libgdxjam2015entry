@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.gdxjam.magellan.Battle;
@@ -23,6 +24,7 @@ public class AiShipFighter extends AiShip {
         super(sector);
         health = 8;
         attack = 3;
+        shield = 0.1f;
         faction = Factions.ENEMY;
     }
 
@@ -43,9 +45,16 @@ public class AiShipFighter extends AiShip {
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_enemy_fighter.png", Texture.class));
-        image.setScale(.4f);
-        image.setUserObject(this);
-        return image;
+        Image imageShield = new Image(MagellanGame.assets.get("sectorview_enemy_fighter_shield.png", Texture.class));
+        imageShield.setColor(1,1,1,0);
+
+        Stack stack = new Stack();
+        stack.setSize(300,208);
+        stack.setUserObject(this);
+        stack.addActor(image);
+        stack.addActor(imageShield);
+
+        return stack;
     }
 
     private void decideState(){
