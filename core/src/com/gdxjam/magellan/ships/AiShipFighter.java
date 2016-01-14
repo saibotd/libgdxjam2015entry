@@ -2,14 +2,10 @@ package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Scaling;
 import com.gdxjam.magellan.Battle;
-import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
@@ -58,6 +54,7 @@ public class AiShipFighter extends AiShip {
     }
 
     private void decideState(){
+        target = null;
         for (GameObj gameObj : sector.gameObjs){
             if(gameObj instanceof IDestroyable && gameObj.faction == Factions.PLAYER){
                 if(Math.random() < .5){
@@ -67,27 +64,28 @@ public class AiShipFighter extends AiShip {
         }
         if(target != null && target.isAlive()){
             state = States.HOSTILE;
-            if(health < 20 && Math.random() < .5){
+            if(health < 2 && Math.random() < .5){
                 state = States.FLEEING;
             }
             return;
         }
-        target = null;
         state = States.IDLE;
     }
 
-    public void tick(){
+    public void passiveTick(){
         decideState();
         switch (state){
             case IDLE:
-                if(Math.random() < .5) super.tick();
-                break;
-            case HOSTILE:
-                new Battle(this, target);
+                if(Math.random() < .5) super.passiveTick();
                 break;
             case FLEEING:
-                super.tick();
+                super.passiveTick();
                 break;
         }
+    }
+
+    public void activeTick(){
+        decideState();
+        if(state == States.HOSTILE) new Battle(this, target);
     }
 }

@@ -17,7 +17,10 @@ public class GameObj {
         this.sector = sector;
         sector.gameObjs.add(this);
     }
-    public void tick(){
+    public void passiveTick(){
+
+    }
+    public void activeTick(){
 
     }
     public void render(float deltaTime) {

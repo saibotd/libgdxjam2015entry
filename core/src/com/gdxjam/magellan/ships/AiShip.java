@@ -33,7 +33,7 @@ public class AiShip extends Ship {
         faction = Factions.ENEMY;
     }
 
-    public void tick(){
+    public void passiveTick(){
         moveTo(sector.connectedSectors.random());
     }
 

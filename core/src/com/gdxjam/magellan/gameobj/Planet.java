@@ -120,7 +120,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         return 0;
     }
 
-    public void tick(){
+    public void passiveTick(){
         growPopulation();
     }
 

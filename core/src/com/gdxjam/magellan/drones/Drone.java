@@ -59,9 +59,17 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         super.moveTo(sector);
     }
 
-    public void tick(){
+    public void passiveTick(){
         for(DroneRoutine routine : routines){
-            routine.tick();
+            if(!(routine instanceof DroneRoutineFighting))
+                routine.tick();
+        }
+    }
+
+    public void activeTick(){
+        for(int i = 0; i < routines.size; i++){
+            if(routines.get(i) instanceof DroneRoutineFighting)
+                routines.get(i).tick();
         }
     }
 

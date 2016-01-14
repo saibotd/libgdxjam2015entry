@@ -1,6 +1,5 @@
 package com.gdxjam.magellan.ships;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -54,9 +53,10 @@ public class AiShipSettler extends AiShip {
     }
 
     private void decideState(){
+        target = null;
         for (int i = 0; i < sector.gameObjs.size; i++){
             GameObj gameObj = sector.gameObjs.get(i);
-            if(gameObj instanceof IDestroyable && gameObj.faction != faction){
+            if(gameObj instanceof IDestroyable && gameObj.faction == Factions.PLAYER){
                 if(Math.random() < .5){
                     target = (IDestroyable) gameObj;
                 }
@@ -74,23 +74,24 @@ public class AiShipSettler extends AiShip {
             }
             return;
         }
-        target = null;
         state = States.IDLE;
     }
 
-    public void tick(){
+    public void passiveTick(){
         decideState();
         switch (state){
             case IDLE:
-                if(Math.random() < .5) super.tick();
-                break;
-            case HOSTILE:
-                target.receiveDamage(attack);
+                if(Math.random() < .5) super.passiveTick();
                 break;
             case FLEEING:
-                super.tick();
+                super.passiveTick();
                 break;
         }
+    }
+
+    public void activeTick(){
+        decideState();
+        if(state == States.HOSTILE) new Battle(this, target);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.gdxjam.magellan;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -40,6 +39,12 @@ public class Universe {
         playerShip = new PlayerShip(bottomLeft);
         new Shop(bottomLeft);
         enemyPlanet = new Planet(topRight);
+        enemyPlanet.faction = GameObj.Factions.ENEMY;
+        enemyPlanet.addResources(1,56465);
+        enemyPlanet.addResources(2,56465);
+        enemyPlanet.addResources(3,56465);
+        enemyPlanet.population = 80114564;
+
     }
 
     public boolean addSector(Sector sector) {
@@ -89,12 +94,20 @@ public class Universe {
 
         MagellanGame.gameState.progressYear();
 
-
+        Array<GameObj> gameObjs = new Array<GameObj>();
 
         for(int i = 0; i < sectors.size; i++){
             for(int j = 0; j < sectors.get(i).gameObjs.size; j++){
-                sectors.get(i).gameObjs.get(j).tick();
+                gameObjs.add(sectors.get(i).gameObjs.get(j));
             }
+        }
+
+        for(int i = 0; i < gameObjs.size; i++){
+            gameObjs.get(i).passiveTick();
+        }
+
+        for(int i = 0; i < gameObjs.size; i++){
+            gameObjs.get(i).activeTick();
         }
 
         MagellanGame.gameState.updatePopulationCount();
