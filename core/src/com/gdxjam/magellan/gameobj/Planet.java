@@ -27,6 +27,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     public int resource2;
     public int resource3;
     public int minResourcesForSettling = 100;
+    private boolean poplimitMessageShown = false;
 
     public Planet(Sector sector) {
         super(sector);
@@ -122,6 +123,10 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     public void passiveTick(){
         growPopulation();
+        if (faction == Factions.PLAYER && population > 0 && population == getPopulationLimit() && poplimitMessageShown == false) {
+            poplimitMessageShown = true;
+            MagellanGame.instance.mapScreen.log.addEntry("Planet has reached it's population limit.", sector);
+        }
     }
 
     public void claim(Ship ship){
@@ -285,6 +290,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     public void addResources(int resourcetype, int amount) {
 
+        if (amount > 0) poplimitMessageShown = false;
         switch (resourcetype) {
             case 1:
                 resource1 += amount;
