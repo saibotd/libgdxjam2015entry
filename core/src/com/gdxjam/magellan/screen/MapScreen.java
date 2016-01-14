@@ -46,6 +46,7 @@ public class MapScreen extends BaseScreen {
     public SpriteBatch mapBatch;
     private Rectangle cameraFrame = new Rectangle();
     private float cameraFramePadding = 200;
+    private Vector2 starfieldScroll = new Vector2();
     float lineWidth = 2;
     private Sector sectorToFocusOn;
 
@@ -83,6 +84,10 @@ public class MapScreen extends BaseScreen {
                 }
             }
         }
+        createStarfield();
+        starfield.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        starfield.setPosition(50,50);
+        starfield.setSize(1180,570);
     }
 
     @Override
@@ -90,12 +95,15 @@ public class MapScreen extends BaseScreen {
         super.render(delta);
 
         batch.begin();
-        pixel.setPosition(20,20);
-        pixel.setSize(1240,630);
-        pixel.setColor(MagellanColors.MAP_BG);
-        pixel.setAlpha(0.4f);
-        pixel.setRotation(0);
-        pixel.draw(batch);
+
+        starfieldScroll.x = camera.position.x / 800;
+        starfieldScroll.y = -camera.position.y / 450;
+        starfield.setU(starfieldScroll.x);
+        starfield.setU2(starfieldScroll.x+1);
+        starfield.setV(starfieldScroll.y);
+        starfield.setV2(starfieldScroll.y+1);
+        starfield.draw(batch);
+
         batch.end();
 
         mapViewport.apply();
@@ -134,14 +142,6 @@ public class MapScreen extends BaseScreen {
             camera.position.set(dragStartCameraPos.x + (dragStartMousePos.x - mousePos.x) * zoom * viewport.getWorldWidth() / viewport.getScreenWidth(), dragStartCameraPos.y + (mousePos.y - dragStartMousePos.y) * zoom * viewport.getWorldHeight() / viewport.getScreenHeight(), 1);
         }
 
-        batch.begin();
-        pixel.setPosition(0,0);
-        pixel.setSize(1280,720);
-        pixel.setColor(MagellanColors.MAP_BG);
-        pixel.setAlpha(0.95f);
-        pixel.setRotation(0);
-        pixel.draw(batch);
-        batch.end();
 
         mapBatch.begin();
 
