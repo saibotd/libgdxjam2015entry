@@ -9,12 +9,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDrawableMap;
 import com.gdxjam.magellan.ships.AiShipFighter;
+import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.Ship;
 
 /**
@@ -26,6 +30,7 @@ public class MapScreen extends BaseScreen {
     private final Sprite sectorNormal;
     private final Sprite sectorNotVisited;
     private final Viewport mapViewport;
+    public Log log;
     private float zoom = 1;
     private Vector3 touch = new Vector3();
     private Circle touchCircle = new Circle(0,0,30);
@@ -42,6 +47,8 @@ public class MapScreen extends BaseScreen {
     private Rectangle cameraFrame = new Rectangle();
     private float cameraFramePadding = 200;
     private Vector2 starfieldScroll = new Vector2();
+    float lineWidth = 2;
+    private Sector sectorToFocusOn;
 
     public MapScreen(MagellanGame game){
         super(game);
@@ -58,6 +65,18 @@ public class MapScreen extends BaseScreen {
         mapViewport = new FitViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
+        HorizontalGroup logGroup = new HorizontalGroup();
+        logGroup.debugAll();
+        logGroup.setSize(400, 100);
+        logGroup.setPosition(1280-400, 0);
+        logGroup.pad(10);
+        VerticalGroup logTarget = new VerticalGroup();
+        ScrollPane logScroll = new ScrollPane(logTarget);
+        logGroup.addActor(logScroll);
+        logScroll.setFillParent(true);
+        logTarget.fill();
+        stage.addActor(logGroup);
+        log = new Log(logTarget);
         for(Sector sector : universe.sectors){
             for(GameObj gameObj:sector.gameObjs){
                 if(gameObj instanceof IDrawableMap) {
@@ -106,6 +125,12 @@ public class MapScreen extends BaseScreen {
         camera.position.x += keyboardPanX;
         camera.position.y += keyboardPanY;
 
+        if(sectorToFocusOn != null){
+            camera.position.lerp(new Vector3(sectorToFocusOn.position.x, sectorToFocusOn.position.y, 0), delta * 4);
+            zoom = MathUtils.clamp(zoom-delta * 2, .5f, 5);
+            if(sectorToFocusOn.position.dst(camera.position.x, camera.position.y) < .2) sectorToFocusOn = null;
+        }
+
         cameraFrame.set(
                 camera.position.x - camera.viewportWidth * zoom / 2 - cameraFramePadding,
                 camera.position.y - camera.viewportHeight * zoom / 2 - cameraFramePadding,
@@ -128,25 +153,18 @@ public class MapScreen extends BaseScreen {
                 if(sector == universe.playerShip.sector || _sector == universe.playerShip.sector) {
                     pixel.setColor(MagellanColors.MAP_POSSIBLE_MOVEMENT);
                     pixel.setAlpha(1f);
-                    pixel.setSize(tmp1.len()+1f, 2);
-                    pixel.setOrigin(0,1f);
+                    pixel.setSize(tmp1.len()+lineWidth/2, lineWidth);
+                    pixel.setOrigin(0,lineWidth/2);
                 } else {
                     pixel.setColor(Color.WHITE);
                     pixel.setAlpha(0.2f);
-                    pixel.setSize(tmp1.len()+1f, 0.4f);
-                    pixel.setOrigin(0,0.2f);
+                    pixel.setSize(tmp1.len()+lineWidth/2, lineWidth);
+                    pixel.setOrigin(0,lineWidth/2);
                 }
 
                 pixel.setPosition(_sector.position.x - pixel.getOriginX(), _sector.position.y - pixel.getOriginY());
                 pixel.setRotation(tmp1.angle());
                 pixel.draw(mapBatch);
-
-                // Do we need this?
-
-                /*dot.setColor(Color.CYAN);
-                dot.setSize(20,20);
-                dot.setPosition(_sector.position.x - 10, _sector.position.y - 10);
-                dot.draw(mapBatch);*/
             }
         }
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
@@ -225,6 +243,10 @@ public class MapScreen extends BaseScreen {
                 Ship ship = new AiShipFighter(universe.playerShip.sector);
                 ship.prepareRenderingOnMap();
                 break;
+            case Input.Keys.J:
+                Ship ship2 = new AiShipSettler(universe.playerShip.sector);
+                ship2.prepareRenderingOnMap();
+                break;
             case Input.Keys.F:
                 if(Gdx.graphics.isFullscreen())
                     Gdx.graphics.setDisplayMode(1280, 720, false);
@@ -236,6 +258,7 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean touchDown(int x, int y, int pointer, int button) {
+        sectorToFocusOn = null;
         camera.unproject(touch.set(x, y, zoom));
         touchCircle.setPosition(touch.x, touch.y);
         doMousePan = true;
@@ -270,4 +293,7 @@ public class MapScreen extends BaseScreen {
         return false;
     }
 
+    public void focusOnSector(Sector sector) {
+        sectorToFocusOn = sector;
+    }
 }

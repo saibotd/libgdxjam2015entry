@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
@@ -22,6 +24,7 @@ import com.gdxjam.magellan.shopitem.ShopItem;
  */
 public class PlayerShip extends Ship implements IInteractable {
 
+    public int maxHealth;
     public int HUMANS = 10000;
     public Array<Integer> drones = new Array();
     public Array<ShopItem> inventory;
@@ -31,7 +34,9 @@ public class PlayerShip extends Ship implements IInteractable {
     public PlayerShip(Sector sector) {
         super(sector);
         faction = Factions.PLAYER;
-        health = 10;
+        maxHealth = health = 15;
+        attack = 4;
+        shield = 0.5f;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(1);
@@ -73,8 +78,11 @@ public class PlayerShip extends Ship implements IInteractable {
 
     @Override
     public Actor getActor() {
-        Image image = new Image(MagellanGame.assets.get("sectorview_ship.png", Texture.class));
-        return image;
+        Stack stack = new Stack();
+        stack.addActor(new Image(MagellanGame.assets.get("sectorview_ship.png", Texture.class)));
+        stack.addActor(new Image(MagellanGame.assets.get("sectorview_ship_shield.png", Texture.class)));
+        stack.getChildren().get(1).setColor(1,1,1,0);
+        return stack;
     }
 
     @Override
@@ -85,7 +93,7 @@ public class PlayerShip extends Ship implements IInteractable {
         spriteVessel.setSize(20, 20);
         spriteVessel.setOriginCenter();
 
-        sectorSlot = 0;
+        sectorSlot = 1;
         getParkingPosition();
 
         spriteVessel.setPosition(parkingPosition.x, parkingPosition.y);
@@ -180,12 +188,16 @@ public class PlayerShip extends Ship implements IInteractable {
     @Override
     public String getInfo() {
         String s = "Your ship.";
-        s += "\nHealth: " + getHealth();
+        s += "\nHealth: " + getHealth() + "/" + maxHealth;
         s += "\nAttack: " + attack;
         s += "\nShield: " + Math.round(shield * 100) + "%";
         s += "\nFrozen Humans: " + HUMANS;
         s += "\nDrones: " + drones.toString(", ");
         s += "\nEquipment: " + inventory.toString(", ");
         return s;
+    }
+
+    public void heal(float powerLevel) {
+        health = (int) MathUtils.clamp(health + powerLevel, 0, maxHealth);
     }
 }

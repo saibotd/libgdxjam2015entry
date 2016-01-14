@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
@@ -17,6 +18,9 @@ public class AiShipSettler extends AiShip {
 
     public AiShipSettler(Sector sector) {
         super(sector);
+        health = 10;
+        attack = 2;
+        shield = 0.3f;
         faction = Factions.ENEMY;
     }
 
@@ -37,8 +41,16 @@ public class AiShipSettler extends AiShip {
     @Override
     public Actor getActor() {
         Image image = new Image(MagellanGame.assets.get("sectorview_enemy_transporter.png", Texture.class));
-        image.setUserObject(this);
-        return image;
+        Image imageShield = new Image(MagellanGame.assets.get("sectorview_enemy_transporter_shield.png", Texture.class));
+        imageShield.setColor(1,1,1,0);
+
+        Stack stack = new Stack();
+        stack.setSize(500,370);
+        stack.setUserObject(this);
+        stack.addActor(image);
+        stack.addActor(imageShield);
+
+        return stack;
     }
 
     private void decideState(){

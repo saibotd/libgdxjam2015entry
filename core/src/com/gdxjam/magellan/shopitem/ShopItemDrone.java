@@ -10,7 +10,7 @@ public class ShopItemDrone extends ShopItem {
     private Integer level;
 
     public ShopItemDrone(int level){
-        super("Drone Level " + level, "This drone can handle\nup to " + level + " subroutines", level * 1000);
+        super("Drone Level " + level, "This drone can handle\nup to " + level + " subroutines", level * level * 1000);
         this.level = level;
     }
     public void buy(PlayerShip buyer){

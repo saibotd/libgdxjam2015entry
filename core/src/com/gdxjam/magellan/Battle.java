@@ -62,7 +62,8 @@ public class Battle implements Disposable{
         float panShoot = (offensive instanceof PlayerShip) ? -0.8f : 0.8f;
         final float panImpact = (offensive instanceof PlayerShip) ? 0.8f : -0.8f;
 
-        MagellanGame.soundFx.weaponFire.random().play(0.8f,1,panShoot);
+        if(isPlayerBattle())
+            MagellanGame.soundFx.weaponFire.random().play(0.8f,1,panShoot);
 
 
         Timer.schedule(new Timer.Task() {
@@ -75,8 +76,17 @@ public class Battle implements Disposable{
                 if(defensive instanceof PlayerShip){
                     MagellanGame.instance.windowScreen.shake(i);
                 }
-                if(isPlayerBattle()) MagellanGame.instance.windowScreen.showDamage(defensive, i);
-                MagellanGame.soundFx.explosions.random().play(0.9f,1,panImpact);
+                if(isPlayerBattle()){
+                    if (i == -1) {
+                        MagellanGame.instance.windowScreen.showShield(defensive);
+                        MagellanGame.soundFx.shield.random().play(0.7f,1,panImpact);
+                    } else {
+                        MagellanGame.instance.windowScreen.showDamage(defensive, i);
+                        MagellanGame.soundFx.explosions.random().play(1,1,panImpact);
+                    }
+
+
+                }
             }
         }, 0.7f);
 

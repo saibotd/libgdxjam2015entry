@@ -13,6 +13,7 @@ import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 
 public class Universe {
+    private final Planet enemyPlanet;
     public PlayerShip playerShip;
     public Array<Sector> sectors;
     public int size = 3000;
@@ -37,6 +38,8 @@ public class Universe {
             }
         }
         playerShip = new PlayerShip(bottomLeft);
+        new Shop(bottomLeft);
+        enemyPlanet = new Planet(topRight);
     }
 
     public boolean addSector(Sector sector) {
@@ -101,13 +104,14 @@ public class Universe {
 
 
 
+        if(enemyPlanet.faction == GameObj.Factions.ENEMY) {
+            if (MagellanGame.gameState.YEARS_PASSED == 1) {
+                addEnemies(50, 5);
+            }
 
-        if (MagellanGame.gameState.YEARS_PASSED == 1) {
-            addEnemies(50, 5);
-        }
-
-        if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
-            addEnemies(10, 1);
+            if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
+                addEnemies(10, 1);
+            }
         }
 
 

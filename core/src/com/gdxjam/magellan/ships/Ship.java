@@ -27,8 +27,11 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
 
     @Override
     public int shootAt(IDestroyable target) {
-        target.receiveDamage(attack);
-        return attack;
+        if (target.receiveDamage(attack)) {
+            return attack;
+        } else {
+            return -1;
+        }
     }
 
     @Override

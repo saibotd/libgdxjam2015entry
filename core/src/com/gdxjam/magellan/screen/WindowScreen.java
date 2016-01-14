@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.*;
@@ -155,6 +156,12 @@ public class WindowScreen extends BaseScreen {
                 if(gameObj instanceof IDrawableWindow) {
                     actor.addListener(new InputListener() {
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            for(GameObj _gameObj : game.universe.playerShip.sector.gameObjs){
+                                if(!(gameObj instanceof AiShip) && _gameObj instanceof AiShip){
+                                    Window window = getWindow("Alert!", "Beware! Enemy ships in sector!");
+                                    return false;
+                                }
+                            }
                             return true;
                         }
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -266,5 +273,31 @@ public class WindowScreen extends BaseScreen {
         }).start(tweenManager);
         effects.add(pe);
         pe.start();
+    }
+
+    public void showShield(final IDestroyable target) {
+        if (target instanceof PlayerShip) {
+            ((Stack) playerOnScreen.getActor()).getChildren().get(1).setColor(1,1,1,1);
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    ((Stack) playerOnScreen.getActor()).getChildren().get(1).setColor(1,1,1,0);
+                }
+            }, 0.5f);
+        } else {
+            for (final Container<Actor> c : shipsOnScreen){
+                if(c.getActor() != null
+                        && c.getActor().getUserObject() != null
+                        && c.getActor().getUserObject() == target){
+                    ((Stack) c.getActor()).getChildren().get(1).setColor(1,1,1,1);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            ((Stack) c.getActor()).getChildren().get(1).setColor(1,1,1,0);
+                        }
+                    }, 0.5f);
+                }
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ public class SoundFx {
     public Array<Sound> explosions = new Array<Sound>();
     public Array<Sound> weaponFire = new Array<Sound>();
     public Array<Sound> weaponFireSmall = new Array<Sound>();
+    public Array<Sound> shield = new Array<Sound>();
 
     public SoundFx() {
         shipJump = MagellanGame.assets.get("sounds/ship_jump_2.mp3", Sound.class);
@@ -38,6 +39,8 @@ public class SoundFx {
         weaponFire.add(MagellanGame.assets.get("sounds/weaponfire3.wav", Sound.class));
         weaponFireSmall.add(MagellanGame.assets.get("sounds/weaponfire5.wav", Sound.class));
         weaponFireSmall.add(MagellanGame.assets.get("sounds/weaponfire6.wav", Sound.class));
+        shield.add(MagellanGame.assets.get("sounds/shield_1.mp3", Sound.class));
+        shield.add(MagellanGame.assets.get("sounds/shield_2.mp3", Sound.class));
 
     }
 

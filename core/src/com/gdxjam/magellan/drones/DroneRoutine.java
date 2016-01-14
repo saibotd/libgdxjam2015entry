@@ -16,7 +16,7 @@ public class DroneRoutine {
     public Sprite sprite;
     public Sprite windowSprite;
 
-    public enum ROUTINES{ MINING, SCOUTING, ATTACKING, ADVSCOUTING, FOLLOWING }
+    public enum ROUTINES{ MINING, SCOUTING, ATTACKING, ADVSCOUTING, FOLLOWING, REPAIRING }
     public ROUTINES routine;
 
     public DroneRoutine(Drone drone){
