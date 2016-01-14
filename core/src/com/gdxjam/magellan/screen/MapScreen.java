@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
@@ -27,6 +30,7 @@ public class MapScreen extends BaseScreen {
     private final Sprite sectorNormal;
     private final Sprite sectorNotVisited;
     private final Viewport mapViewport;
+    public Log log;
     private float zoom = 1;
     private Vector3 touch = new Vector3();
     private Circle touchCircle = new Circle(0,0,30);
@@ -43,6 +47,7 @@ public class MapScreen extends BaseScreen {
     private Rectangle cameraFrame = new Rectangle();
     private float cameraFramePadding = 200;
     float lineWidth = 2;
+    private Sector sectorToFocusOn;
 
     public MapScreen(MagellanGame game){
         super(game);
@@ -59,6 +64,18 @@ public class MapScreen extends BaseScreen {
         mapViewport = new FitViewport(1280, 720, camera);
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
+        HorizontalGroup logGroup = new HorizontalGroup();
+        logGroup.debugAll();
+        logGroup.setSize(400, 100);
+        logGroup.setPosition(1280-400, 0);
+        logGroup.pad(10);
+        VerticalGroup logTarget = new VerticalGroup();
+        ScrollPane logScroll = new ScrollPane(logTarget);
+        logGroup.addActor(logScroll);
+        logScroll.setFillParent(true);
+        logTarget.fill();
+        stage.addActor(logGroup);
+        log = new Log(logTarget);
         for(Sector sector : universe.sectors){
             for(GameObj gameObj:sector.gameObjs){
                 if(gameObj instanceof IDrawableMap) {
@@ -99,6 +116,12 @@ public class MapScreen extends BaseScreen {
         camera.zoom = zoom;
         camera.position.x += keyboardPanX;
         camera.position.y += keyboardPanY;
+
+        if(sectorToFocusOn != null){
+            camera.position.lerp(new Vector3(sectorToFocusOn.position.x, sectorToFocusOn.position.y, 0), delta * 4);
+            zoom = MathUtils.clamp(zoom-delta * 2, .5f, 5);
+            if(sectorToFocusOn.position.dst(camera.position.x, camera.position.y) < .2) sectorToFocusOn = null;
+        }
 
         cameraFrame.set(
                 camera.position.x - camera.viewportWidth * zoom / 2 - cameraFramePadding,
@@ -235,6 +258,7 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean touchDown(int x, int y, int pointer, int button) {
+        sectorToFocusOn = null;
         camera.unproject(touch.set(x, y, zoom));
         touchCircle.setPosition(touch.x, touch.y);
         doMousePan = true;
@@ -269,4 +293,7 @@ public class MapScreen extends BaseScreen {
         return false;
     }
 
+    public void focusOnSector(Sector sector) {
+        sectorToFocusOn = sector;
+    }
 }

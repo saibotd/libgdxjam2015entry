@@ -126,6 +126,9 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     public void claim(Ship ship){
         this.faction = ship.faction;
+        if(faction == Factions.PLAYER){
+            MagellanGame.instance.mapScreen.log.addEntry("Planet claimed (A:"+resource1+" P:"+resource2+" E:"+resource3+")", sector);
+        }
     }
 
     public void populate(Ship ship, int humans){
