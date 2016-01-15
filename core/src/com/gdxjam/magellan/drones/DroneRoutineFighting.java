@@ -27,6 +27,9 @@ public class DroneRoutineFighting extends DroneRoutine{
         for(GameObj gameObj : drone.sector.gameObjs){
             if(gameObj instanceof AiShip){
                 new Battle(drone, (IDestroyable) gameObj);
+                if (drone.faction == GameObj.Factions.PLAYER) {
+                    MagellanGame.instance.mapScreen.log.addEntry("Attack drone is engaging an enemy!", drone.sector);
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.gameobj.Planet;
@@ -91,7 +92,15 @@ public class AiShipSettler extends AiShip {
 
     public void activeTick(){
         decideState();
-        if(state == States.HOSTILE) new Battle(this, target);
+        if(state == States.HOSTILE){
+            new Battle(this, target);
+            if (target instanceof Drone && ((Drone) target).faction == Factions.PLAYER) {
+                MagellanGame.instance.mapScreen.log.addEntry("Your drone is under attack!", sector);
+            }
+            if (target instanceof Planet && ((Planet) target).faction == Factions.PLAYER) {
+                MagellanGame.instance.mapScreen.log.addEntry("Your planet is under attack!", sector);
+            }
+        }
     }
 
 }

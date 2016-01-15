@@ -44,7 +44,7 @@ public class GameState {
         for (GameObj gameObj:game.universe.getGameObjs(Planet.class)) {
             Planet planet = (Planet)gameObj;
             if (planet.faction == GameObj.Factions.PLAYER) {
-                CREDITS_PER_TICK = planet.creditsByTick();
+                CREDITS_PER_TICK += planet.creditsByTick();
             }
         }
         CREDITS += CREDITS_PER_TICK;

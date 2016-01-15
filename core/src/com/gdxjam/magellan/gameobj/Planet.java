@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
@@ -91,6 +92,9 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         population -= damage;
         if(population <= 0){
             population = 0;
+            if (faction == Factions.PLAYER) {
+                MagellanGame.instance.mapScreen.log.addEntry("The population of a planet has ben eradicated.", sector);
+            }
             faction = Factions.NEUTRAL;
         }
         return true;
@@ -123,7 +127,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     public void passiveTick(){
         growPopulation();
-        if (faction == Factions.PLAYER && population > 0 && population == getPopulationLimit() && poplimitMessageShown == false) {
+        if (faction == Factions.PLAYER && population > 0 && population == getPopulationLimit() && !poplimitMessageShown) {
             poplimitMessageShown = true;
             MagellanGame.instance.mapScreen.log.addEntry("Planet has reached it's population limit.", sector);
         }

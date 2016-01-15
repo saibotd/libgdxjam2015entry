@@ -61,7 +61,7 @@ public class Log {
         }
 
         public LogEntry(String s, Sector _sector){
-            text = s;
+            text =  MagellanGame.gameState.YEAR + " " + s;
             sector = _sector;
         }
     }

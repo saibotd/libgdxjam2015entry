@@ -79,9 +79,6 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         for(DroneRoutine routine : routines){
             routine.receiveDamage(damage);
         }
-        if (faction == Factions.PLAYER && damage > 0) {
-            MagellanGame.instance.mapScreen.log.addEntry("Your drone is under attack!", sector);
-        }
         if(health <= 0) destroy();
         return true;
     }
@@ -93,6 +90,9 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void destroy() {
+        if (faction == Factions.PLAYER) {
+            MagellanGame.instance.mapScreen.log.addEntry("You have lost a drone", sector);
+        }
         dispose();
         routines.clear();
     }

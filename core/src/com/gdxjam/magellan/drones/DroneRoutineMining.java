@@ -14,6 +14,7 @@ import com.gdxjam.magellan.gameobj.MeteoroidField;
 public class DroneRoutineMining extends DroneRoutine{
 
     private int resourcesPerTick = 2;
+    private boolean noResMessageShown = false;
 
     public DroneRoutineMining(Drone drone) {
         super(drone);
@@ -29,19 +30,28 @@ public class DroneRoutineMining extends DroneRoutine{
                 metroidFields.add((MeteoroidField) gameObj);
             }
         }
+        int resCounter = 0;
         for(MeteoroidField meteoroidField :metroidFields){
             switch (meteoroidField.resource){
                 case 1:
                     MagellanGame.gameState.RESOURCE1 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
+                    resCounter += meteoroidField.resourceAmount;
                     break;
                 case 2:
                     MagellanGame.gameState.RESOURCE2 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
+                    resCounter += meteoroidField.resourceAmount;
                     break;
                 case 3:
                     MagellanGame.gameState.RESOURCE3 += meteoroidField.mine(Math.round(resourcesPerTick * powerLevel));
+                    resCounter += meteoroidField.resourceAmount;
                     break;
 
             }
+        }
+
+        if (drone.faction == GameObj.Factions.PLAYER && resCounter <= 0 && !noResMessageShown) {
+            noResMessageShown = true;
+            MagellanGame.instance.mapScreen.log.addEntry("Mining drone has no resources left", drone.sector);
         }
     }
 }
