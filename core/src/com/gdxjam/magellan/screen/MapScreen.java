@@ -74,6 +74,7 @@ public class MapScreen extends BaseScreen {
         logGroup.addActor(logScroll);
         logScroll.setFillParent(true);
         logTarget.fill();
+        logTarget.space(5);
         stage.addActor(logGroup);
         log = new Log(logTarget);
         for(Sector sector : universe.sectors){
