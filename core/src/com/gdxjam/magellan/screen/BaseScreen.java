@@ -66,13 +66,14 @@ public class BaseScreen implements Screen, InputProcessor {
         stage.addActor(windowContainer);
 
         HorizontalGroup menu = new HorizontalGroup();
-        menu.setPosition(10,20);
-        btnWindow = new TextButton("SHOW SURROUNDINGS", skin);
-        btnMap = new TextButton("STAR MAP", skin);
-        btnWait = new TextButton("Wait", skin);
+        menu.setPosition(20,40);
+        menu.space(10);
+        btnWindow = new TextButton("Show Sector", skin);
+        btnMap = new TextButton("Star Map", skin);
+        btnWait = new TextButton("Skip turn", skin);
+        menu.addActor(btnWait);
         menu.addActor(btnWindow);
         menu.addActor(btnMap);
-        menu.addActor(btnWait);
         stage.addActor(menu);
 
         bgTexture = MagellanGame.assets.get("bg.png", Texture.class);

@@ -20,12 +20,12 @@ public class Log {
     }
 
     public void addEntry(String s){
-        log.add(new LogEntry(s));
+        log.insert(0, new LogEntry(s));
         update();
     }
 
     public void addEntry(String s, Sector sector){
-        log.add(new LogEntry(s, sector));
+        log.insert(0, new LogEntry(s, sector));
         update();
     }
 
@@ -33,6 +33,8 @@ public class Log {
         target.clear();
         for(final LogEntry entry:log){
             Label l = new Label(entry.text, MagellanGame.instance.mapScreen.skin);
+            l.setWrap(true);
+
             if(entry.sector != null){
                 l.addListener(new InputListener() {
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -57,11 +59,20 @@ public class Log {
         public Sector sector;
 
         public LogEntry(String s){
-            text = MagellanGame.gameState.YEAR + " " + s;
+            if (s == "") {
+                text = s;
+            } else {
+                text =  MagellanGame.gameState.YEAR + " " + s;
+            }
         }
 
         public LogEntry(String s, Sector _sector){
-            text =  MagellanGame.gameState.YEAR + " " + s;
+            if (s == "") {
+                text = s;
+            } else {
+                text =  MagellanGame.gameState.YEAR + " " + s;
+            }
+
             sector = _sector;
         }
     }
