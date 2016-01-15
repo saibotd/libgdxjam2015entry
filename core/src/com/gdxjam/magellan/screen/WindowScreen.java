@@ -81,6 +81,8 @@ public class WindowScreen extends BaseScreen {
         sectorContainer.addActor(shipsOnScreen.get(1));
         sectorContainer.addActor(shipsOnScreen.get(2));
         sectorContainer.addActor(playerOnScreen);
+
+        btnWindow.remove();
     }
 
     public void show(){
@@ -112,6 +114,7 @@ public class WindowScreen extends BaseScreen {
         Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0.8f,1.3f)).start(tweenManager);
 
         lastShownSector = game.universe.playerShip.sector;
+
     }
 
 

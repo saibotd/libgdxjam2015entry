@@ -66,5 +66,15 @@ public class StoryScreen extends BaseScreen {
         }
     }
 
+    public boolean keyUp(int keyCode) {
+        game.showTitleScreen();
+        return false;
+    }
+
+    public boolean touchUp(int x, int y, int pointer, int button) {
+        game.showTitleScreen();
+        return false;
+    }
+
 
 }
