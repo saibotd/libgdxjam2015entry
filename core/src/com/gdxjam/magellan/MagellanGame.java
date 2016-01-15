@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gdxjam.magellan.drones.DroneRoutine;
 import com.gdxjam.magellan.screen.MapScreen;
+import com.gdxjam.magellan.screen.StoryScreen;
 import com.gdxjam.magellan.screen.TitleScreen;
 import com.gdxjam.magellan.screen.WindowScreen;
 import com.gdxjam.magellan.tweening.ActorAccessor;
@@ -21,6 +22,7 @@ public class MagellanGame extends Game{
     public Universe universe;
     public MapScreen mapScreen;
     public WindowScreen windowScreen;
+    public StoryScreen storyScreen;
     public static GameState gameState;
     public static boolean DEBUG = false;
     public static MagellanGame instance;
@@ -111,6 +113,7 @@ public class MagellanGame extends Game{
         titleScreen = new TitleScreen(this);
         mapScreen = new MapScreen(this);
         windowScreen = new WindowScreen(this);
+        storyScreen = new StoryScreen(this);
         setScreen(titleScreen);
 
 	}
@@ -122,5 +125,11 @@ public class MagellanGame extends Game{
     public void showMapScreen() {
         setScreen(mapScreen);
     }
+    public void showStoryScreen() {
+        setScreen(storyScreen);
+    }
 
+    public void showTitleScreen() {
+        setScreen(titleScreen);
+    }
 }
