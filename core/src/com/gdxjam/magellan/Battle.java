@@ -62,7 +62,11 @@ public class Battle implements Disposable{
 
         if(isPlayerBattle()){
             screen.closeWindow();
-            MagellanGame.soundFx.weaponFire.random().play(0.8f,1,panShoot);
+            if (((IArmed) offensive).getAttack() > 1) {
+                MagellanGame.soundFx.weaponFire.random().play(0.8f, 1, panShoot);
+            } else {
+                MagellanGame.soundFx.weaponFireSmall.random().play(0.8f, 1, panShoot);
+            }
         }
 
 

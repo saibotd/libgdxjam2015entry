@@ -9,6 +9,7 @@ import com.gdxjam.magellan.gameobj.Planet;
 import com.gdxjam.magellan.gameobj.Shop;
 import com.gdxjam.magellan.ships.AiShipFighter;
 import com.gdxjam.magellan.ships.AiShipSettler;
+import com.gdxjam.magellan.ships.AiShipSmallFighter;
 import com.gdxjam.magellan.ships.PlayerShip;
 
 public class Universe {
@@ -119,11 +120,11 @@ public class Universe {
 
         if(enemyPlanet.faction == GameObj.Factions.ENEMY) {
             if (MagellanGame.gameState.YEARS_PASSED == 1) {
-                addEnemies(50, 5);
+                addEnemies(50, 5, 10);
             }
 
             if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
-                addEnemies(10, 1);
+                addEnemies(10, 1, 0);
             }
         }
 
@@ -169,7 +170,7 @@ public class Universe {
     }
 
 
-    public void addEnemies(int numberFighters, int numberSettlers) {
+    public void addEnemies(int numberFighters, int numberSettlers, int numberSmallFighters) {
         for(int i = 0; i < numberFighters; i++){
             final AiShipFighter fighter = new AiShipFighter(topRight);
             fighter.prepareRenderingOnMap();
@@ -177,6 +178,10 @@ public class Universe {
         for(int i = 0; i < numberSettlers; i++){
             final AiShipSettler settler = new AiShipSettler(topRight);
             settler.prepareRenderingOnMap();
+        }
+        for(int i = 0; i < numberSmallFighters; i++){
+            final AiShipSmallFighter smallFighter = new AiShipSmallFighter(sectors.random());
+            smallFighter.prepareRenderingOnMap();
         }
     }
 
