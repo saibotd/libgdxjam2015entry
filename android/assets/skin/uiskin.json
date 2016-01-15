@@ -27,7 +27,8 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	red: { down: button-red-down, up: button-red, font: button-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { vScroll: default-scroll, hScrollKnob: default-round-large, background: default-rect, hScroll: default-scroll, vScrollKnob: default-round-large }
+	default: { vScroll: default-scroll, hScrollKnob: default-round-large, background: default-rect, hScroll: default-scroll, vScrollKnob: default-round-large },
+	log: { vScroll: default-scroll, hScrollKnob: default-round-large, background: window, hScroll: default-scroll, vScrollKnob: default-round-large }
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: { font: default-font, fontColor: white, background: default-select, scrollStyle: default, listStyle: { font: default-font, selection: default-select-selection } }
@@ -45,6 +46,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: datalabel-font, fontColor: white }
+	highlight: { font: datalabel-font, fontColor: black, background: white }
 	value: { font: datavalue-font, fontColor: white }
 	window: { font: default-font, fontColor: white }
 	inlay: { background: inlay, font: default-font, fontColor: white }

@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.magellan.*;
@@ -66,12 +67,10 @@ public class MapScreen extends BaseScreen {
         camera.position.x = universe.playerShip.sector.position.x;
         camera.position.y = universe.playerShip.sector.position.y;
         HorizontalGroup logGroup = new HorizontalGroup();
-        logGroup.debugAll();
-        logGroup.setSize(400, 100);
-        logGroup.setPosition(1280-400, 0);
-        logGroup.pad(10);
+        logGroup.setSize(400, 200);
+        logGroup.setPosition(1280-410, 5);
         VerticalGroup logTarget = new VerticalGroup();
-        ScrollPane logScroll = new ScrollPane(logTarget);
+        ScrollPane logScroll = new ScrollPane(logTarget, skin, "log");
         logGroup.addActor(logScroll);
         logScroll.setFillParent(true);
         logTarget.fill();
@@ -86,8 +85,22 @@ public class MapScreen extends BaseScreen {
         }
         createStarfield();
         starfield.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        starfield.setPosition(50,50);
-        starfield.setSize(1180,570);
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("");
+                MagellanGame.instance.mapScreen.log.addEntry("Hey there! Good thing you're awake. Humanity's last surviving specimen are in your cold storage. Their fate is in your hands. Oh, you have no hands. Circuits. You have circuits. No pressure. Good luck!");
+            }
+        }, 1);
     }
 
     @Override
@@ -107,16 +120,6 @@ public class MapScreen extends BaseScreen {
         batch.end();
 
         mapViewport.apply();
-
-        int border = Math.round(Gdx.graphics.getWidth() * 0.04f);
-        int bordertop = border*2;
-        Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
-        Gdx.gl.glScissor(
-                border,
-                border,
-                Gdx.graphics.getWidth() - border * 2,
-                Gdx.graphics.getHeight() - (border + bordertop)
-        );
 
         camera.update();
         mapBatch.setProjectionMatrix(camera.combined);
@@ -188,8 +191,6 @@ public class MapScreen extends BaseScreen {
             }
         }
         mapBatch.end();
-
-        Gdx.gl.glScissor(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         viewport.apply();
 
