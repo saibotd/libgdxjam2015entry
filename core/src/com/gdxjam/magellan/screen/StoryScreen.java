@@ -21,6 +21,7 @@ public class StoryScreen extends BaseScreen {
         theStory += "\nit finally happened - the earth exploded.";
         theStory += "\nLuckily not all hope is lost for humanity";
         theStory += "\nbecause there's you.";
+        theStory += "\n";
         theStory += "\nYou, this is this ship \"The Trinidad\"";
         theStory += "\nor to be precise, it's on-board A.I.";
         theStory += "\nAfter 62 years of standby you received";
@@ -60,9 +61,19 @@ public class StoryScreen extends BaseScreen {
         super.render(delta);
         label.setY(label.getY()+delta*30);
         stage.draw();
-        if(label.getY() > label.getHeight() + 720){
+        if(label.getY() > label.getHeight()){
             game.showTitleScreen();
         }
+    }
+
+    public boolean keyUp(int keyCode) {
+        game.showTitleScreen();
+        return false;
+    }
+
+    public boolean touchUp(int x, int y, int pointer, int button) {
+        game.showTitleScreen();
+        return false;
     }
 
 

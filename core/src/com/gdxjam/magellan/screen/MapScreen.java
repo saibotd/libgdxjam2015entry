@@ -102,7 +102,9 @@ public class MapScreen extends BaseScreen {
                 MagellanGame.instance.mapScreen.log.addEntry("Hey there! Good thing you're awake. Humanity's last surviving specimen are in your cold storage. Their fate is in your hands. Oh, you have no hands. Circuits. You have circuits. No pressure. Good luck!");
             }
         }, 1);
+        btnMap.remove();
     }
+
 
     @Override
     public void render(float delta) {

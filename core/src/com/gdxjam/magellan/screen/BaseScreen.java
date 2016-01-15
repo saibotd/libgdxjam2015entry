@@ -26,9 +26,9 @@ import com.gdxjam.magellan.UiTopbar;
  * Created by lolcorner on 20.12.2015.
  */
 public class BaseScreen implements Screen, InputProcessor {
-    private final TextButton btnWindow;
-    private final TextButton btnMap;
-    private final TextButton btnWait;
+    public TextButton btnWindow;
+    public TextButton btnMap;
+    public TextButton btnWait;
     public MagellanGame game;
     public SpriteBatch batch;
     public FitViewport viewport;

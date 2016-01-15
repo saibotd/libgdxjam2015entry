@@ -52,7 +52,7 @@ public class TitleScreen extends BaseScreen {
         btnStart.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.showMapScreen();
+                game.showWindowScreen();
                 startBGM();
             }
         });
