@@ -252,7 +252,7 @@ public class WindowScreen extends BaseScreen {
         if(target instanceof PlayerShip) {
             l.setPosition(200, 400);
             pe.setPosition(200, 200);
-            pe.scaleEffect(6);
+            pe.scaleEffect(damage*2);
         } else {
             l.setPosition(700, 500);
             pe.setPosition(700, 500);
@@ -261,8 +261,8 @@ public class WindowScreen extends BaseScreen {
                 if(c.getActor() != null
                         && c.getActor().getUserObject() != null
                         && c.getActor().getUserObject() == target){
-                    l.setPosition(c.getX() + 200, c.getY() + 270);
-                    pe.setPosition(c.getX() + 200, c.getY() + 120);
+                    l.setPosition(c.getX() + c.getActor().getWidth()/2, c.getY() + c.getActor().getHeight()/2);
+                    pe.setPosition(c.getX() + c.getActor().getWidth()/2, c.getY() + c.getActor().getHeight()/2);
                 }
             }
         }
