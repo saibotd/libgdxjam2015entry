@@ -58,6 +58,12 @@ public class TitleScreen extends BaseScreen {
         });
 
         TextButton btnStory = new TextButton("Story", skin);
+        btnStory.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.showStoryScreen();
+            }
+        });
 
         mainMenu.addActor(btnStart);
         mainMenu.addActor(btnStory);
