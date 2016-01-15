@@ -1,6 +1,7 @@
 package com.gdxjam.magellan;
 
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.gameobj.GameObj;
@@ -119,6 +120,7 @@ public class Universe {
 
 
         if(enemyPlanet.faction == GameObj.Factions.ENEMY) {
+            /*
             if (MagellanGame.gameState.YEARS_PASSED == 1) {
                 addEnemies(50, 5, 10);
             }
@@ -126,6 +128,8 @@ public class Universe {
             if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
                 addEnemies(10, 1, 0);
             }
+            */
+            addEnemies(MathUtils.random(-10,1), MathUtils.random(-20,1), MathUtils.random(-15,1));
         }
 
         if (MagellanGame.gameState.YEARS_PASSED == 1) {
