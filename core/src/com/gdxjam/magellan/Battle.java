@@ -2,6 +2,7 @@ package com.gdxjam.magellan;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -23,6 +24,7 @@ public class Battle implements Disposable{
     private WindowScreen screen;
     private IDestroyable offensive;
     private IDestroyable defensive;
+    private int damageDone = 0;
 
     public Battle(IDestroyable playerOne, IDestroyable playerTwo){
         this.screen = MagellanGame.instance.windowScreen;
@@ -72,6 +74,7 @@ public class Battle implements Disposable{
                 public void run() {
                     IArmed armedOffensive = (IArmed) offensive;
                     int i = armedOffensive.shootAt(defensive);
+                    damageDone+=i;
                     Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS FOR " + i);
                     Gdx.app.log("BATTLE", defensive.toString() + " HEALTH AT " + defensive.getHealth());
                     if (defensive instanceof PlayerShip) {
@@ -89,6 +92,7 @@ public class Battle implements Disposable{
         } else if(offensive instanceof IArmed) {
             IArmed armedOffensive = (IArmed) offensive;
             int i = armedOffensive.shootAt(defensive);
+            damageDone+=i;
             Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS FOR " + i);
             Gdx.app.log("BATTLE", defensive.toString() + " HEALTH AT " + defensive.getHealth());
         }
@@ -201,13 +205,26 @@ public class Battle implements Disposable{
 
     private void showOutcomeWindow() {
         screen.closeWindow();
+        int credits = MathUtils.random(0, damageDone*250);
+        MagellanGame.gameState.CREDITS += credits;
         Window window = screen.getWindow("Battle outcome");
         VerticalGroup windowContent = new VerticalGroup();
+        Label info = new Label("", screen.skin, "window");
+        if(MagellanGame.instance.universe.playerShip.isAlive()){
+            info.setText("Victory! As you scan the\nremaining scraps you gather " + credits + " credits!");
+        } else {
+            info.setText("That's it. Humanity's last chance\nand you blew it. The enemy will\ncapture each of your planets\nand destroy all human life forever.");
+        }
+        windowContent.addActor(info);
         HorizontalGroup menu = new HorizontalGroup();
         TextButton buttonOK = new TextButton("OK", screen.skin);
         buttonOK.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if(!MagellanGame.instance.universe.playerShip.isAlive()){
+                    MagellanGame.instance.showTitleScreen();
+                    MagellanGame.instance.restartGame();
+                }
                 screen.closeWindow();
                 screen.drawSurroundings();
             }

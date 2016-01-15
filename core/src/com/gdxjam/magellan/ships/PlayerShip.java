@@ -36,7 +36,7 @@ public class PlayerShip extends Ship implements IInteractable {
         faction = Factions.PLAYER;
         maxHealth = health = 15;
         attack = 4;
-        shield = 0.5f;
+        shield = 0.15f;
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(1);

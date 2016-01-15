@@ -32,9 +32,6 @@ public class MagellanGame extends Game{
     public MagellanGame(){
         instance = this;
         gameState = new GameState(this);
-        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
-        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
-        gameState.UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.REPAIRING);
 		universe = new Universe(this);
 	}
 
@@ -131,5 +128,14 @@ public class MagellanGame extends Game{
 
     public void showTitleScreen() {
         setScreen(titleScreen);
+    }
+
+    public void restartGame() {
+        mapScreen.dispose();
+        windowScreen.dispose();
+        gameState = new GameState(this);
+        universe = new Universe(this);
+        mapScreen = new MapScreen(this);
+        windowScreen = new WindowScreen(this);
     }
 }

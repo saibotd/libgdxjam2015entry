@@ -26,6 +26,9 @@ public class GameState {
 
     public GameState(MagellanGame game) {
         this.game = game;
+        UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.MINING);
+        UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.SCOUTING);
+        UNLOCKED_ROUTINES.add(DroneRoutine.ROUTINES.REPAIRING);
     }
 
     public void progressYear() {

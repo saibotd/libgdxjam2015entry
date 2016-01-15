@@ -131,6 +131,10 @@ public class Universe {
             MagellanGame.instance.mapScreen.log.addEntry("Enemy AI detected! Someone seems to populate the universe with another species! To stop them you have to destroy their home planet!");
         }
 
+        if(!MagellanGame.instance.universe.playerShip.isAlive()){
+            MagellanGame.instance.showTitleScreen();
+            MagellanGame.instance.restartGame();
+        }
 
     }
 
