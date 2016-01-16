@@ -67,6 +67,7 @@ public class StoryScreen extends BaseScreen {
     }
 
     public boolean keyUp(int keyCode) {
+        super.keyUp(keyCode);
         game.showTitleScreen();
         return false;
     }
