@@ -272,7 +272,11 @@ public class WindowScreen extends BaseScreen {
         if(target instanceof PlayerShip) {
             l.setPosition(200, 400);
             pe.setPosition(200, 200);
-            pe.scaleEffect(damage*2);
+            pe.scaleEffect(damage * 2);
+        } else if(target instanceof Planet){
+            pe.setPosition(980, 550);
+            l.setPosition(980, 550);
+            pe.scaleEffect(4);
         } else {
             l.setPosition(900, 500);
             pe.setPosition(900, 500);
