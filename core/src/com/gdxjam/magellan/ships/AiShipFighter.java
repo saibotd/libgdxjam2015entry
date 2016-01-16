@@ -59,8 +59,15 @@ public class AiShipFighter extends AiShip {
         target = null;
         for (GameObj gameObj : sector.gameObjs){
             if(gameObj instanceof IDestroyable && gameObj.faction == Factions.PLAYER){
-                if(Math.random() < .5){
-                    target = (IDestroyable) gameObj;
+                if(gameObj instanceof  PlayerShip){
+                    if(Math.random() < .5){
+                        target = (IDestroyable) gameObj;
+                    }
+                    break;
+                } else {
+                    if(Math.random() < .5){
+                        target = (IDestroyable) gameObj;
+                    }
                 }
             }
         }

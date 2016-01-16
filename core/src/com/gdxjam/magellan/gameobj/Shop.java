@@ -25,6 +25,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
     private Array<ShopItem> inventory = new Array<ShopItem>();
     private Label info;
     private int lastSelectedIndex;
+    private boolean droneBought = false;
 
     public Shop(Sector sector) {
         super(sector);
@@ -114,6 +115,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
                     MagellanGame.gameState.CREDITS -= item.price;
                     item.buy(MagellanGame.instance.universe.playerShip);
                     MagellanGame.soundFx.buy.play(0.7f);
+                    droneBought = item instanceof ShopItemDrone;
                 } else {
                     MagellanGame.soundFx.nope.play(0.7f);
                 }
@@ -125,6 +127,16 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MagellanGame.instance.windowScreen.closeWindow();
+                if(!MagellanGame.gameState.DRONE_INFO_SHOWN && droneBought){
+                    String s = "Drones can be deployed by clicking on your ship";
+                    s += "\non the left side. After deploying a drone,";
+                    s += "\nbe sure to click on it and setup routines.";
+                    s += "\ndepending on the level, a drone can hold up to 5";
+                    s += "\nof them. If you setup less routines than maximum";
+                    s += "\nthe set up routines become more powerful.";
+                    MagellanGame.instance.windowScreen.getWindow("INFO", s);
+                    MagellanGame.gameState.DRONE_INFO_SHOWN = true;
+                }
             }
         });
         lastSelectedIndex = MathUtils.clamp(lastSelectedIndex, 0, inventory.size-1);
