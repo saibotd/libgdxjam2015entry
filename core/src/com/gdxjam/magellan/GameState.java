@@ -24,6 +24,7 @@ public class GameState {
     public int POPULATION = 0;
     public int AI_HOSTILITY = 0;
     public Array<DroneRoutine.ROUTINES> UNLOCKED_ROUTINES = new Array<DroneRoutine.ROUTINES>();
+    public boolean DRONE_INFO_SHOWN = false;
 
     public GameState(MagellanGame game) {
         this.game = game;
