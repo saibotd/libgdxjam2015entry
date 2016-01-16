@@ -290,7 +290,6 @@ public class WindowScreen extends BaseScreen {
         spBar.setSize(200,40);
         spBar.setPosition(1280/2 - spBar.getWidth()/2, 20);
         spPixel.setSize(spBar.getWidth()/game.universe.playerShip.maxHealth * game.universe.playerShip.health ,spBar.getHeight());
-        Gdx.app.log("fsd", game.universe.playerShip.maxHealth / spBar.getWidth() * game.universe.playerShip.health+"");
         spPixel.setPosition(spBar.getX(), spBar.getY());
         spPixel.setColor(MagellanColors.FACTION_PLAYER);
         spPixel.setScale(1);

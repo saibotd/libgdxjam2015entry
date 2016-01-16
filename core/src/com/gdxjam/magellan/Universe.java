@@ -41,10 +41,10 @@ public class Universe {
         topRight.gameObjs.clear();
         enemyPlanet = new EnemyHomePlanet(topRight);
         enemyPlanet.faction = GameObj.Factions.SAATOO;
-        enemyPlanet.addResources(1,6465);
-        enemyPlanet.addResources(2,6465);
-        enemyPlanet.addResources(3,6465);
-        enemyPlanet.population = 9564;
+        enemyPlanet.addResources(1,550);
+        enemyPlanet.addResources(2,550);
+        enemyPlanet.addResources(3,550);
+        enemyPlanet.population = 2000;
 
     }
 
