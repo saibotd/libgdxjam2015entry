@@ -186,9 +186,11 @@ public class Universe {
                 undiscoveredSectors.add(sector);
             }
         }
-        for(int i = 0; i < numberSmallFighters; i++){
-            final AiShipSmallFighter smallFighter = new AiShipSmallFighter(undiscoveredSectors.random());
-            smallFighter.prepareRenderingOnMap();
+        if (undiscoveredSectors.size > 0) {
+            for (int i = 0; i < numberSmallFighters; i++) {
+                final AiShipSmallFighter smallFighter = new AiShipSmallFighter(undiscoveredSectors.random());
+                smallFighter.prepareRenderingOnMap();
+            }
         }
     }
 
