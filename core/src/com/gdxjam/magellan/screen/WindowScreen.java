@@ -38,6 +38,7 @@ public class WindowScreen extends BaseScreen {
     private final Container<Actor> shopOnScreen;
     private Sector lastShownSector;
     private Array<ParticleEffect> effects;
+    private boolean startTutorialShown = false;
 
     public WindowScreen(MagellanGame game) {
         super(game);
@@ -120,6 +121,11 @@ public class WindowScreen extends BaseScreen {
         Tween.to(shipsOnScreen.get(2), ActorAccessor.POSITION_Y,MathUtils.random(.4f,.6f)).target(415).ease(TweenEquations.easeInOutCubic).repeatYoyo(-1,0f).delay(MathUtils.random(0.8f,1.3f)).start(tweenManager);
 
         lastShownSector = game.universe.playerShip.sector;
+
+        if (!startTutorialShown) {
+            startTutorialShown = true;
+            getWindow("Info", "Click on your ship to see it's stats.\nClick on the shop to interact with it.\nClick 'Star Map' to see your surroundings.");
+        }
 
     }
 

@@ -50,6 +50,8 @@ public class MapScreen extends BaseScreen {
     private Vector2 starfieldScroll = new Vector2();
     float lineWidth = 2;
     private Sector sectorToFocusOn;
+    private boolean startTutorialShown = false;
+
 
     public MapScreen(MagellanGame game){
         super(game);
@@ -103,6 +105,14 @@ public class MapScreen extends BaseScreen {
             }
         }, 1);
         btnMap.remove();
+    }
+
+    public void show() {
+        super.show();
+        if (!startTutorialShown) {
+            startTutorialShown = true;
+            getWindow("Info", "Here you can jump to other sectors.\nJust click on a connected sector to try it out!");
+        }
     }
 
 

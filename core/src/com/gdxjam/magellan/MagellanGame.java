@@ -115,7 +115,7 @@ public class MagellanGame extends Game{
         windowScreen = new WindowScreen(this);
         storyScreen = new StoryScreen(this);
         setScreen(titleScreen);
-        Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+        //Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
 
 	}
 
