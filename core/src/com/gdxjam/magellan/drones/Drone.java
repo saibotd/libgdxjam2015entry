@@ -38,6 +38,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         // The level of a drone decides how many routines it can handle
         // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
+        health = level;
         prepareRenderingOnMap();
 
     }
