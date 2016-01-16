@@ -26,6 +26,7 @@ public class MovingGameObj extends GameObj {
     public Vector2 lastParkingPosition;
     public float parkingAngle;
     public float flightAngle;
+    public boolean notMoving = false;
 
     public MovingGameObj(Sector sector) {
         super(sector);
@@ -36,6 +37,7 @@ public class MovingGameObj extends GameObj {
     }
 
     public void moveTo(Sector sector) {
+        if (notMoving) return;
         if(this instanceof IDestroyable){
             IDestroyable iDestroyable = (IDestroyable) this;
             if(iDestroyable.inBattle()){
