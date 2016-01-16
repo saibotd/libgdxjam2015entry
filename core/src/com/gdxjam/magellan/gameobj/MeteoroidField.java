@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,7 +28,7 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
-        resourceAmount = MathUtils.random(100, 500);
+        resourceAmount = Math.round(sector.position.x * sector.position.y * .05f);
     }
 
     @Override
