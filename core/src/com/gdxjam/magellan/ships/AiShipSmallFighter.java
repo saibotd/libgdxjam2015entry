@@ -64,7 +64,7 @@ public class AiShipSmallFighter extends AiShip {
                 }
             }
         }
-        if(target != null && target.isAlive()){
+        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY > 2){
             state = States.HOSTILE;
             return;
         }
@@ -84,6 +84,7 @@ public class AiShipSmallFighter extends AiShip {
     }
 
     public void activeTick(){
+        super.activeTick();
         decideState();
         if(state == States.HOSTILE){
             new Battle(this, target);

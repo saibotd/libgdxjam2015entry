@@ -83,6 +83,12 @@ public class WindowScreen extends BaseScreen {
         sectorContainer.addActor(playerOnScreen);
 
         btnWindow.remove();
+
+        btnWait.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                drawSurroundings();
+            }
+        });
     }
 
     public void show(){
