@@ -30,15 +30,24 @@ public class Battle implements Disposable{
         this.screen = MagellanGame.instance.windowScreen;
         offensive = playerOne;
         defensive = playerTwo;
+        if(playerOne.inBattle() || playerTwo.inBattle()){
+            return;
+        }
+        playerOne.setBattle(this);
+        playerTwo.setBattle(this);
         if(((GameObj) offensive).sector != ((GameObj) defensive).sector){
             dispose();
             return;
         }
         Gdx.app.log("BATTLE", offensive.toString() + " VS " + defensive.toString());
         if(defensive instanceof PlayerShip){
-            MagellanGame.instance.showWindowScreen();
-            screen.startBGM(MagellanGame.assets.get("battle.mp3", Music.class));
-            showAlertWindow();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    MagellanGame.instance.showWindowScreen();
+                    screen.startBGM(MagellanGame.assets.get("battle.mp3", Music.class));
+                }
+            }, 1);
         }
         if(offensive instanceof PlayerShip){
             screen.startBGM(MagellanGame.assets.get("battle.mp3", Music.class));
@@ -145,7 +154,7 @@ public class Battle implements Disposable{
     public void playerTurn(){
         //screen.closeWindow();
         Gdx.app.log("playerTurn", "1");
-        Window window = screen.getWindow("Battle");
+        Window window = screen.getWindowWithoutClose("Battle");
         VerticalGroup windowContent = new VerticalGroup();
         HorizontalGroup menu = new HorizontalGroup();
         HorizontalGroup info = new HorizontalGroup();
@@ -184,23 +193,6 @@ public class Battle implements Disposable{
         menu.addActor(buttonAttack);
         menu.addActor(buttonFlee);
         windowContent.addActor(info);
-        windowContent.addActor(menu);
-        window.add(windowContent);
-    }
-
-    private void showAlertWindow() {
-        screen.closeWindow();
-        Window window = screen.getWindow("You are under Attack!");
-        VerticalGroup windowContent = new VerticalGroup();
-        HorizontalGroup menu = new HorizontalGroup();
-        TextButton buttonOK = new TextButton("OK", screen.skin);
-        buttonOK.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                playerTurn();
-            }
-        });
-        menu.addActor(buttonOK);
         windowContent.addActor(menu);
         window.add(windowContent);
     }
@@ -245,6 +237,8 @@ public class Battle implements Disposable{
             showOutcomeWindow();
             screen.startBGM();
         }
+        offensive.setBattle(null);
+        defensive.setBattle(null);
         offensive = null;
         defensive = null;
     }

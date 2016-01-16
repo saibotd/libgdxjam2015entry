@@ -23,7 +23,7 @@ public class AiShipFighter extends AiShip {
         health = 8;
         attack = 3;
         shield = 0.1f;
-        faction = Factions.ENEMY;
+        faction = Factions.SAATOO;
     }
 
     @Override

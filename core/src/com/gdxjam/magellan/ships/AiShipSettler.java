@@ -21,7 +21,7 @@ public class AiShipSettler extends AiShip {
         health = 10;
         attack = 2;
         shield = 0.3f;
-        faction = Factions.ENEMY;
+        faction = Factions.SAATOO;
     }
 
     @Override

@@ -36,6 +36,12 @@ public class MovingGameObj extends GameObj {
     }
 
     public void moveTo(Sector sector) {
+        if(this instanceof IDestroyable){
+            IDestroyable iDestroyable = (IDestroyable) this;
+            if(iDestroyable.inBattle()){
+                iDestroyable.setBattle(null);
+            }
+        }
         lastSector = this.sector;
         lastParkingPosition = parkingPosition.cpy();
         this.sector.gameObjs.removeValue(this, true);

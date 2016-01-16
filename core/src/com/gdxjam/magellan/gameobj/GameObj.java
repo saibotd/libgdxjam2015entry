@@ -9,7 +9,7 @@ import com.gdxjam.magellan.Sector;
 public class GameObj {
 
     public Sector sector;
-    public enum Factions{NEUTRAL, PLAYER, ENEMY, PIRATE};
+    public enum Factions{NEUTRAL, PLAYER, SAATOO, PIRATE};
     public Factions faction = Factions.NEUTRAL;
     public String submenuOpen = "";
 

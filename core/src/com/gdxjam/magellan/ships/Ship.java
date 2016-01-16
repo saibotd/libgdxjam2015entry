@@ -20,6 +20,7 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     public int health = 3;
     public int attack = 1;
     public Sprite spriteDot;
+    private Battle battle;
 
     public Ship(Sector sector) {
         super(sector);
@@ -70,6 +71,16 @@ public class Ship extends MovingGameObj implements IDrawableMap, IDrawableWindow
     @Override
     public float getShield() {
         return shield;
+    }
+
+    @Override
+    public boolean inBattle() {
+        return battle != null;
+    }
+
+    @Override
+    public void setBattle(Battle battle) {
+        this.battle = battle;
     }
 
     @Override

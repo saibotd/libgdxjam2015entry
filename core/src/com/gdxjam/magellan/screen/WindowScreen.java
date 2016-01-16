@@ -165,8 +165,9 @@ public class WindowScreen extends BaseScreen {
                 if(gameObj instanceof IDrawableWindow) {
                     actor.addListener(new InputListener() {
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                            if(game.universe.playerShip.inBattle()) return true;
                             for(GameObj _gameObj : game.universe.playerShip.sector.gameObjs){
-                                if(!(gameObj instanceof AiShip) && _gameObj instanceof AiShip){
+                                if(!(gameObj instanceof AiShip) && _gameObj instanceof AiShip && MagellanGame.gameState.AI_HOSTILITY > 2){
                                     Window window = getWindow("Alert!", "Beware! Enemy ships in sector!");
                                     return false;
                                 }
@@ -174,6 +175,7 @@ public class WindowScreen extends BaseScreen {
                             return true;
                         }
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                            if(game.universe.playerShip.inBattle()) return;
                             gameObj.submenuOpen = "";
                             showInteractionWindow((IDrawableWindow) gameObj);
                         }
@@ -206,6 +208,7 @@ public class WindowScreen extends BaseScreen {
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
+                        if(game.universe.playerShip.inBattle()) return;
                         interactable.getInteractions(game.universe.playerShip).get(key).interact();
                         drawSurroundings();
                     }
@@ -219,6 +222,7 @@ public class WindowScreen extends BaseScreen {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
+                    if(game.universe.playerShip.inBattle()) return;
                     closeWindow();
                     new Battle(game.universe.playerShip, destroyable);
                 }

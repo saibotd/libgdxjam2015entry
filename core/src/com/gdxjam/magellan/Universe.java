@@ -42,7 +42,7 @@ public class Universe {
         playerShip = new PlayerShip(bottomLeft);
         new Shop(bottomLeft);
         enemyPlanet = new Planet(topRight);
-        enemyPlanet.faction = GameObj.Factions.ENEMY;
+        enemyPlanet.faction = GameObj.Factions.SAATOO;
         enemyPlanet.addResources(1,56465);
         enemyPlanet.addResources(2,56465);
         enemyPlanet.addResources(3,56465);
@@ -120,7 +120,7 @@ public class Universe {
 
 
 
-        if(enemyPlanet.faction == GameObj.Factions.ENEMY) {
+        if(enemyPlanet.faction == GameObj.Factions.SAATOO) {
 
             if (MagellanGame.gameState.YEARS_PASSED == 1) {
                 addEnemies(20, 5, 20);

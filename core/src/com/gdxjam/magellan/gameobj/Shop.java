@@ -77,7 +77,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
     public void showInventoryWindow(){
         fillInventory();
         MagellanGame.instance.windowScreen.closeWindow();
-        Window window = MagellanGame.instance.windowScreen.getWindow("Buy");
+        Window window = MagellanGame.instance.windowScreen.getWindowWithoutClose("Buy");
         Skin skin = MagellanGame.instance.windowScreen.skin;
         VerticalGroup windowContent = new VerticalGroup();
         HorizontalGroup listAndInfo = new HorizontalGroup();

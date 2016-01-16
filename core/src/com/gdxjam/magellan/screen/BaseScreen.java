@@ -207,6 +207,20 @@ public class BaseScreen implements Screen, InputProcessor {
         return window;
     }
 
+    public Window getWindowWithoutClose(String title){
+        windowContainer.clear();
+        Window window = new Window(title + "    ", skin);
+        window.getTitleLabel().setEllipsis(false);
+        window.setMovable(false);
+        window.setModal(true);
+        window.setWidth(500);
+        window.padTop(70);
+        window.padLeft(20);
+
+        windowContainer.setActor(window);
+        return window;
+    }
+
     public Window getWindow(String title) {
         return getWindow(title, null);
     }

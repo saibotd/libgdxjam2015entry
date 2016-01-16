@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
-import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
@@ -78,10 +77,10 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         if (faction == Factions.PLAYER) {
             mapClaimedSprite.setColor(MagellanColors.FACTION_PLAYER);
         }
-        if (faction == Factions.ENEMY) {
+        if (faction == Factions.SAATOO) {
             mapClaimedSprite.setColor(MagellanColors.FACTION_ENEMY);
         }
-        if (faction == Factions.PLAYER || faction == Factions.ENEMY) {
+        if (faction == Factions.PLAYER || faction == Factions.SAATOO) {
             mapClaimedSprite.setPosition(sector.position.x, sector.position.y + mapSprite.getHeight()/4);
             mapClaimedSprite.draw(batch);
         }
@@ -123,6 +122,16 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     @Override
     public float getShield() {
         return 0;
+    }
+
+    @Override
+    public boolean inBattle() {
+        return false;
+    }
+
+    @Override
+    public void setBattle(Battle battle) {
+
     }
 
     public void passiveTick(){

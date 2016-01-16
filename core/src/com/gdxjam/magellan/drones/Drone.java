@@ -33,6 +33,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     private List listRight;
     private List listLeft;
     public Boolean destroyed = false;
+    private Battle battle;
 
     public Drone(Sector sector, int level) {
         super(sector);
@@ -114,6 +115,16 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     @Override
     public float getShield() {
         return 0;
+    }
+
+    @Override
+    public boolean inBattle() {
+        return battle != null;
+    }
+
+    @Override
+    public void setBattle(Battle battle) {
+        this.battle = battle;
     }
 
     @Override
