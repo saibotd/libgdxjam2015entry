@@ -62,6 +62,8 @@ public class MagellanGame extends Game{
         assets.load("drone_thruster.png", Texture.class);
         assets.load("enemy_fighter.png", Texture.class);
         assets.load("enemy_transport.png", Texture.class);
+        assets.load("enemy_drone.png", Texture.class);
+        assets.load("pirateship.png", Texture.class);
         assets.load("shop.png", Texture.class);
         assets.load("sectorview_asteroids.png", Texture.class);
         assets.load("sectorview_asteroids_resources.png", Texture.class);

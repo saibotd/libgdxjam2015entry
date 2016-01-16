@@ -29,8 +29,8 @@ public class AiShipSmallFighter extends AiShip {
     @Override
     public void prepareRenderingOnMap() {
         super.prepareRenderingOnMap();
-        spriteVessel = new Sprite(MagellanGame.assets.get("enemy_fighter.png", Texture.class));
-        spriteVessel.setSize(6, 9);
+        spriteVessel = new Sprite(MagellanGame.assets.get("enemy_drone.png", Texture.class));
+        spriteVessel.setSize(6, 8);
         spriteVessel.setOriginCenter();
 
         getFreeSectorSlot();
