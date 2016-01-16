@@ -207,7 +207,21 @@ public class Battle implements Disposable{
         windowContent.space(10);
         Label info = new Label("", screen.skin, "window");
         if(MagellanGame.instance.universe.playerShip.isAlive()){
-            info.setText("Victory! As you scan the\nremaining scraps you gather " + credits + " credits!");
+            Gdx.app.log("defensive", defensive.toString());
+            Gdx.app.log("offensive", offensive.toString());
+            Planet planet = null;
+            if (defensive instanceof Planet) planet = (Planet) defensive;
+            if (offensive instanceof Planet) planet = (Planet) offensive;
+
+            if (planet != null && isPlayerBattle()) {
+                if (planet.population == 0) {
+                    info.setText("Victory! There is no life\nleft on this planet.");
+                } else {
+                    info.setText("You killed much of whatever was\nliving on that planet but\nthere are still some left!");
+                }
+            } else {
+                info.setText("Victory! As you scan the\nremaining scraps you gather " + credits + " credits!");
+            }
         } else {
             info.setText("That's it. Humanity's last chance\nand you blew it. The enemy will\ncapture each of your planets\nand destroy all human life forever.");
         }
