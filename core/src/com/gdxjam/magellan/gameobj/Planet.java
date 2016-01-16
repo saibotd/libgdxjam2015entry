@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.screen.BaseScreen;
@@ -49,10 +50,12 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     @Override
     public Actor getActor() {
+        Stack stack = new Stack();
         Image image = new Image(MagellanGame.assets.get("sectorview_planet_"+visualType+".png", Texture.class));
         image.setColor(color);
         image.setFillParent(true);
-        return image;
+        stack.addActor(image);
+        return stack;
     }
 
     @Override
