@@ -36,6 +36,7 @@ public class WindowScreen extends BaseScreen {
     private final Container<Actor> resourcesOnScreen;
     private final Container<Actor> playerOnScreen;
     private final Container<Actor> shopOnScreen;
+    private final Container<Actor> planetClaimedOnScreen;
     private Sector lastShownSector;
     private Array<ParticleEffect> effects;
     private boolean startTutorialShown = false;
@@ -53,6 +54,7 @@ public class WindowScreen extends BaseScreen {
         shipsOnScreen.add(new Container<Actor>());
         playerOnScreen = new Container<Actor>();
         planetOnScreen = new Container<Actor>();
+        planetClaimedOnScreen = new Container<Actor>();
         shopOnScreen = new Container<Actor>();
         resourcesOnScreen = new Container<Actor>();
         dronesOnScreen.setPosition(500, 200);
@@ -69,12 +71,15 @@ public class WindowScreen extends BaseScreen {
         playerOnScreen.setSize(assetToGameSize(2523), assetToGameSize(2064));
         planetOnScreen.setPosition(1280 - assetToGameSize(1386), 720 - assetToGameSize(1677));
         planetOnScreen.setSize(assetToGameSize(1386), assetToGameSize(1677));
+        planetClaimedOnScreen.setPosition(960,480);
+        planetClaimedOnScreen.setSize(90,125);
         shopOnScreen.setPosition(530, 360);
         shopOnScreen.setSize(assetToGameSize(717), assetToGameSize(790));
         resourcesOnScreen.setPosition(1280 - assetToGameSize(2341), 0);
         resourcesOnScreen.setSize(assetToGameSize(2341), assetToGameSize(1318));
 
         sectorContainer.addActor(planetOnScreen);
+        sectorContainer.addActor(planetClaimedOnScreen);
         sectorContainer.addActor(resourcesOnScreen);
         sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(shopOnScreen);
@@ -135,6 +140,7 @@ public class WindowScreen extends BaseScreen {
         resourcesOnScreen.clear();
         playerOnScreen.clear();
         planetOnScreen.clear();
+        planetClaimedOnScreen.clear();
         shopOnScreen.clear();
         shipsOnScreen.get(0).clear();
         shipsOnScreen.get(1).clear();
@@ -146,6 +152,19 @@ public class WindowScreen extends BaseScreen {
                 Actor actor = ((IDrawableWindow) gameObj).getActor();
                 if(gameObj instanceof Planet){
                     planetOnScreen.setActor(actor);
+                    if (gameObj.faction == GameObj.Factions.PLAYER || gameObj.faction == GameObj.Factions.SAATOO) {
+                        Image imageClaimed = new Image(MagellanGame.assets.get("map_planet_claimed.png", Texture.class));
+
+                        if (gameObj.faction == GameObj.Factions.PLAYER) {
+                            imageClaimed.setColor(MagellanColors.FACTION_PLAYER);
+                        }
+                        if (gameObj.faction == GameObj.Factions.SAATOO) {
+                            imageClaimed.setColor(MagellanColors.FACTION_ENEMY);
+                        }
+                        imageClaimed.setRotation(102);
+                        imageClaimed.setScaleX(-1);
+                        planetClaimedOnScreen.setActor(imageClaimed);
+                    }
                 }
                 if(gameObj instanceof Drone) {
                     dronesOnScreen.setWidth(actor.getWidth());
