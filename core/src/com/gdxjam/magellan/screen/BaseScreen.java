@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.screen;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;

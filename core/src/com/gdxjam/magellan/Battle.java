@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
-import com.gdxjam.magellan.gameobj.GameObj;
-import com.gdxjam.magellan.gameobj.IArmed;
-import com.gdxjam.magellan.gameobj.IDestroyable;
-import com.gdxjam.magellan.gameobj.IDrawableWindow;
+import com.gdxjam.magellan.gameobj.*;
 import com.gdxjam.magellan.screen.BaseScreen;
 import com.gdxjam.magellan.screen.WindowScreen;
 import com.gdxjam.magellan.ships.PlayerShip;
@@ -62,6 +59,10 @@ public class Battle implements Disposable{
     }
 
     public void turn(){
+        if (offensive instanceof Planet) {
+            dispose();
+            return;
+        }
         Gdx.app.log("BATTLE", offensive.toString() + " ATTACKS " + defensive.toString());
         if(((GameObj) offensive).sector != ((GameObj) defensive).sector){
             dispose();

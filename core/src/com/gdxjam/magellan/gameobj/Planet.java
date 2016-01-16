@@ -88,7 +88,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
 
     @Override
     public boolean receiveDamage(int damage) {
-        population -= damage;
+        population -= damage * 100;
         if(population <= 0){
             population = 0;
             if (faction == Factions.PLAYER) {

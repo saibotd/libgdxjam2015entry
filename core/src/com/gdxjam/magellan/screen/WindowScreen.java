@@ -216,7 +216,11 @@ public class WindowScreen extends BaseScreen {
                 menu.addActor(button);
             }
         }
-        if(gameObj instanceof IDestroyable && gameObj != game.universe.playerShip && ((GameObj)gameObj).submenuOpen == "") {
+        if(gameObj instanceof IDestroyable &&
+                gameObj != game.universe.playerShip &&
+                ((GameObj)gameObj).submenuOpen == "" &&
+                ((IDestroyable) gameObj).isAlive()
+                ){
             final IDestroyable destroyable = (IDestroyable) gameObj;
             TextButton button = new TextButton("ATTACK", skin, "red");
             button.addListener(new ChangeListener() {
