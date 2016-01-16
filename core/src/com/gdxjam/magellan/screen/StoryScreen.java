@@ -24,7 +24,7 @@ public class StoryScreen extends BaseScreen {
         theStory += "\n";
         theStory += "\nYou, this is this ship \"The Trinidad\"";
         theStory += "\nor to be precise, it's on-board A.I.";
-        theStory += "\nAfter 62 years of standby you received";
+        theStory += "\nAfter 162 years of standby you received";
         theStory += "\nyour bootup sequence mere hours before";
         theStory += "\nearth shattered to pieces.";
         theStory += "\n";

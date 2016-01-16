@@ -80,9 +80,9 @@ public class MapScreen extends BaseScreen {
         stage.addActor(logGroup);
         log = new Log(logTarget);
         for(Sector sector : universe.sectors){
-            for(GameObj gameObj:sector.gameObjs){
-                if(gameObj instanceof IDrawableMap) {
-                    ((IDrawableMap) gameObj).prepareRenderingOnMap();
+            for(int i = 0; i < sector.gameObjs.size; i++){
+                if(sector.gameObjs.get(i) instanceof IDrawableMap) {
+                    ((IDrawableMap) sector.gameObjs.get(i)).prepareRenderingOnMap();
                 }
             }
         }
@@ -272,6 +272,7 @@ public class MapScreen extends BaseScreen {
                 universe.playerShip.drones.add(4);
                 universe.playerShip.drones.add(5);
                 MagellanGame.instance.mapScreen.topbar.updateStats();
+                universe.playerShip.health = universe.playerShip.maxHealth;
                 break;
         }
         return false;

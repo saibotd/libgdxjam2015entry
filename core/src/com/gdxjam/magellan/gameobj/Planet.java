@@ -215,6 +215,7 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     @Override
     public OrderedMap<String, Interaction> getInteractions(final GameObj with) {
         OrderedMap<String, Interaction> interactions = new OrderedMap();
+        final Planet me = this;
 
         if (submenuOpen == "") {
             if (faction == Factions.NEUTRAL) {
@@ -222,7 +223,21 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                     @Override
                     public void interact() {
                         claim((Ship) with);
-                        showInteractionWindow();
+                        if(me instanceof EnemyHomePlanet){
+                            MagellanGame.instance.windowScreen.getWindow("A WINNER IS YOU", "You defeated SAATOO and captured their home planet!\n" +
+                                    "But more important you finished our little game :)\n" +
+                                    "We would like to really thank you for your patience\n" +
+                                    "and hope you had some fun with Project Magellan.\n" +
+                                    "Did you see the plot-twist coming?\n" +
+                                    "Probably. But anyways, you are free to capture the\n" +
+                                    "rest of the universe as no more enemy units will\n" +
+                                    "spawn from now on.\n" +
+                                    "\n" +
+                                    "Thanks for playing!\n" +
+                                    "Felix, Kilian and Tobias.");
+                        } else{
+                            showInteractionWindow();
+                        }
                     }
                 });
             }

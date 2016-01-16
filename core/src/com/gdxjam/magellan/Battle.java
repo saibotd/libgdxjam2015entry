@@ -199,6 +199,7 @@ public class Battle implements Disposable{
     }
 
     private void showOutcomeWindow() {
+        if(damageDone <= 0) return;
         screen.closeWindow();
         int credits = MathUtils.random(0, damageDone*250);
         MagellanGame.gameState.CREDITS += credits;

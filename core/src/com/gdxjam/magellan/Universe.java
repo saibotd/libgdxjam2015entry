@@ -5,10 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.gdxjam.magellan.gameobj.*;
-import com.gdxjam.magellan.ships.AiShipFighter;
-import com.gdxjam.magellan.ships.AiShipSettler;
-import com.gdxjam.magellan.ships.AiShipSmallFighter;
-import com.gdxjam.magellan.ships.PlayerShip;
+import com.gdxjam.magellan.ships.*;
 
 public class Universe {
     private final Planet enemyPlanet;
@@ -45,6 +42,7 @@ public class Universe {
         enemyPlanet.addResources(2,550);
         enemyPlanet.addResources(3,550);
         enemyPlanet.population = 2000;
+        new AiShipSaatoo(topRight);
 
     }
 
@@ -121,12 +119,6 @@ public class Universe {
         if(enemyPlanet.faction == GameObj.Factions.SAATOO) {
 
             if (MagellanGame.gameState.YEARS_PASSED == 1) {
-
-                for (int i = 0; i < 3; i++) {
-                    AiShipFighter staticFighter = new AiShipFighter(topRight);
-                    staticFighter.notMoving = true;
-                    staticFighter.prepareRenderingOnMap();
-                }
                 addEnemies(20, 5, 20);
             }
 
