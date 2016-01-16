@@ -299,6 +299,7 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean scrolled(int i) {
+        sectorToFocusOn = null;
         zoom = MathUtils.clamp(zoom + i*.3f, .5f, 2f);
         return false;
     }

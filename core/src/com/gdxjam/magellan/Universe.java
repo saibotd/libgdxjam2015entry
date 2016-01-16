@@ -4,10 +4,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.gdxjam.magellan.gameobj.GameObj;
-import com.gdxjam.magellan.gameobj.MeteoroidField;
-import com.gdxjam.magellan.gameobj.Planet;
-import com.gdxjam.magellan.gameobj.Shop;
+import com.gdxjam.magellan.gameobj.*;
 import com.gdxjam.magellan.ships.AiShipFighter;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.AiShipSmallFighter;
@@ -41,12 +38,13 @@ public class Universe {
         bottomLeft.gameObjs.clear();
         playerShip = new PlayerShip(bottomLeft);
         new Shop(bottomLeft);
-        enemyPlanet = new Planet(topRight);
+        topRight.gameObjs.clear();
+        enemyPlanet = new EnemyHomePlanet(topRight);
         enemyPlanet.faction = GameObj.Factions.SAATOO;
         enemyPlanet.addResources(1,56465);
         enemyPlanet.addResources(2,56465);
         enemyPlanet.addResources(3,56465);
-        enemyPlanet.population = 80114564;
+        enemyPlanet.population = 801564;
 
     }
 
