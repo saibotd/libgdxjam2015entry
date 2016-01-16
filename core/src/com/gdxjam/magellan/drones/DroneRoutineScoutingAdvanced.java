@@ -25,20 +25,24 @@ public class DroneRoutineScoutingAdvanced extends DroneRoutine{
         wait -= powerLevel;
         if(wait <= 0) {
             Sector sector;
-            Array<Sector> notVisitedSectors = new Array<Sector>();
+            Array<Sector> preferredSectors = new Array<Sector>();
             for (Sector _sector:drone.sector.connectedSectors) {
-                if (_sector.visited == false)
-                    notVisitedSectors.add(_sector);
+                if (_sector.position.x > drone.sector.position.x || _sector.position.y > drone.sector.position.y)
+                    preferredSectors.add(_sector);
             }
-            if (notVisitedSectors.size == 0) {
+            if (preferredSectors.size == 0) {
                 sector = drone.sector.connectedSectors.random();
             } else {
-                sector = notVisitedSectors.random();
+                sector = preferredSectors.random();
             }
             sector.discovered = true;
             sector.visited = true;
-            for(Sector _sector: sector.connectedSectors){
+            for(Sector _sector : sector.connectedSectors){
+                for (Sector __sector : _sector.connectedSectors) {
+                    __sector.discovered = true;
+                }
                 _sector.discovered = true;
+                _sector.visited = true;
             }
             drone.moveTo(sector);
             wait = 5;

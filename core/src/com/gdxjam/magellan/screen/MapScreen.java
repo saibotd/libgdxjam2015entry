@@ -175,7 +175,7 @@ public class MapScreen extends BaseScreen {
         }
         for(Sector sector : universe.getSectorsInRectangle(cameraFrame)){
             if(!sector.discovered && !MagellanGame.DEBUG) continue;
-            if (sector.discovered) {
+            if (sector.visited) {
                 sectorNormal.setPosition(sector.position.x - sectorNormal.getWidth()/2, sector.position.y - sectorNormal.getHeight()/2);
                 sectorNormal.draw(mapBatch);
             } else {
@@ -185,7 +185,7 @@ public class MapScreen extends BaseScreen {
 
 
             // Fog of war disabled for debugging
-            if (sector.discovered || MagellanGame.DEBUG) {
+            if (sector.visited || MagellanGame.DEBUG) {
                 for (GameObj gameObj : sector.gameObjs) {
                     if (gameObj instanceof IDrawableMap) {
                         ((IDrawableMap) gameObj).renderOnMap(mapBatch, delta);
