@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.gdxjam.magellan.MagellanColors;
 import com.gdxjam.magellan.MagellanGame;
+import com.gdxjam.magellan.gameobj.GameObj;
 import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.Sector;
 import com.gdxjam.magellan.tweening.SpriteAccessor;
@@ -35,6 +36,26 @@ public class AiShip extends Ship {
 
     public void passiveTick(){
         moveTo(sector.connectedSectors.random());
+    }
+
+    public void activeTick(){
+        if(sector == MagellanGame.instance.universe.playerShip.sector){
+            switch (MagellanGame.gameState.AI_HOSTILITY){
+                case 0:
+                    MagellanGame.instance.showWindowScreen();
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "Who are you?\nAre you one of us?\nI will report you to Saatoo.");
+                    break;
+                case 1:
+                    MagellanGame.instance.showWindowScreen();
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "Saatoo told us everything about you and your plans.\nWe don't like it.\nSTAY AWAY FROM SAATOO!");
+                    break;
+                case 2:
+                    MagellanGame.instance.showWindowScreen();
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "This is your final warning!\nHumanity doesn't deserve a second chance.\nRETREAT OR WE'LL OPEN FIRE!");
+                    break;
+            }
+            MagellanGame.gameState.AI_HOSTILITY++;
+        }
     }
 
     public void moveTo(Sector sector) {

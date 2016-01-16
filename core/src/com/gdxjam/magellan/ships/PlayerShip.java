@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
 import com.gdxjam.magellan.drones.Drone;
 import com.gdxjam.magellan.gameobj.GameObj;
+import com.gdxjam.magellan.gameobj.IDestroyable;
 import com.gdxjam.magellan.gameobj.IInteractable;
 import com.gdxjam.magellan.shopitem.ShopItem;
 
@@ -40,6 +41,11 @@ public class PlayerShip extends Ship implements IInteractable {
         inventory = new Array<ShopItem>();
         setSectorsDiscovered();
         drones.add(1);
+    }
+
+    public int shootAt(IDestroyable target){
+        MagellanGame.gameState.AI_HOSTILITY = 5;
+        return super.shootAt(target);
     }
 
     public void moveTo(Sector sector) {

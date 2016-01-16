@@ -64,7 +64,7 @@ public class AiShipFighter extends AiShip {
                 }
             }
         }
-        if(target != null && target.isAlive()){
+        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY > 2){
             state = States.HOSTILE;
             if(health < 2 && Math.random() < .5){
                 state = States.FLEEING;
@@ -87,6 +87,7 @@ public class AiShipFighter extends AiShip {
     }
 
     public void activeTick(){
+        super.activeTick();
         decideState();
         if(state == States.HOSTILE){
             if (target instanceof Drone && ((Drone) target).faction == Factions.PLAYER) {

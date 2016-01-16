@@ -22,6 +22,7 @@ public class GameState {
     public int YEAR = 3056;
     public int YEARS_PASSED = 0;
     public int POPULATION = 0;
+    public int AI_HOSTILITY = 0;
     public Array<DroneRoutine.ROUTINES> UNLOCKED_ROUTINES = new Array<DroneRoutine.ROUTINES>();
 
     public GameState(MagellanGame game) {
