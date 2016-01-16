@@ -28,7 +28,7 @@ public class MeteoroidField extends GameObj implements IDrawableMap, IDrawableWi
     public MeteoroidField(Sector sector) {
         super(sector);
         resource = MathUtils.random(1, 3);
-        resourceAmount = Math.round(sector.position.x * sector.position.y * .05f);
+        resourceAmount = Math.round((sector.position.x + sector.position.y) * .25f);
     }
 
     @Override
