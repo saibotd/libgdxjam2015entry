@@ -17,7 +17,7 @@ public class GameState {
     public int RESOURCE1 = 0;
     public int RESOURCE2 = 0;
     public int RESOURCE3 = 0;
-    public int CREDITS = 0;
+    public int CREDITS = 100000;
     public int CREDITS_PER_TICK = 0;
     public int YEAR = 3056;
     public int YEARS_PASSED = 0;

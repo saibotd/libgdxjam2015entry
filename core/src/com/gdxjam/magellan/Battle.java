@@ -117,7 +117,6 @@ public class Battle implements Disposable{
                         } else
                             turn();
                     } else {
-                        if (!offensive.isAlive()) offensive.destroy();
                         if (!defensive.isAlive()) defensive.destroy();
                         Gdx.app.log("BATTLE", "OVER");
                         dispose();
@@ -134,7 +133,6 @@ public class Battle implements Disposable{
                 defensive = _offensive;
                 turn();
             } else {
-                if (!offensive.isAlive()) offensive.destroy();
                 if (!defensive.isAlive()) defensive.destroy();
                 Gdx.app.log("BATTLE", "OVER");
                 dispose();

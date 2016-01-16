@@ -32,6 +32,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
     private Array<DroneRoutine.ROUTINES> selectedRoutines;
     private List listRight;
     private List listLeft;
+    public Boolean destroyed = false;
 
     public Drone(Sector sector, int level) {
         super(sector);
@@ -91,6 +92,8 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
 
     @Override
     public void destroy() {
+        if (destroyed) return;
+        destroyed = true;
         if (faction == Factions.PLAYER) {
             MagellanGame.instance.mapScreen.log.addEntry("You have lost a drone", sector);
         }

@@ -78,7 +78,11 @@ public class PlayerShip extends Ship implements IInteractable {
         sector.visited = true;
         sector.discovered = true;
         for(Sector _sector : sector.connectedSectors){
+            for (Sector __sector : _sector.connectedSectors) {
+                __sector.discovered = true;
+            }
             _sector.discovered = true;
+            _sector.visited = true;
         }
     }
 

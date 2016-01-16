@@ -94,13 +94,13 @@ public class AiShipSettler extends AiShip {
         super.activeTick();
         decideState();
         if(state == States.HOSTILE){
-            new Battle(this, target);
             if (target instanceof Drone && ((Drone) target).faction == Factions.PLAYER) {
                 MagellanGame.instance.mapScreen.log.addEntry("Your drone is under attack!", sector);
             }
             if (target instanceof Planet && ((Planet) target).faction == Factions.PLAYER) {
                 MagellanGame.instance.mapScreen.log.addEntry("Your planet is under attack!", sector);
             }
+            new Battle(this, target);
         }
     }
 
