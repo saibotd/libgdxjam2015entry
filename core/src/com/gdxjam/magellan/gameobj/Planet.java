@@ -151,27 +151,31 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
         }
     }
 
-    public void populate(Ship ship, int humans){
+    public int populate(Ship ship, int humans){
         if(ship instanceof PlayerShip){
             faction = ship.faction;
-            Gdx.app.log("humans", humans+"");
-            Gdx.app.log("pop limit", getPopulationLimit()+"");
-            int drop_humans;
-            drop_humans = MathUtils.clamp(humans, 0, Math.min(((PlayerShip) ship).HUMANS, getPopulationLimit() - population));
-            Gdx.app.log("drop_humans", drop_humans+"");
-            if (drop_humans > 0) {
+
+            humans = MathUtils.clamp(humans, 0, Math.min(((PlayerShip) ship).HUMANS, getPopulationLimit() - population));
+            if (humans > 0) {
                 MagellanGame.soundFx.population.play(0.6f);
             } else {
-                MagellanGame.instance.windowScreen.getWindow("No humans left", "There are no frozen humans\non your ship anymore.");
+                if (getPopulationLimit() - population == 0) {
+                    MagellanGame.instance.windowScreen.getWindow("Capacity reached", "This planet has reached\nit's capacity for humans.");
+                } else {
+                    MagellanGame.instance.windowScreen.getWindow("No humans left", "There are no frozen\nhumans on your ship.");
+                }
+
             }
-            population += drop_humans;
-            ((PlayerShip) ship).HUMANS -= drop_humans;
+            population += humans;
+            ((PlayerShip) ship).HUMANS -= humans;
         }
         if(ship instanceof AiShipSettler){
             faction = ship.faction;
             population += 500;
         }
         MagellanGame.gameState.updatePopulationCount();
+
+        return humans;
     }
 
     public void boardHumans(Ship ship, int humans){
@@ -223,9 +227,11 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 interactions.put("Settle 1000 humans", new Interaction() {
                     @Override
                     public void interact() {
-                        // TODO: Ask for how many
-                        populate((Ship) with, 1000);
-                        showInteractionWindow();
+                        if (populate((Ship) with, 1000) > 0) {
+                            showInteractionWindow();
+                        }
+
+
                     }
                 });
             }
@@ -233,7 +239,6 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 interactions.put("Board 1000 humans", new Interaction() {
                     @Override
                     public void interact() {
-                        // TODO: Ask for how many
                         boardHumans((Ship) with, 1000);
                         showInteractionWindow();
                     }
@@ -269,6 +274,13 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 @Override
                 public void interact() {
                     addResources(3, MagellanGame.gameState.spendResource(3, 10));
+                    showInteractionWindow();
+                }
+            });
+            interactions.put("Back", new Interaction() {
+                @Override
+                public void interact() {
+                    submenuOpen = "";
                     showInteractionWindow();
                 }
             });

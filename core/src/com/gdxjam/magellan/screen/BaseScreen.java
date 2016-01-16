@@ -210,7 +210,6 @@ public class BaseScreen implements Screen, InputProcessor {
             group.addActor(btnOK);
             window.add(group);
         }
-
         windowContainer.setActor(window);
         return window;
     }
