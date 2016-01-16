@@ -121,16 +121,12 @@ public class Universe {
 
 
         if(enemyPlanet.faction == GameObj.Factions.ENEMY) {
-            /*
+
             if (MagellanGame.gameState.YEARS_PASSED == 1) {
-                addEnemies(50, 5, 10);
+                addEnemies(20, 5, 20);
             }
 
-            if (MagellanGame.gameState.YEARS_PASSED % 20 == 0) {
-                addEnemies(10, 1, 0);
-            }
-            */
-            addEnemies(MathUtils.random(-10,1), MathUtils.random(-20,1), MathUtils.random(-15,1));
+            addEnemies(MathUtils.random(-5,1), MathUtils.random(-10,1), MathUtils.random(-15,1));
         }
 
         if(!MagellanGame.instance.universe.playerShip.isAlive()){
@@ -184,8 +180,14 @@ public class Universe {
             final AiShipSettler settler = new AiShipSettler(topRight);
             settler.prepareRenderingOnMap();
         }
+        Array<Sector> undiscoveredSectors = new Array<Sector>();
+        for (Sector sector:sectors) {
+            if (!sector.discovered && sector.position.x > 200 && sector.position.y > 200) {
+                undiscoveredSectors.add(sector);
+            }
+        }
         for(int i = 0; i < numberSmallFighters; i++){
-            final AiShipSmallFighter smallFighter = new AiShipSmallFighter(sectors.random());
+            final AiShipSmallFighter smallFighter = new AiShipSmallFighter(undiscoveredSectors.random());
             smallFighter.prepareRenderingOnMap();
         }
     }
