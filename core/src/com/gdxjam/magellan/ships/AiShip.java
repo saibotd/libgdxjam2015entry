@@ -49,7 +49,7 @@ public class AiShip extends Ship {
                 case 2:
                     MagellanGame.instance.showWindowScreen();
                     MagellanGame.instance.windowScreen.getWindow("Communication", "This is your final warning!\nHumanity doesn't deserve a second chance.\nRETREAT OR WE'LL OPEN FIRE!");
-                    MagellanGame.gameState.AI_HOSTILITY++;
+                    MagellanGame.gameState.AI_HOSTILITY = 5;
                     break;
             }
         }
