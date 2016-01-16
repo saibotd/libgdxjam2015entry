@@ -64,7 +64,7 @@ public class AiShipFighter extends AiShip {
                 }
             }
         }
-        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY > 2){
+        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY >= 5){
             state = States.HOSTILE;
             if(health < 2 && Math.random() < .5){
                 state = States.FLEEING;

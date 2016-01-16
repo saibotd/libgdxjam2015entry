@@ -68,7 +68,7 @@ public class AiShipSettler extends AiShip {
                 planet.populate(this, 500);
             }
         }
-        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY > 2){
+        if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY >= 5){
             state = States.FLEEING;
             if(Math.random() < .2){
                 state = States.HOSTILE;

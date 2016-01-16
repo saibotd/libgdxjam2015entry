@@ -2,6 +2,7 @@ package com.gdxjam.magellan;
 
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -114,6 +115,7 @@ public class MagellanGame extends Game{
         windowScreen = new WindowScreen(this);
         storyScreen = new StoryScreen(this);
         setScreen(titleScreen);
+        Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
 
 	}
 

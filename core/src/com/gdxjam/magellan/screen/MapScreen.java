@@ -229,7 +229,7 @@ public class MapScreen extends BaseScreen {
     }
 
     public boolean keyUp(int keyCode) {
-
+        super.keyUp(keyCode);
         switch (keyCode){
             case Input.Keys.W:
                 keyboardPanY = 0;
@@ -250,12 +250,6 @@ public class MapScreen extends BaseScreen {
             case Input.Keys.J:
                 Ship ship2 = new AiShipSettler(universe.playerShip.sector);
                 ship2.prepareRenderingOnMap();
-                break;
-            case Input.Keys.F:
-                if(Gdx.graphics.isFullscreen())
-                    Gdx.graphics.setDisplayMode(1280, 720, false);
-                else
-                    Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
                 break;
             case Input.Keys.L:
                 MagellanGame.gameState.CREDITS += 100000;

@@ -2,10 +2,7 @@ package com.gdxjam.magellan.screen;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.TweenManager;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -123,6 +120,15 @@ public class BaseScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode){
+            case Input.Keys.F11:
+            case Input.Keys.F:
+                if(Gdx.graphics.isFullscreen())
+                    Gdx.graphics.setDisplayMode(1280, 720, false);
+                else
+                    Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+                break;
+        }
         return false;
     }
 
@@ -330,5 +336,6 @@ public class BaseScreen implements Screen, InputProcessor {
     public void dispose() {
         batch.dispose();
     }
+
 
 }
