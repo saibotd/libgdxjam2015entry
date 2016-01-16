@@ -127,7 +127,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
                 MagellanGame.instance.windowScreen.closeWindow();
             }
         });
-        lastSelectedIndex = MathUtils.clamp(lastSelectedIndex, 0, inventory.size);
+        lastSelectedIndex = MathUtils.clamp(lastSelectedIndex, 0, inventory.size-1);
         if(lastSelectedIndex != -1){
             list.setSelectedIndex(lastSelectedIndex);
             selectItem(lastSelectedIndex);

@@ -274,8 +274,8 @@ public class WindowScreen extends BaseScreen {
             pe.setPosition(200, 200);
             pe.scaleEffect(damage*2);
         } else {
-            l.setPosition(700, 500);
-            pe.setPosition(700, 500);
+            l.setPosition(900, 500);
+            pe.setPosition(900, 500);
             pe.scaleEffect(2);
             for (Container<Actor> c : shipsOnScreen){
                 if(c.getActor() != null
