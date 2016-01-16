@@ -41,7 +41,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public TweenManager tweenManager;
     public Sprite starfield;
 
-    public BaseScreen(MagellanGame _game){
+    public BaseScreen(final MagellanGame _game){
         skin = MagellanGame.assets.get("skin/uiskin.json", Skin.class);
         game = _game;
         batch = new SpriteBatch();
@@ -84,12 +84,14 @@ public class BaseScreen implements Screen, InputProcessor {
         });
         btnMap.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.showMapScreen();
+                if(!_game.universe.playerShip.inBattle())
+                    game.showMapScreen();
             }
         });
         btnWait.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                game.universe.tick();
+                if(!_game.universe.playerShip.inBattle())
+                    game.universe.tick();
             }
         });
 
