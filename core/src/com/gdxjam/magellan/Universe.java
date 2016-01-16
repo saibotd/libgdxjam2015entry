@@ -38,6 +38,7 @@ public class Universe {
                 topRight = sector;
             }
         }
+        bottomLeft.gameObjs.clear();
         playerShip = new PlayerShip(bottomLeft);
         new Shop(bottomLeft);
         enemyPlanet = new Planet(topRight);
