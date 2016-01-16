@@ -2,6 +2,7 @@ package com.gdxjam.magellan.ships;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -65,7 +66,10 @@ public class AiShipSettler extends AiShip {
             if(gameObj instanceof Planet && gameObj.faction == Factions.NEUTRAL){
                 Planet planet = (Planet) gameObj;
                 planet.claim(this);
-                planet.populate(this, 500);
+                planet.resource1 += MathUtils.random(100,200);
+                planet.resource2 += MathUtils.random(100,200);
+                planet.resource3 += MathUtils.random(100,200);
+                planet.populate(this,  MathUtils.random(500,1500));
             }
         }
         if(target != null && target.isAlive() && MagellanGame.gameState.AI_HOSTILITY >= 5){

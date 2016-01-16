@@ -127,7 +127,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
                 MagellanGame.instance.windowScreen.closeWindow();
             }
         });
-
+        lastSelectedIndex = MathUtils.clamp(lastSelectedIndex, 0, inventory.size);
         if(lastSelectedIndex != -1){
             list.setSelectedIndex(lastSelectedIndex);
             selectItem(lastSelectedIndex);
@@ -189,10 +189,9 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
 
     @Override
     public String getInfo() {
-        String s = "INTERCOM: Hey there! We have drones, upgrades,\nanything you need!\nIf you have the credits, that is.";
+        String s = "INTERCOM: Hello good friend! We have drones, upgrades,\nanything you need!\nIf you have the credits, that is.";
         if(MagellanGame.gameState.CREDITS == 0){
-            s += "\n";
-            s += "INTERCOM: Weird, our scanners pick up 0 credits on your ship\nand no, we won't accept frozen lifeforms as a substitute!";
+            s = "INTERCOM: Hey there! Weird, our scanners pick up 0 credits on your ship\nand no, we won't accept frozen lifeforms as a substitute!";
             s += "\nHow about this:\nYou populate some planets with those creatures\nand they will generate credits for you.";
             s += "\nYou bring those credits to our trading outposts\nand we sell you cool stuff! Deal? Deal!";
         }
