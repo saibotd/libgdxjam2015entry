@@ -115,11 +115,11 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
                     MagellanGame.gameState.CREDITS -= item.price;
                     item.buy(MagellanGame.instance.universe.playerShip);
                     MagellanGame.soundFx.buy.play(0.7f);
+                    droneBought = item instanceof ShopItemDrone;
                 } else {
                     MagellanGame.soundFx.nope.play(0.7f);
                 }
                 MagellanGame.gameState.updateNumberOfDrones();
-                droneBought = item instanceof ShopItemDrone;
                 showInventoryWindow();
             }
         });
@@ -129,7 +129,7 @@ public class Shop extends MovingGameObj implements IDrawableWindow, IDrawableMap
                 MagellanGame.instance.windowScreen.closeWindow();
                 if(!MagellanGame.gameState.DRONE_INFO_SHOWN && droneBought){
                     String s = "Drones can be deployed by clicking on your ship";
-                    s += "\nin the bottom left corner. After deploying a drone,";
+                    s += "\non the left side. After deploying a drone,";
                     s += "\nbe sure to click on it and setup routines.";
                     s += "\ndepending on the level, a drone can hold up to 5";
                     s += "\nof them. If you setup less routines than maximum";

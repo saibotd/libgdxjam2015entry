@@ -59,8 +59,15 @@ public class AiShipSettler extends AiShip {
         for (int i = 0; i < sector.gameObjs.size; i++){
             GameObj gameObj = sector.gameObjs.get(i);
             if(gameObj instanceof IDestroyable && gameObj.faction == Factions.PLAYER){
-                if(Math.random() < .5){
-                    target = (IDestroyable) gameObj;
+                if(gameObj instanceof  PlayerShip){
+                    if(Math.random() < .3){
+                        target = (IDestroyable) gameObj;
+                    }
+                    break;
+                } else {
+                    if(Math.random() < .3){
+                        target = (IDestroyable) gameObj;
+                    }
                 }
             }
             if(gameObj instanceof Planet && gameObj.faction == Factions.NEUTRAL){

@@ -23,7 +23,7 @@ import com.gdxjam.magellan.tweening.SpriteAccessor;
  */
 public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, IInteractable, IArmed {
     private int maxNumberOfRoutines;
-    private int health = 1;
+    private int health = 4;
     public static int price = 1000;
     private Array<DroneRoutine> routines = new Array();
     public Vector2 dimensions = new Vector2(280,170);
@@ -40,7 +40,7 @@ public class Drone extends MovingGameObj implements IDestroyable, IDrawableMap, 
         // The level of a drone decides how many routines it can handle
         // If not all routines are set, the routines become more powerful
         maxNumberOfRoutines = level;
-        health = level;
+        health *= level;
         prepareRenderingOnMap();
 
     }
