@@ -134,7 +134,7 @@ public class MapScreen extends BaseScreen {
         if(sectorToFocusOn != null){
             camera.position.lerp(new Vector3(sectorToFocusOn.position.x, sectorToFocusOn.position.y, 0), delta * 4);
             zoom = MathUtils.clamp(zoom-delta * 2, .5f, 5);
-            if(sectorToFocusOn.position.dst(camera.position.x, camera.position.y) < .2) sectorToFocusOn = null;
+            if(sectorToFocusOn.position.dst(camera.position.x, camera.position.y) < .2 && zoom <= 0.5f) sectorToFocusOn = null;
         }
 
         cameraFrame.set(
