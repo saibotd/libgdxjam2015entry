@@ -36,6 +36,8 @@ public class WindowScreen extends BaseScreen {
     private final Container<Actor> resourcesOnScreen;
     private final Container<Actor> playerOnScreen;
     private final Container<Actor> shopOnScreen;
+    private final Sprite spPixel;
+    private final Sprite spBar;
     private Sector lastShownSector;
     private Array<ParticleEffect> effects;
     private boolean startTutorialShown = false;
@@ -90,6 +92,9 @@ public class WindowScreen extends BaseScreen {
                 drawSurroundings();
             }
         });
+
+        spPixel = new Sprite(MagellanGame.assets.get("pixel.png", Texture.class));
+        spBar = new Sprite(MagellanGame.assets.get("bar.png", Texture.class));
     }
 
     public void show(){
@@ -257,8 +262,22 @@ public class WindowScreen extends BaseScreen {
             pe.draw(batch, delta);
             if(pe.isComplete()) effects.removeValue(pe, true);
         }
+        renderHealthBar();
         batch.end();
         ScreenShake.update(stage.getCamera());
+    }
+
+    private void renderHealthBar(){
+        spBar.setSize(200,40);
+        spBar.setPosition(1280/2 - spBar.getWidth()/2, 20);
+        spPixel.setSize(spBar.getWidth()/game.universe.playerShip.maxHealth * game.universe.playerShip.health ,spBar.getHeight());
+        Gdx.app.log("fsd", game.universe.playerShip.maxHealth / spBar.getWidth() * game.universe.playerShip.health+"");
+        spPixel.setPosition(spBar.getX(), spBar.getY());
+        spPixel.setColor(MagellanColors.FACTION_PLAYER);
+        spPixel.setScale(1);
+        spPixel.setRotation(0);
+        spPixel.draw(batch);
+        spBar.draw(batch);
     }
 
     public int assetToGameSize(int size) {
