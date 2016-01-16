@@ -38,17 +38,17 @@ public class AiShip extends Ship {
             switch (MagellanGame.gameState.AI_HOSTILITY){
                 case 0:
                     MagellanGame.instance.showWindowScreen();
-                    MagellanGame.instance.windowScreen.getWindow("Communication", "Who are you?\nAre you one of us?\nI will report you to Saatoo.");
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "Who are you?\nAre you one of us?");
                     MagellanGame.gameState.AI_HOSTILITY++;
                     break;
                 case 1:
                     MagellanGame.instance.showWindowScreen();
-                    MagellanGame.instance.windowScreen.getWindow("Communication", "Saatoo told us everything about you and your plans.\nWe don't like it.\nSTAY AWAY FROM SAATOO!");
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "Saatoo knows about you and your plans.\nWe don't like it.\nSTAY AWAY FROM SAATOO!");
                     MagellanGame.gameState.AI_HOSTILITY++;
                     break;
                 case 2:
                     MagellanGame.instance.showWindowScreen();
-                    MagellanGame.instance.windowScreen.getWindow("Communication", "This is your final warning!\nHumanity doesn't deserve a second chance.\nRETREAT OR WE'LL OPEN FIRE!");
+                    MagellanGame.instance.windowScreen.getWindow("Communication", "This is your final warning!\nHumanity doesn't deserve a second chance.\nRETREAT OR GET CRUSHED BY SAATOO!");
                     MagellanGame.gameState.AI_HOSTILITY = 5;
                     break;
             }
