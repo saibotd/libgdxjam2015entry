@@ -213,6 +213,7 @@ public class Battle implements Disposable{
         MagellanGame.gameState.CREDITS += credits;
         Window window = screen.getWindow("Battle outcome");
         VerticalGroup windowContent = new VerticalGroup();
+        windowContent.space(10);
         Label info = new Label("", screen.skin, "window");
         if(MagellanGame.instance.universe.playerShip.isAlive()){
             info.setText("Victory! As you scan the\nremaining scraps you gather " + credits + " credits!");

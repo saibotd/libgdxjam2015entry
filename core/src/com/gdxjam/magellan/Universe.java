@@ -38,6 +38,7 @@ public class Universe {
                 topRight = sector;
             }
         }
+        bottomLeft.gameObjs.clear();
         playerShip = new PlayerShip(bottomLeft);
         new Shop(bottomLeft);
         enemyPlanet = new Planet(topRight);
@@ -130,10 +131,6 @@ public class Universe {
             }
             */
             addEnemies(MathUtils.random(-10,1), MathUtils.random(-20,1), MathUtils.random(-15,1));
-        }
-
-        if (MagellanGame.gameState.YEARS_PASSED == 1) {
-            MagellanGame.instance.mapScreen.log.addEntry("Enemy AI detected! Someone seems to populate the universe with another species! To stop them you have to destroy their home planet!");
         }
 
         if(!MagellanGame.instance.universe.playerShip.isAlive()){
