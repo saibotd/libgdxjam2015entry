@@ -1,5 +1,6 @@
 package com.gdxjam.magellan.gameobj;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.gdxjam.magellan.*;
+import com.gdxjam.magellan.screen.BaseScreen;
 import com.gdxjam.magellan.ships.AiShipSettler;
 import com.gdxjam.magellan.ships.PlayerShip;
 import com.gdxjam.magellan.ships.Ship;
@@ -152,13 +154,18 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
     public void populate(Ship ship, int humans){
         if(ship instanceof PlayerShip){
             faction = ship.faction;
-            humans = MathUtils.clamp(humans, 0, getPopulationLimit());
-            humans = MathUtils.clamp(humans, 0, ((PlayerShip) ship).HUMANS);
-            if (humans > 0) {
+            Gdx.app.log("humans", humans+"");
+            Gdx.app.log("pop limit", getPopulationLimit()+"");
+            int drop_humans;
+            drop_humans = MathUtils.clamp(humans, 0, Math.min(((PlayerShip) ship).HUMANS, getPopulationLimit() - population));
+            Gdx.app.log("drop_humans", drop_humans+"");
+            if (drop_humans > 0) {
                 MagellanGame.soundFx.population.play(0.6f);
+            } else {
+                MagellanGame.instance.windowScreen.getWindow("No humans left", "There are no frozen humans\non your ship anymore.");
             }
-            population += humans;
-            ((PlayerShip) ship).HUMANS -= humans;
+            population += drop_humans;
+            ((PlayerShip) ship).HUMANS -= drop_humans;
         }
         if(ship instanceof AiShipSettler){
             faction = ship.faction;
@@ -213,22 +220,22 @@ public class Planet extends GameObj implements IDrawableMap, IDestroyable, IInte
                 });
             }
             if (faction == with.faction && isHabitable()) {
-                interactions.put("populate", new Interaction() {
+                interactions.put("Settle 1000 humans", new Interaction() {
                     @Override
                     public void interact() {
                         // TODO: Ask for how many
                         populate((Ship) with, 1000);
-                        closeWindow();
+                        showInteractionWindow();
                     }
                 });
             }
             if (faction == with.faction && population > 0) {
-                interactions.put("board humans", new Interaction() {
+                interactions.put("Board 1000 humans", new Interaction() {
                     @Override
                     public void interact() {
                         // TODO: Ask for how many
-                        boardHumans((Ship) with, 100);
-                        closeWindow();
+                        boardHumans((Ship) with, 1000);
+                        showInteractionWindow();
                     }
                 });
             }

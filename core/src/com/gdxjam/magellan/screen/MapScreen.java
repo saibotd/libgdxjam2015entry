@@ -257,6 +257,18 @@ public class MapScreen extends BaseScreen {
                 else
                     Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
                 break;
+            case Input.Keys.L:
+                MagellanGame.gameState.CREDITS += 100000;
+                MagellanGame.gameState.RESOURCE1 += 1000;
+                MagellanGame.gameState.RESOURCE2 += 1000;
+                MagellanGame.gameState.RESOURCE3 += 1000;
+                universe.playerShip.drones.add(1);
+                universe.playerShip.drones.add(2);
+                universe.playerShip.drones.add(3);
+                universe.playerShip.drones.add(4);
+                universe.playerShip.drones.add(5);
+                MagellanGame.instance.mapScreen.topbar.updateStats();
+                break;
         }
         return false;
     }

@@ -191,6 +191,7 @@ public class BaseScreen implements Screen, InputProcessor {
 
         if(message != null){
             VerticalGroup group = new VerticalGroup();
+            group.space(10);
             Label labelMessage = new Label(message, skin);
             TextButton btnOK = new TextButton("OK", skin);
             btnOK.addListener(new ChangeListener() {
