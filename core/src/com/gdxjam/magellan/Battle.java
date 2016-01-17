@@ -52,6 +52,7 @@ public class Battle implements Disposable{
         } else {
             turn();
         }
+
     }
 
     private boolean isPlayerBattle(){
@@ -154,6 +155,11 @@ public class Battle implements Disposable{
 
     public void playerTurn(){
         //screen.closeWindow();
+        for (Actor actor:screen.stage.getActors()) {
+            if (actor instanceof Label) {
+                actor.remove();
+            }
+        }
         Gdx.app.log("playerTurn", "1");
         Window window = screen.getWindowWithoutClose("Battle");
         VerticalGroup windowContent = new VerticalGroup();
@@ -248,6 +254,11 @@ public class Battle implements Disposable{
     @Override
     public void dispose() {
         Gdx.app.log("BATTLE", "DISPOSE");
+        for (Actor actor:screen.stage.getActors()) {
+            if (actor instanceof Label) {
+                actor.remove();
+            }
+        }
         if(isPlayerBattle()){
             screen.drawSurroundings();
             showOutcomeWindow();
