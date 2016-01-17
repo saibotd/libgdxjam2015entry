@@ -83,11 +83,11 @@ public class WindowScreen extends BaseScreen {
         sectorContainer.addActor(planetOnScreen);
         sectorContainer.addActor(planetClaimedOnScreen);
         sectorContainer.addActor(resourcesOnScreen);
-        sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(shopOnScreen);
         sectorContainer.addActor(shipsOnScreen.get(0));
         sectorContainer.addActor(shipsOnScreen.get(1));
         sectorContainer.addActor(shipsOnScreen.get(2));
+        sectorContainer.addActor(dronesOnScreen);
         sectorContainer.addActor(playerOnScreen);
 
         btnWindow.remove();
